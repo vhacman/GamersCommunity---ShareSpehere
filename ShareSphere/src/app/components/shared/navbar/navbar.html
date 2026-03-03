@@ -1,0 +1,50 @@
+<mat-toolbar class="navbar">
+
+  <!-- Logo -->
+  <a routerLink="/home" class="logo">
+    <img src="img/logo.png" alt="ShareSphere logo" class="logo-img" />
+    <span class="logo-text">ShareSphere</span>
+  </a>
+
+  <!-- Nav links (centro) -->
+  <nav class="nav-links">
+    @for (link of navLinks; track link.path) {
+      <a
+        [routerLink]="link.path"
+        routerLinkActive="active"
+        class="nav-link"
+      >
+        {{ link.label }}
+      </a>
+    }
+  </nav>
+
+  <span class="spacer"></span>
+
+  <!-- Notifiche -->
+  <button mat-icon-button [matBadge]="notifiche()" matBadgeColor="warn" matBadgeSize="small">
+    <mat-icon>notifications</mat-icon>
+  </button>
+
+  <!-- Menu utente -->
+  <button mat-icon-button [matMenuTriggerFor]="userMenu">
+    <mat-icon>account_circle</mat-icon>
+  </button>
+
+  <mat-menu #userMenu="matMenu">
+    <button mat-menu-item routerLink="/profilo">
+      <mat-icon>person</mat-icon>
+      <span>Il mio profilo</span>
+    </button>
+    <button mat-menu-item routerLink="/admin">
+      <mat-icon>admin_panel_settings</mat-icon>
+      <span>Admin</span>
+    </button>
+    <mat-divider />
+    <button mat-menu-item routerLink="/login">
+      <mat-icon>logout</mat-icon>
+      <span>Esci</span>
+    </button>
+  </mat-menu>
+
+</mat-toolbar>

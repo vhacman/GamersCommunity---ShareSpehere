@@ -1,10 +1,11 @@
-import { Component } from '@angular/core';
+import { Component, signal } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatCardModule } from '@angular/material/card';
 import { MatChipsModule } from '@angular/material/chips';
 import { MockDataService, CampagnaCrowdfunding } from '../../../services/mock-data-service';
+import { BoostPopup } from '../boost-popup/boost-popup';
 
 @Component({
   selector: 'app-crowdfunding-list',
@@ -14,16 +15,21 @@ import { MockDataService, CampagnaCrowdfunding } from '../../../services/mock-da
     MatIconModule,
     MatCardModule,
     MatChipsModule,
+    BoostPopup,
   ],
   templateUrl: './crowdfunding-list.html',
   styleUrl: './crowdfunding-list.css',
 })
 export class CrowdfundingList {
   campagne: CampagnaCrowdfunding[];
+  boostPopupAperto = signal(false);
 
   constructor(private data: MockDataService) {
     this.campagne = this.data.campagne;
   }
+
+  apriBoost() { this.boostPopupAperto.set(true); }
+  chiudiBoost() { this.boostPopupAperto.set(false); }
 
   getPercentuale(campagna: CampagnaCrowdfunding): number {
     return Math.min(Math.round((campagna.raggiunto / campagna.obiettivo) * 100), 100);

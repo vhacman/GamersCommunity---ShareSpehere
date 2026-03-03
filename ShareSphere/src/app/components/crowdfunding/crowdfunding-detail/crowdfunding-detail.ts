@@ -3,17 +3,8 @@ import { ActivatedRoute, RouterLink } from '@angular/router';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatCardModule } from '@angular/material/card';
-import { MockDataService, CampagnaCrowdfunding } from '../../../services/mock-data-service';
-
-interface PianoBoost {
-  id: string;
-  nome: string;
-  icona: string;
-  prezzo: string;
-  durata: string;
-  features: string[];
-  popolare?: boolean;
-}
+import { MockDataService, CampagnaCrowdfunding, Ricompensa } from '../../../services/mock-data-service';
+import { BoostPopup } from '../boost-popup/boost-popup';
 
 @Component({
   selector: 'app-crowdfunding-detail',
@@ -22,6 +13,7 @@ interface PianoBoost {
     MatButtonModule,
     MatIconModule,
     MatCardModule,
+    BoostPopup,
   ],
   templateUrl: './crowdfunding-detail.html',
   styleUrl: './crowdfunding-detail.css',
@@ -29,36 +21,8 @@ interface PianoBoost {
 export class CrowdfundingDetail implements OnInit {
   campagna: CampagnaCrowdfunding | undefined;
   boostPopupAperto = signal(false);
-  pianSelezionato = signal('');
-  boosted = signal(false);
-
-  piani: PianoBoost[] = [
-    {
-      id: 'base',
-      nome: 'Boost Base',
-      icona: 'bolt',
-      prezzo: '€4.99',
-      durata: '3 giorni',
-      features: ['Badge boost visibile', 'Posizione in evidenza nella categoria'],
-    },
-    {
-      id: 'pro',
-      nome: 'Boost Pro',
-      icona: 'star',
-      prezzo: '€9.99',
-      durata: '7 giorni',
-      features: ['Tutto il Base +', 'Evidenziato in homepage', 'Badge dorato'],
-      popolare: true,
-    },
-    {
-      id: 'ultra',
-      nome: 'Boost Ultra',
-      icona: 'trending_up',
-      prezzo: '€19.99',
-      durata: '14 giorni',
-      features: ['Tutto il Pro +', 'Banner dedicato in homepage', 'Priorità nelle ricerche', 'Report analytics'],
-    },
-  ];
+  ricompensaPopupAperta = signal(false);
+  ricompensaScelta = signal<Ricompensa | null>(null);
 
   constructor(private route: ActivatedRoute, private data: MockDataService) {}
 
@@ -84,18 +48,15 @@ export class CrowdfundingDetail implements OnInit {
   }
 
   apriBoost() { this.boostPopupAperto.set(true); }
+  chiudiBoost() { this.boostPopupAperto.set(false); }
 
-  chiudiBoost() {
-    this.boostPopupAperto.set(false);
-    this.boosted.set(false);
-    this.pianSelezionato.set('');
+  apriRicompensa(ricompensa: Ricompensa) {
+    this.ricompensaScelta.set(ricompensa);
+    this.ricompensaPopupAperta.set(true);
   }
 
-  selezionaPiano(id: string) { this.pianSelezionato.set(id); }
-
-  confermaBoost() {
-    if (this.pianSelezionato()) {
-      this.boosted.set(true);
-    }
+  chiudiRicompensaPopup() {
+    this.ricompensaPopupAperta.set(false);
+    this.ricompensaScelta.set(null);
   }
 }

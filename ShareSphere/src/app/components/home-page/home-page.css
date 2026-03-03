@@ -1,0 +1,249 @@
+.page-wrapper {
+  max-width: 680px;
+  margin: 0 auto;
+  padding: 24px 16px 48px;
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+
+/* ── HERO ─────────────────────────────────────────────────────────────── */
+.hero {
+  background: linear-gradient(135deg, #fff 0%, #f8f0ff 50%, #ffe8f8 100%);
+  border-radius: 20px;
+  padding: 32px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.hero-text h1 {
+  font-size: 32px;
+  font-weight: 800;
+  color: #111;
+  line-height: 1.2;
+  margin: 0 0 8px;
+}
+
+.hero-accent {
+  color: #d63bcc;
+}
+
+.hero-sub {
+  font-size: 15px;
+  color: #888;
+  margin: 0;
+}
+
+.hero-stats {
+  display: flex;
+  gap: 12px;
+}
+
+.stat-card {
+  flex: 1;
+  background: white;
+  border-radius: 16px;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+}
+
+.stat-icon {
+  font-size: 22px;
+  width: 22px;
+  height: 22px;
+}
+
+.stat-icon--viola { color: #6c3ff5; }
+.stat-icon--green { color: #10b981; }
+
+.stat-label {
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.stat-label--viola { color: #6c3ff5; }
+.stat-label--green { color: #10b981; }
+
+.stat-value {
+  font-size: 24px;
+  font-weight: 800;
+  color: #111;
+}
+
+/* ── SEZIONI ──────────────────────────────────────────────────────────── */
+.section {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.section-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.section-title {
+  font-size: 18px;
+  font-weight: 700;
+  color: #111;
+  margin: 0;
+}
+
+.vedi-tutte {
+  font-size: 14px;
+  color: #6c3ff5;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.vedi-tutte:hover { text-decoration: underline; }
+
+/* ── AREE TEMATICHE ──────────────────────────────────────────────────── */
+.aree-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+}
+
+.area-card {
+  background: white;
+  border-radius: 16px;
+  padding: 16px 12px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+  transition: transform 0.15s, box-shadow 0.15s;
+}
+
+.area-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(0,0,0,0.1);
+}
+
+.area-icona {
+  width: 48px;
+  height: 48px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.area-emoji {
+  font-size: 24px;
+}
+
+.area-nome {
+  font-size: 13px;
+  font-weight: 600;
+  color: #333;
+  text-align: center;
+}
+
+/* ── CHALLENGE BANNER ─────────────────────────────────────────────────── */
+.challenge-banner {
+  background: linear-gradient(90deg, #6c3ff5, #d63bcc);
+  border-radius: 20px;
+  padding: 28px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.challenge-badge {
+  font-size: 13px;
+  color: rgba(255,255,255,0.8);
+  font-weight: 500;
+}
+
+.challenge-titolo {
+  font-size: 24px;
+  font-weight: 800;
+  color: white;
+  margin: 0;
+}
+
+.challenge-desc {
+  font-size: 14px;
+  color: rgba(255,255,255,0.9);
+  margin: 0 0 8px;
+}
+
+.challenge-btn {
+  align-self: flex-start;
+  background: white;
+  color: #6c3ff5;
+  font-weight: 700;
+  font-size: 14px;
+  border: none;
+  border-radius: 24px;
+  padding: 10px 24px;
+  cursor: pointer;
+  transition: opacity 0.2s;
+}
+
+.challenge-btn:hover { opacity: 0.9; }
+
+/* ── IN EVIDENZA ──────────────────────────────────────────────────────── */
+.evidenza-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.evidenza-card {
+  background: white;
+  border-radius: 16px;
+  display: flex;
+  gap: 12px;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+}
+
+.evidenza-img {
+  width: 90px;
+  min-width: 90px;
+  height: 90px;
+  object-fit: cover;
+}
+
+.evidenza-body {
+  padding: 12px 12px 12px 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  justify-content: center;
+}
+
+.evidenza-badge {
+  display: inline-block;
+  align-self: flex-start;
+  font-size: 11px;
+  font-weight: 700;
+  padding: 2px 10px;
+  border-radius: 20px;
+}
+
+.evidenza-titolo {
+  font-size: 14px;
+  font-weight: 700;
+  color: #111;
+  margin: 0;
+  line-height: 1.4;
+}
+
+.evidenza-meta {
+  display: flex;
+  gap: 12px;
+  font-size: 12px;
+  color: #999;
+  margin: 0;
+}

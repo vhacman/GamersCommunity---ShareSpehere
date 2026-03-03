@@ -53,12 +53,15 @@
 .btn-nuovo { display: flex; align-items: center; gap: 6px; background: #7c3aed; color: white; border: none; border-radius: 8px; padding: 8px 16px; font-size: 14px; font-weight: 600; cursor: pointer; }
 .btn-nuovo mat-icon { font-size: 18px; width: 18px; height: 18px; }
 
+.filtro-select{display: flex; align-items: center; gap: 6px; background: #7c3aed; color: white; border: none; border-radius: 8px; padding: 8px 16px; font-size: 14px; font-weight: 600; cursor: pointer; }
+
 .data-table { width: 100%; border-collapse: collapse; }
 
 .data-table th { text-align: left; padding: 10px 16px; font-size: 12px; font-weight: 600; color: #6b7280; text-transform: uppercase; letter-spacing: 0.05em; border-bottom: 1px solid #f3f4f6; }
 .data-table td { padding: 14px 16px; border-bottom: 1px solid #f3f4f6; font-size: 14px; color: #374151; vertical-align: middle; }
 .data-table tr:last-child td { border-bottom: none; }
 .data-table tr:hover td { background: #fafafa; }
+
 
 .td-titolo { font-weight: 500; max-width: 280px; }
 .td-data { color: #9ca3af; font-size: 13px; }

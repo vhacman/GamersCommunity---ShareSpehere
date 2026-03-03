@@ -1,0 +1,48 @@
+.stats-row { display: flex; gap: 16px; margin-bottom: 24px; }
+
+.stat-card { flex: 1; background: white; border-radius: 12px; padding: 20px; display: flex; flex-direction: column; gap: 4px; box-shadow: 0 1px 4px rgba(0,0,0,0.06); }
+
+.stat-icon-wrap { width: 40px; height: 40px; border-radius: 10px; display: flex; align-items: center; justify-content: center; margin-bottom: 8px; }
+.stat-icon-wrap mat-icon { font-size: 22px; width: 22px; height: 22px; }
+.stat-icon--orange { background: #fff7ed; color: #ea580c; }
+.stat-icon--green  { background: #f0fdf4; color: #16a34a; }
+.stat-icon--blue   { background: #eff6ff; color: #2563eb; }
+
+.stat-value { font-size: 28px; font-weight: 800; color: #111; }
+.stat-label { font-size: 13px; color: #6b7280; }
+
+.table-card { background: white; border-radius: 12px; box-shadow: 0 1px 4px rgba(0,0,0,0.06); overflow: hidden; }
+.table-header { display: flex; align-items: center; justify-content: space-between; padding: 20px 24px 16px; }
+.table-title { font-size: 16px; font-weight: 700; color: #111; margin: 0; }
+
+.btn-nuovo { display: flex; align-items: center; gap: 6px; background: #7c3aed; color: white; border: none; border-radius: 8px; padding: 8px 16px; font-size: 14px; font-weight: 600; cursor: pointer; }
+.btn-nuovo mat-icon { font-size: 18px; width: 18px; height: 18px; }
+
+.data-table { width: 100%; border-collapse: collapse; }
+.data-table th { text-align: left; padding: 10px 16px; font-size: 12px; font-weight: 600; color: #6b7280; text-transform: uppercase; letter-spacing: 0.05em; border-bottom: 1px solid #f3f4f6; }
+.data-table td { padding: 14px 16px; border-bottom: 1px solid #f3f4f6; font-size: 14px; color: #374151; vertical-align: middle; }
+.data-table tr:last-child td { border-bottom: none; }
+.data-table tr:hover td { background: #fafafa; }
+
+.td-titolo { max-width: 240px; }
+.td-titolo strong { display: block; font-weight: 600; }
+.td-titolo small { display: block; font-size: 12px; color: #9ca3af; margin-top: 2px; }
+
+.area-badge { background: #f3eeff; color: #7c3aed; font-size: 12px; font-weight: 600; padding: 3px 10px; border-radius: 20px; }
+.td-premio { max-width: 200px; font-size: 13px; }
+.td-data { color: #9ca3af; font-size: 13px; }
+
+.badge { display: inline-block; font-size: 12px; font-weight: 600; padding: 3px 10px; border-radius: 20px; }
+.badge-attiva  { background: #dcfce7; color: #16a34a; }
+.badge-scaduta { background: #f3f4f6; color: #6b7280; }
+
+.td-azioni { display: flex; align-items: center; gap: 2px; }
+.btn-edit mat-icon   { color: #6b7280; font-size: 18px; }
+.btn-delete mat-icon { color: #ef4444; font-size: 18px; }
+
+.pagination { display: flex; align-items: center; justify-content: space-between; padding: 16px 24px; border-top: 1px solid #f3f4f6; }
+.pag-info { font-size: 13px; color: #6b7280; }
+.pag-btns { display: flex; gap: 4px; }
+.pag-btn { padding: 6px 12px; border: 1px solid #e5e7eb; background: white; border-radius: 6px; font-size: 13px; color: #374151; cursor: pointer; }
+.pag-btn:hover { background: #f3f4f6; }
+.pag-active { background: #7c3aed !important; color: white !important; border-color: #7c3aed !important; }

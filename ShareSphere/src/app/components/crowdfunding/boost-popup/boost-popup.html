@@ -1,1 +1,64 @@
-<p>boost-popup works!</p>
+<div class="popup-overlay" (click)="onChiudi()">
+	<div class="popup" (click)="$event.stopPropagation()">
+
+		@if (!boosted()) {
+
+			<button class="close-btn" (click)="onChiudi()">✕</button>
+			<h2 class="popup-titolo">🔥 Dai visibilità al tuo progetto</h2>
+			<p class="popup-subtitle">Scegli un piano boost per mettere in risalto la tua campagna</p>
+
+			<div class="piani-grid">
+				@for (piano of piani; track piano.id) {
+					<div
+						class="piano-card"
+						[class.popolare]="piano.popolare"
+						[class.selezionato]="pianSelezionato() === piano.id"
+						(click)="selezionaPiano(piano.id)"
+					>
+						@if (piano.popolare) {
+							<span class="badge-popolare">Più scelto</span>
+						}
+						<mat-icon class="piano-icona">{{ piano.icona }}</mat-icon>
+						<h3 class="piano-nome">{{ piano.nome }}</h3>
+						<div class="piano-prezzo">
+							<span class="prezzo-importo">{{ piano.prezzo }}</span>
+							<span class="prezzo-durata"> / {{ piano.durata }}</span>
+						</div>
+						<ul class="piano-features">
+							@for (f of piano.features; track f) {
+								<li>✓ {{ f }}</li>
+							}
+						</ul>
+						<button
+							class="btn-seleziona"
+							[class.btn-filled]="pianSelezionato() === piano.id"
+							[class.btn-outline]="pianSelezionato() !== piano.id"
+							(click)="selezionaPiano(piano.id); $event.stopPropagation()"
+						>
+							Seleziona
+						</button>
+					</div>
+				}
+			</div>
+
+			<button
+				class="btn-conferma"
+				[disabled]="!pianSelezionato()"
+				(click)="confermaBoost()"
+			>
+				Attiva boost
+			</button>
+
+		} @else {
+
+			<div class="popup-success">
+				<span class="success-icon">🚀</span>
+				<h2>Boost attivato!</h2>
+				<p>La tua campagna è ora in evidenza.</p>
+				<button class="btn-conferma" (click)="onChiudi()">Chiudi</button>
+			</div>
+
+		}
+
+	</div>
+</div>

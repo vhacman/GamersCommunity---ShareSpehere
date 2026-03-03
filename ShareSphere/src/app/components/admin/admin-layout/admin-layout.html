@@ -1,1 +1,51 @@
-<p>admin-layout works!</p>
+<div class="admin-wrapper">
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+    <div class="brand">
+      <img src="/img/logo.png" class="brand-logo" alt="logo" />
+      <div class="brand-text">
+        <span class="app-name">Beyond Gaming</span>
+        <span class="admin-label">Admin Panel</span>
+      </div>
+    </div>
+
+    <nav class="nav">
+      <a routerLink="/admin/dashboard" routerLinkActive="active" class="nav-link">
+        <mat-icon>dashboard</mat-icon><span>Dashboard</span>
+      </a>
+      <a routerLink="/admin/articoli" routerLinkActive="active" class="nav-link">
+        <mat-icon>article</mat-icon><span>Articoli</span>
+      </a>
+      <a routerLink="/admin/utenti" routerLinkActive="active" class="nav-link">
+        <mat-icon>person</mat-icon><span>Utenti</span>
+      </a>
+      <a routerLink="/admin/challenge" routerLinkActive="active" class="nav-link">
+        <mat-icon>emoji_events</mat-icon><span>Challenge</span>
+      </a>
+      <a routerLink="/admin/impostazioni" routerLinkActive="active" class="nav-link">
+        <mat-icon>settings</mat-icon><span>Impostazioni</span>
+      </a>
+    </nav>
+
+    <div class="user-footer">
+      <div class="avatar-circle">AU</div>
+      <div class="user-info">
+        <span class="u-name">Admin User</span>
+        <span class="u-role">Amministratore</span>
+      </div>
+    </div>
+  </aside>
+
+  <!-- MAIN -->
+  <div class="main-col">
+    <div class="topbar">
+      <h1 class="topbar-title">{{ pageTitle }}</h1>
+      <input type="text" placeholder="Cerca..." class="search-input" />
+    </div>
+    <div class="page-content">
+      <router-outlet />
+    </div>
+  </div>
+
+</div>

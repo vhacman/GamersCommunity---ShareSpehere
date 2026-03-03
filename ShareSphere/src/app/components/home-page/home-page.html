@@ -1,1 +1,80 @@
-<p>home-page works!</p>
+<div class="page-wrapper">
+
+  <!-- ── HERO ─────────────────────────────────────────────────────────── -->
+  <section class="hero">
+    <div class="hero-text">
+      <h1>
+        Benvenuto nella<br>
+        <span class="hero-accent">Community!</span>
+      </h1>
+      <p class="hero-sub">Connettiti, gioca e condividi le tue passioni</p>
+    </div>
+    <div class="hero-stats">
+      <div class="stat-card">
+        <mat-icon class="stat-icon stat-icon--viola">people</mat-icon>
+        <span class="stat-label stat-label--viola">Membri</span>
+        <span class="stat-value">{{ formatMembri(membriTotali) }}</span>
+      </div>
+      <div class="stat-card">
+        <mat-icon class="stat-icon stat-icon--green">wifi</mat-icon>
+        <span class="stat-label stat-label--green">Online</span>
+        <span class="stat-value">{{ membriOnline }}</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── AREE TEMATICHE ────────────────────────────────────────────────── -->
+  <section class="section">
+    <div class="section-header">
+      <h2 class="section-title">Aree Tematiche</h2>
+      <a routerLink="/gruppi" class="vedi-tutte">Vedi tutte ›</a>
+    </div>
+    <div class="aree-grid">
+      @for (area of areeTematiche; track area.nome) {
+        <a routerLink="/gruppi" class="area-card">
+          <div class="area-icona" [style.background]="area.colore + '22'">
+            <span class="area-emoji">{{ area.icona }}</span>
+          </div>
+          <span class="area-nome">{{ area.nome }}</span>
+        </a>
+      }
+    </div>
+  </section>
+
+  <!-- ── CHALLENGE ATTIVA ──────────────────────────────────────────────── -->
+  @if (challengeAttiva) {
+    <section class="challenge-banner">
+      <span class="challenge-badge">📅 Challenge Attiva</span>
+      <h2 class="challenge-titolo">{{ challengeAttiva.titolo }}</h2>
+      <p class="challenge-desc">{{ challengeAttiva.descrizione }}</p>
+      <button class="challenge-btn" routerLink="/crowdfunding">Partecipa Ora</button>
+    </section>
+  }
+
+  <!-- ── IN EVIDENZA ───────────────────────────────────────────────────── -->
+  <section class="section">
+    <div class="section-header">
+      <h2 class="section-title">In Evidenza</h2>
+    </div>
+    <div class="evidenza-list">
+      @for (articolo of articoliInEvidenza; track articolo.id) {
+        <div class="evidenza-card">
+          <img [src]="articolo.immagine" [alt]="articolo.titolo" class="evidenza-img" />
+          <div class="evidenza-body">
+            <span
+              class="evidenza-badge"
+              [style.background]="getAreaBadgeStyle(articolo.categoria)"
+              [style.color]="getAreaColore(articolo.categoria)"
+            >{{ articolo.categoria }}</span>
+            <h3 class="evidenza-titolo">{{ articolo.titolo }}</h3>
+            <p class="evidenza-meta">
+              <span>&#64;{{ articolo.categoria | lowercase }}team</span>
+              <span>{{ articolo.likes }} likes</span>
+            </p>
+          </div>
+        </div>
+      }
+    </div>
+  </section>
+
+</div>

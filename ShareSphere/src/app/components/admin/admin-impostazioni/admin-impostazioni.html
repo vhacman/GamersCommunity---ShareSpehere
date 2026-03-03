@@ -1,0 +1,98 @@
+<div class="impostazioni-grid">
+
+  <!-- COLONNA SINISTRA -->
+  <div class="col-left">
+
+    <div class="settings-card">
+      <h2 class="card-title">Impostazioni Generali</h2>
+      <div class="form-group">
+        <label class="form-label">Nome Piattaforma</label>
+        <input type="text" class="form-input" [(ngModel)]="nomePiattaforma" />
+      </div>
+      <div class="form-group">
+        <label class="form-label">Descrizione</label>
+        <textarea class="form-input form-textarea" [(ngModel)]="descrizione"></textarea>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Email di Contatto</label>
+        <input type="email" class="form-input" [(ngModel)]="emailContatto" />
+      </div>
+    </div>
+
+    <div class="settings-card">
+      <h2 class="card-title">Notifiche</h2>
+      <div class="toggle-row">
+        <span class="toggle-label">Notifiche nuovi utenti</span>
+        <mat-slide-toggle [checked]="notifNuoviUtenti()" (change)="notifNuoviUtenti.set($event.checked)" color="primary" />
+      </div>
+      <div class="toggle-row">
+        <span class="toggle-label">Report contenuti</span>
+        <mat-slide-toggle [checked]="notifReportContenuti()" (change)="notifReportContenuti.set($event.checked)" color="primary" />
+      </div>
+      <div class="toggle-row">
+        <span class="toggle-label">Richieste moderazione</span>
+        <mat-slide-toggle [checked]="notifModerazione()" (change)="notifModerazione.set($event.checked)" color="primary" />
+      </div>
+      <div class="toggle-row">
+        <span class="toggle-label">Digest settimanale</span>
+        <mat-slide-toggle [checked]="notifDigest()" (change)="notifDigest.set($event.checked)" color="primary" />
+      </div>
+    </div>
+
+  </div>
+
+  <!-- COLONNA DESTRA -->
+  <div class="col-right">
+
+    <div class="settings-card">
+      <h2 class="card-title">Tema</h2>
+      <div class="tema-btns">
+        <button class="tema-btn" [class.attivo]="temaSelezionato() === 'chiaro'" (click)="temaSelezionato.set('chiaro')">
+          <mat-icon>light_mode</mat-icon> Chiaro
+        </button>
+        <button class="tema-btn" [class.attivo]="temaSelezionato() === 'scuro'" (click)="temaSelezionato.set('scuro')">
+          <mat-icon>dark_mode</mat-icon> Scuro
+        </button>
+      </div>
+      <p class="colore-label">Colore Primario</p>
+      <div class="colori-row">
+        @for (c of colori; track c) {
+          <button
+            class="colore-btn"
+            [style.background]="c"
+            [class.selected]="coloreSelezionato() === c"
+            (click)="coloreSelezionato.set(c)"
+          ></button>
+        }
+      </div>
+    </div>
+
+    <div class="settings-card">
+      <h2 class="card-title">Database</h2>
+      <p class="db-info">{{ dbUsato }} GB / {{ dbTotale }} GB utilizzati</p>
+      <div class="db-bar-bg">
+        <div class="db-bar-fill" [style.width.%]="dbPercentuale"></div>
+      </div>
+      <button class="btn-outline-action" (click)="esportaBackup()">
+        <mat-icon>download</mat-icon> Esporta Backup
+      </button>
+    </div>
+
+    <div class="settings-card">
+      <h2 class="card-title">API</h2>
+      <label class="form-label">API Key</label>
+      <input type="text" class="form-input api-input" [value]="apiKey" readonly />
+      <button class="btn-outline-action" style="margin-top: 12px" (click)="rigeneraApiKey()">
+        <mat-icon>refresh</mat-icon> Rigenera API Key
+      </button>
+    </div>
+
+  </div>
+
+</div>
+
+<div class="save-row">
+  <button class="btn-save" (click)="salva()">
+    <mat-icon>save</mat-icon> Salva Impostazioni
+  </button>
+</div>

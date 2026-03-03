@@ -1,1 +1,76 @@
-<p>admin-challenge works!</p>
+<div class="stats-row">
+  <div class="stat-card">
+    <div class="stat-icon-wrap stat-icon--orange"><mat-icon>emoji_events</mat-icon></div>
+    <span class="stat-value">{{ challenge.length }}</span>
+    <span class="stat-label">Challenge Totali</span>
+  </div>
+  <div class="stat-card">
+    <div class="stat-icon-wrap stat-icon--green"><mat-icon>check_circle</mat-icon></div>
+    <span class="stat-value">{{ attive }}</span>
+    <span class="stat-label">Challenge Attive</span>
+  </div>
+  <div class="stat-card">
+    <div class="stat-icon-wrap stat-icon--blue"><mat-icon>group</mat-icon></div>
+    <span class="stat-value">{{ totPartecipanti }}</span>
+    <span class="stat-label">Partecipanti Totali</span>
+  </div>
+</div>
+
+<div class="table-card">
+  <div class="table-header">
+    <h2 class="table-title">Tutte le Challenge</h2>
+    <button class="btn-nuovo"><mat-icon>add</mat-icon> Nuova Challenge</button>
+  </div>
+
+  <table class="data-table">
+    <thead>
+      <tr>
+        <th>Challenge</th>
+        <th>Area</th>
+        <th>Partecipanti</th>
+        <th>Premio</th>
+        <th>Scadenza</th>
+        <th>Stato</th>
+        <th>Azioni</th>
+      </tr>
+    </thead>
+    <tbody>
+      @for (c of challenge; track c.id) {
+        <tr>
+          <td class="td-titolo">
+            <strong>{{ c.titolo }}</strong>
+            <small>{{ c.descrizione }}</small>
+          </td>
+          <td><span class="area-badge">{{ c.area }}</span></td>
+          <td>{{ c.partecipanti }}</td>
+          <td class="td-premio">{{ c.premio }}</td>
+          <td class="td-data">{{ c.scadenza }}</td>
+          <td>
+            <span class="badge" [class.badge-attiva]="c.attiva" [class.badge-scaduta]="!c.attiva">
+              {{ c.attiva ? 'Attiva' : 'Scaduta' }}
+            </span>
+          </td>
+          <td class="td-azioni">
+            <button mat-icon-button class="btn-edit"><mat-icon>edit</mat-icon></button>
+            <button mat-icon-button class="btn-delete"><mat-icon>delete</mat-icon></button>
+            <button mat-icon-button [matMenuTriggerFor]="menu"><mat-icon>more_vert</mat-icon></button>
+            <mat-menu #menu="matMenu">
+              <button mat-menu-item>Visualizza</button>
+              <button mat-menu-item>Duplica</button>
+              <button mat-menu-item>{{ c.attiva ? 'Disattiva' : 'Attiva' }}</button>
+            </mat-menu>
+          </td>
+        </tr>
+      }
+    </tbody>
+  </table>
+
+  <div class="pagination">
+    <span class="pag-info">Mostrando {{ challenge.length }} di {{ challenge.length }} elementi</span>
+    <div class="pag-btns">
+      <button class="pag-btn">Precedente</button>
+      <button class="pag-btn pag-active">1</button>
+      <button class="pag-btn">Successivo</button>
+    </div>
+  </div>
+</div>

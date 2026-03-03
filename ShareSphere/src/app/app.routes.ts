@@ -1,6 +1,6 @@
 import { Routes } from '@angular/router';
 import { LoginForm } from './components/auth/login-form/login-form';
-import { Homepage } from './components/homepage/homepage/homepage';
+import { HomePage } from './components/home-page/home-page';
 import { Profilo } from './components/profilo/profilo';
 import { GruppiList } from './components/gruppi/gruppi-list/gruppi-list';
 import { GruppoDetail } from './components/gruppi/gruppo-detail/gruppo-detail';
@@ -15,7 +15,7 @@ import { AdminChallenge } from './components/admin/admin-challenge/admin-challen
 export const routes: Routes = [
   { path: '',                  redirectTo: 'home', pathMatch: 'full' },
   { path: 'login',             component: LoginForm },
-  { path: 'home',              component: Homepage },
+  { path: 'home',              component: HomePage },
   { path: 'profilo',           component: Profilo },
   { path: 'profilo/:id',       component: Profilo },
   { path: 'gruppi',            component: GruppiList },

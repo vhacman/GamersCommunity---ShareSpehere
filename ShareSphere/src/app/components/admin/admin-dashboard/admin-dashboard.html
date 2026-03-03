@@ -1,1 +1,73 @@
-<p>admin-dashboard works!</p>
+<!-- STAT CARDS -->
+<div class="stats-grid">
+  @for (s of stats; track s.label) {
+    <div class="stat-card">
+      <div class="stat-top">
+        <div class="stat-icon-wrap" [class]="'stat-icon--' + s.color">
+          <mat-icon>{{ s.icon }}</mat-icon>
+        </div>
+        <span class="stat-delta">{{ s.delta }}</span>
+      </div>
+      <span class="stat-value">{{ s.value }}</span>
+      <span class="stat-label">{{ s.label }}</span>
+    </div>
+  }
+</div>
+
+<!-- TABELLA CONTENUTI -->
+<div class="table-card">
+  <div class="table-header">
+    <h2 class="table-title">Gestione Contenuti</h2>
+    <button class="btn-nuovo">
+      <mat-icon>add</mat-icon> Nuovo Articolo
+    </button>
+  </div>
+
+  <table class="data-table">
+    <thead>
+      <tr>
+        <th>Titolo</th>
+        <th>Stato</th>
+        <th>Statistiche</th>
+        <th>Data</th>
+        <th>Azioni</th>
+      </tr>
+    </thead>
+    <tbody>
+      @for (a of articoli; track a.id) {
+        <tr>
+          <td class="td-titolo">{{ a.titolo }}</td>
+          <td>
+            <span class="badge" [class]="getStatoBadgeClass(a.stato)">{{ a.stato }}</span>
+          </td>
+          <td class="td-stats">
+            <span><mat-icon class="ic">visibility</mat-icon> {{ a.visualizzazioni }}</span>
+            <span><mat-icon class="ic">favorite</mat-icon> {{ a.likes }}</span>
+          </td>
+          <td class="td-data">{{ a.data }}</td>
+          <td class="td-azioni">
+            <button mat-icon-button class="btn-edit"><mat-icon>edit</mat-icon></button>
+            <button mat-icon-button class="btn-delete"><mat-icon>delete</mat-icon></button>
+            <button mat-icon-button [matMenuTriggerFor]="menu"><mat-icon>more_vert</mat-icon></button>
+            <mat-menu #menu="matMenu">
+              <button mat-menu-item>Visualizza</button>
+              <button mat-menu-item>Duplica</button>
+              <button mat-menu-item>Archivia</button>
+            </mat-menu>
+          </td>
+        </tr>
+      }
+    </tbody>
+  </table>
+
+  <div class="pagination">
+    <span class="pag-info">Mostrando {{ articoli.length }} di {{ articoli.length }} elementi</span>
+    <div class="pag-btns">
+      <button class="pag-btn">Precedente</button>
+      <button class="pag-btn pag-active">1</button>
+      <button class="pag-btn">2</button>
+      <button class="pag-btn">3</button>
+      <button class="pag-btn">Successivo</button>
+    </div>
+  </div>
+</div>

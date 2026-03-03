@@ -36,7 +36,7 @@
                 <div class="ricompensa-importo">Da {{ formatEuro(ricompensa.importoMinimo) }}</div>
                 <h3 class="ricompensa-titolo">{{ ricompensa.titolo }}</h3>
                 <p class="ricompensa-desc">{{ ricompensa.descrizione }}</p>
-                <button class="btn-scegli" (click)="apriBoost()">Scegli questa ricompensa</button>
+                <button class="btn-scegli" (click)="apriRicompensa(ricompensa)">Scegli questa ricompensa</button>
               </mat-card-content>
             </mat-card>
           }
@@ -75,74 +75,26 @@
 
     </div>
 
-    <!-- ── POPUP BOOST ─────────────────────────────────────────────── -->
-    @if (boostPopupAperto()) {
-      <div class="popup-overlay" (click)="chiudiBoost()">
-        <div class="popup" (click)="$event.stopPropagation()">
-
-          @if (!boosted()) {
-
-            <button class="close-btn" (click)="chiudiBoost()">✕</button>
-            <h2 class="popup-titolo">🔥 Dai visibilità al tuo progetto</h2>
-            <p class="popup-subtitle">Scegli un piano boost per mettere in risalto la tua campagna</p>
-
-            <!-- 3 piani -->
-            <div class="piani-grid">
-              @for (piano of piani; track piano.id) {
-                <div
-                  class="piano-card"
-                  [class.popolare]="piano.popolare"
-                  [class.selezionato]="pianSelezionato() === piano.id"
-                  (click)="selezionaPiano(piano.id)"
-                >
-                  @if (piano.popolare) {
-                    <span class="badge-popolare">Più scelto</span>
-                  }
-                  <mat-icon class="piano-icona">{{ piano.icona }}</mat-icon>
-                  <h3 class="piano-nome">{{ piano.nome }}</h3>
-                  <div class="piano-prezzo">
-                    <span class="prezzo-importo">{{ piano.prezzo }}</span>
-                    <span class="prezzo-durata"> / {{ piano.durata }}</span>
-                  </div>
-                  <ul class="piano-features">
-                    @for (f of piano.features; track f) {
-                      <li>✓ {{ f }}</li>
-                    }
-                  </ul>
-                  <button
-                    class="btn-seleziona"
-                    [class.btn-filled]="piano.popolare"
-                    [class.btn-outline]="!piano.popolare"
-                    (click)="selezionaPiano(piano.id); $event.stopPropagation()"
-                  >
-                    Seleziona
-                  </button>
-                </div>
-              }
-            </div>
-
-            <button
-              class="btn-conferma"
-              [disabled]="!pianSelezionato()"
-              (click)="confermaBoost()"
-            >
-              Attiva boost
-            </button>
-
-          } @else {
-
-            <!-- Successo -->
-            <div class="popup-success">
-              <span class="success-icon">🚀</span>
-              <h2>Boost attivato!</h2>
-              <p>La tua campagna è ora in evidenza.</p>
-              <button class="btn-conferma" (click)="chiudiBoost()">Chiudi</button>
-            </div>
-
-          }
-
+    <!-- ── POPUP RICOMPENSA ──────────────────────────────────────────── -->
+    @if (ricompensaPopupAperta() && ricompensaScelta()) {
+      <div class="popup-overlay" (click)="chiudiRicompensaPopup()">
+        <div class="popup popup-small" (click)="$event.stopPropagation()">
+          <button class="close-btn" (click)="chiudiRicompensaPopup()">✕</button>
+          <div class="popup-success">
+            <span class="success-icon">🎁</span>
+            <h2>Ricompensa selezionata!</h2>
+            <p><strong>{{ ricompensaScelta()!.titolo }}</strong></p>
+            <p class="popup-desc">{{ ricompensaScelta()!.descrizione }}</p>
+            <p class="popup-importo">Contributo minimo: <strong>{{ formatEuro(ricompensaScelta()!.importoMinimo) }}</strong></p>
+            <button class="btn-conferma" (click)="chiudiRicompensaPopup()">Salvato ✓</button>
+          </div>
         </div>
       </div>
+    }
+
+    <!-- ── POPUP BOOST ─────────────────────────────────────────────── -->
+    @if (boostPopupAperto()) {
+      <app-boost-popup (chiudi)="chiudiBoost()" />
     }
 
   </div>

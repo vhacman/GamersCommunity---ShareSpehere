@@ -102,6 +102,16 @@
 .ricompensa-card {
   border-radius: 12px !important;
   overflow: hidden;
+  display: flex !important;
+  flex-direction: column !important;
+  height: 100%;
+}
+
+.ricompensa-card mat-card-content {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  flex: 1;
 }
 
 .ricompensa-img {
@@ -142,6 +152,7 @@
   color: white !important;
   border-radius: 20px !important;
   font-size: 13px !important;
+  margin-top: auto;
 }
 
 /* Progress card (colonna destra) */
@@ -218,7 +229,7 @@
   height: 16px;
 }
 
-/* ── POPUP ──────────────────────────────────────────────────────── */
+/* ── POPUP RICOMPENSA ── */
 .popup-overlay {
   position: fixed;
   inset: 0;
@@ -232,7 +243,7 @@
 
 @keyframes fadeIn {
   from { opacity: 0; }
-  to { opacity: 1; }
+  to   { opacity: 1; }
 }
 
 .popup {
@@ -249,7 +260,21 @@
 
 @keyframes slideUp {
   from { transform: translateY(30px); opacity: 0; }
-  to { transform: translateY(0); opacity: 1; }
+  to   { transform: translateY(0);    opacity: 1; }
+}
+
+.popup-small { max-width: 360px; }
+
+.popup-desc {
+  font-size: 14px;
+  color: #666;
+  margin: 4px 0;
+}
+
+.popup-importo {
+  font-size: 14px;
+  color: #333;
+  margin: 8px 0 20px;
 }
 
 .close-btn {
@@ -266,162 +291,6 @@
 
 .close-btn:hover { color: #111; }
 
-.popup-titolo {
-  font-size: 22px;
-  font-weight: 700;
-  color: #1a1a2e;
-  margin: 0 0 6px;
-}
-
-.popup-subtitle {
-  font-size: 14px;
-  color: #666;
-  margin: 0 0 24px;
-}
-
-/* 3 piani */
-.piani-grid {
-  display: flex;
-  gap: 16px;
-  margin-bottom: 24px;
-}
-
-@media (max-width: 600px) {
-  .piani-grid { flex-direction: column; }
-}
-
-.piano-card {
-  flex: 1;
-  border: 1.5px solid #e5e7eb;
-  border-radius: 12px;
-  padding: 20px;
-  position: relative;
-  text-align: center;
-  cursor: pointer;
-  transition: border-color 0.2s, box-shadow 0.2s;
-  display: flex;
-  flex-direction: column;
-}
-
-.piano-card:hover {
-  border-color: #7c3aed;
-  box-shadow: 0 4px 16px rgba(124, 58, 237, 0.12);
-}
-
-.piano-card.popolare {
-  border: 2px solid #7c3aed;
-}
-
-.piano-card.selezionato {
-  background: #f5f0ff;
-  border-color: #7c3aed;
-}
-
-.badge-popolare {
-  position: absolute;
-  top: -13px;
-  left: 50%;
-  transform: translateX(-50%);
-  background: #7c3aed;
-  color: white;
-  border-radius: 20px;
-  padding: 2px 14px;
-  font-size: 12px;
-  font-weight: 600;
-  white-space: nowrap;
-}
-
-.piano-icona {
-  color: #7c3aed;
-  font-size: 32px;
-  width: 32px;
-  height: 32px;
-  margin-bottom: 8px;
-}
-
-.piano-nome {
-  font-size: 16px;
-  font-weight: 700;
-  color: #1a1a2e;
-  margin: 0 0 8px;
-}
-
-.piano-prezzo {
-  margin-bottom: 16px;
-}
-
-.prezzo-importo {
-  font-size: 24px;
-  font-weight: 800;
-  color: #1a1a2e;
-}
-
-.prezzo-durata {
-  font-size: 13px;
-  color: #999;
-}
-
-.piano-features {
-  list-style: none;
-  padding: 0;
-  margin: 0 0 16px;
-  text-align: left;
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-  flex: 1;
-}
-
-.piano-features li {
-  font-size: 13px;
-  color: #16a34a;
-}
-
-.btn-seleziona {
-  width: 100%;
-  border-radius: 8px;
-  padding: 10px 24px;
-  font-size: 14px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: opacity 0.2s;
-}
-
-.btn-filled {
-  background: #7c3aed;
-  color: white;
-  border: none;
-}
-
-.btn-outline {
-  background: white;
-  color: #111;
-  border: 1.5px solid #d1d5db;
-}
-
-.btn-seleziona:hover { opacity: 0.85; }
-
-.btn-conferma {
-  width: 100%;
-  background: linear-gradient(90deg, #7c3aed, #d63bcc);
-  color: white;
-  border: none;
-  border-radius: 24px;
-  height: 48px;
-  font-size: 16px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: opacity 0.2s;
-}
-
-.btn-conferma:disabled {
-  opacity: 0.4;
-  cursor: not-allowed;
-}
-
-.btn-conferma:not(:disabled):hover { opacity: 0.9; }
-
-/* Successo */
 .popup-success {
   text-align: center;
   padding: 24px 0;
@@ -444,6 +313,21 @@
   color: #555;
   margin: 0 0 24px;
 }
+
+.btn-conferma {
+  width: 100%;
+  background: linear-gradient(90deg, #7c3aed, #d63bcc);
+  color: white;
+  border: none;
+  border-radius: 24px;
+  height: 48px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: opacity 0.2s;
+}
+
+.btn-conferma:not(:disabled):hover { opacity: 0.9; }
 
 .not-found {
   text-align: center;

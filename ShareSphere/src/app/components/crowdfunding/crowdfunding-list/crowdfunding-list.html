@@ -62,7 +62,7 @@
           <button mat-flat-button class="btn-dettaglio" [routerLink]="['/crowdfunding', campagna.id]">
             Scopri di più
           </button>
-          <button mat-stroked-button class="btn-boost" [routerLink]="['/crowdfunding', campagna.id]">
+          <button mat-stroked-button class="btn-boost" (click)="apriBoost()">
             <mat-icon>rocket_launch</mat-icon>
             Boost
           </button>
@@ -71,5 +71,9 @@
       </mat-card>
     }
   </div>
+
+  @if (boostPopupAperto()) {
+    <app-boost-popup (chiudi)="chiudiBoost()" />
+  }
 
 </div>

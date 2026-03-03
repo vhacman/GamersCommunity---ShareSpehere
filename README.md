@@ -144,10 +144,6 @@ ShareSphere è una piattaforma community per gamers costruita con Angular 17+ e 
 - Link a tutte le sezioni
 - Design responsive
 
-#### Footer (`footer`)
-- Informazioni footer
-- Link utili
-
 #### Progress Bar (`progress-bar`)
 - Componente riutilizzabile
 - Colore personalizzabile
@@ -241,9 +237,8 @@ src/app/components/
 
 ---
 
-## Date e Autori
+## Autori
 
-- **Data inizio:** 2026-03-03
 - **Team:**
   - Viorica Gabriela Hacman
   - Domenico Portanova
@@ -253,11 +248,3 @@ src/app/components/
   - Jojo de Andrade Rocha
 
 ---
-
-## Note di Sviluppo
-
-- Utilizzo di Angular Signals per la reactivity
-- Componenti standalone (no NgModule)
-- @iff invece di @if deprecato
-- TypeScript strict mode
-- Design responsive con Material Design

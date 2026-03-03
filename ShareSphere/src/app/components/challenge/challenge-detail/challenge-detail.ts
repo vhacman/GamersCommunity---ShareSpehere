@@ -1,6 +1,7 @@
 import { Component, signal, inject } from '@angular/core';
 import { ActivatedRoute, RouterLink } from '@angular/router';
-import { MockDataService, Challenge } from '../../../services/mock-data-service';
+import { MockDataService } from '../../../services/mock-data-service';
+import { Challenge } from '../../../model';
 
 /**
  * Componente per la visualizzazione del dettaglio di una challenge.

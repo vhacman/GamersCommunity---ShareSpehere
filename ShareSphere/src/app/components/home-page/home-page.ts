@@ -4,7 +4,8 @@ import { LowerCasePipe } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatCardModule } from '@angular/material/card';
-import { MockDataService, Articolo, Challenge } from '../../services/mock-data-service';
+import { MockDataService } from '../../services/mock-data-service';
+import { Articolo, Challenge } from '../../model';
 import { SpazioPubblicitario } from '../shared/spazio-pubblicitario/spazio-pubblicitario';
 
 /**

@@ -2,7 +2,8 @@ import { Component, inject } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatMenuModule } from '@angular/material/menu';
-import { MockDataService, Challenge } from '../../../services/mock-data-service';
+import { MockDataService } from '../../../services/mock-data-service';
+import { Challenge } from '../../../model';
 
 /**
  * Componente per la gestione admin delle challenge.

@@ -4,7 +4,8 @@ import { FormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatCardModule } from '@angular/material/card';
-import { MockDataService, CampagnaCrowdfunding, Ricompensa } from '../../../services/mock-data-service';
+import { MockDataService } from '../../../services/mock-data-service';
+import { CampagnaCrowdfunding, Ricompensa } from '../../../model';
 import { BoostPopup } from '../boost-popup/boost-popup';
 import { ProgressBar } from '../../shared/progress-bar/progress-bar';
 

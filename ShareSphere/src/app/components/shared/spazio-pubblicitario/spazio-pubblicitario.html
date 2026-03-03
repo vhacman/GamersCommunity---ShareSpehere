@@ -1,7 +1,21 @@
+<!-- Il componente non renderizza nulla se annuncio è null/undefined.
+     Questo evita di mostrare uno spazio vuoto quando non ci sono annunci. -->
 @if (annuncio) {
+
+  <!-- [class] aggiunge dinamicamente una classe basata sul formato:
+         'ad-leaderboard', 'ad-sidebar' o 'ad-inline'
+       Ogni classe CSS definisce dimensioni e layout specifici del formato.
+       [style.--ad-colore] imposta una CSS custom property (variabile CSS)
+       usata nel foglio di stile per colorare bordi, bottoni e accenti
+       senza dover ripetere il colore su ogni elemento figlio. -->
   <div class="ad-wrapper" [class]="'ad-' + formato" [style.--ad-colore]="annuncio.colore">
+
+    <!-- Etichetta fissa sempre visibile per trasparenza verso l'utente. -->
     <span class="ad-label">Sponsorizzato</span>
 
+    <!-- ── FORMATO LEADERBOARD ──────────────────────────────────────────
+         Banner orizzontale largo (tipicamente 728×90px).
+         Layout a riga: icona | testi | bottone CTA affiancati. -->
     @if (formato === 'leaderboard') {
       <div class="ad-inner ad-inner--row">
         <span class="ad-icona">{{ annuncio.icona }}</span>
@@ -14,6 +28,10 @@
       </div>
     }
 
+    <!-- ── FORMATO SIDEBAR ─────────────────────────────────────────────
+         Banner verticale stretto (tipicamente 300×250px).
+         Layout a colonna: tutti gli elementi impilati verticalmente.
+         L'icona ha classe --lg per essere più grande rispetto agli altri formati. -->
     @if (formato === 'sidebar') {
       <div class="ad-inner ad-inner--col">
         <span class="ad-icona ad-icona--lg">{{ annuncio.icona }}</span>
@@ -24,6 +42,9 @@
       </div>
     }
 
+    <!-- ── FORMATO INLINE ──────────────────────────────────────────────
+         Banner compatto inserito dentro il contenuto della pagina.
+         Stesso layout a riga del leaderboard, ma con dimensioni ridotte via CSS. -->
     @if (formato === 'inline') {
       <div class="ad-inner ad-inner--row">
         <span class="ad-icona">{{ annuncio.icona }}</span>
@@ -35,5 +56,6 @@
         <button class="ad-cta">{{ annuncio.cta }}</button>
       </div>
     }
+
   </div>
 }

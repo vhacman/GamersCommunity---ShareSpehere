@@ -1,15 +1,21 @@
 import { Injectable } from '@angular/core';
 
-// ─── INTERFACES ────────────────────────────────────────────────────────────────
+// ─── INTERFACCE ────────────────────────────────────────────────────────────────
+// Le interfacce definiscono la "forma" degli oggetti usati nell'app.
+// TypeScript le usa solo in fase di compilazione: spariscono nel bundle finale.
+// Esportarle (export interface) permette agli altri componenti di importarle
+// e usarle come tipo nelle loro proprietà e metodi.
 
+/** Rappresenta un utente registrato sulla piattaforma. */
 export interface Utente {
   id: number;
   nome: string;
   username: string;
-  avatar: string;
+  avatar: string;       // URL dell'immagine profilo
   bio: string;
+  /** Union type: il ruolo può essere solo uno di questi quattro valori. */
   ruolo: 'admin' | 'moderator' | 'content_creator_verificato' | 'user';
-  challenge: number;
+  challenge: number;    // numero di challenge completate
   amici: number;
   punti: number;
   areeInteresse: string[];
@@ -17,61 +23,70 @@ export interface Utente {
   accountGaming: AccountGaming[];
 }
 
+/** Badge conquistato da un utente completando challenge o attività. */
 export interface Badge {
   nome: string;
-  colore: string;
-  icona: string;
+  colore: string;   // colore esadecimale usato per styling del badge
+  icona: string;    // emoji dell'icona
 }
 
+/** Account gaming collegato al profilo utente (es. Steam, PlayStation). */
 export interface AccountGaming {
   piattaforma: string;
   username: string;
-  connesso: boolean;
+  connesso: boolean;  // false = account non ancora collegato
   icona: string;
 }
 
+/** Gruppo/community con lista membri e descrizione opzionale estesa. */
 export interface Gruppo {
   id: number;
   nome: string;
   area: string;
   descrizione: string;
-  descrizioneEstesa?: string;
+  descrizioneEstesa?: string;  // ? = campo opzionale, può essere undefined
   membri: number;
   immagine: string;
   membri_lista: MembroGruppo[];
 }
 
+/** Membro di un gruppo con il suo ruolo interno. */
 export interface MembroGruppo {
   id: number;
   nome: string;
   avatar: string;
+  /** Union type: il ruolo nel gruppo è uno di questi tre valori. */
   ruolo: 'Admin' | 'Moderatore' | 'Membro';
 }
 
+/** Campagna di crowdfunding con obiettivo economico e ricompense per i donatori. */
 export interface CampagnaCrowdfunding {
   id: number;
   titolo: string;
   descrizione: string;
-  obiettivo: number;
-  raggiunto: number;
+  obiettivo: number;    // importo target in €
+  raggiunto: number;    // importo raccolto finora in €
   autore: string;
   immagine: string;
   ricompense: Ricompensa[];
-  scadenza: string;
+  scadenza: string;     // data in formato stringa (es. '2025-04-30')
 }
 
+/** Ricompensa offerta ai donatori di una campagna crowdfunding. */
 export interface Ricompensa {
   titolo: string;
   descrizione: string;
-  importoMinimo: number;
+  importoMinimo: number;  // donazione minima per ottenere questa ricompensa
   immagine: string;
 }
 
+/** Articolo del blog con contenuto opzionale e stato di pubblicazione. */
 export interface Articolo {
   id: number;
   titolo: string;
-  descrizione?: string;
-  contenuto?: string[];
+  descrizione?: string;    // opzionale: non tutti gli articoli hanno sottotitolo
+  contenuto?: string[];    // array di paragrafi, opzionale (assente nelle bozze)
+  /** Union type: stato editoriale dell'articolo. */
   stato: 'Pubblicato' | 'Bozza' | 'In Revisione';
   visualizzazioni: number;
   likes: number;
@@ -80,6 +95,7 @@ export interface Articolo {
   immagine: string;
 }
 
+/** Challenge/sfida disponibile sulla piattaforma. */
 export interface Challenge {
   id: number;
   titolo: string;
@@ -88,19 +104,28 @@ export interface Challenge {
   premio: string;
   scadenza: string;
   partecipanti: number;
-  attiva: boolean;
-  immagine?: string;
-  obiettivo?: number;
-  regole?: string[];
-  tag?: string[];
+  attiva: boolean;         // false = challenge conclusa, non più partecipabile
+  immagine?: string;       // opzionale
+  obiettivo?: number;      // numero target di partecipanti, opzionale
+  regole?: string[];       // lista delle regole, opzionale
+  tag?: string[];          // hashtag associati, opzionali
 }
 
-// ─── MOCK DATA ─────────────────────────────────────────────────────────────────
+// ─── SERVIZIO DATI MOCK ────────────────────────────────────────────────────────
 
+/**
+ * Servizio che simula un backend fornendo dati statici a tutti i componenti.
+ * providedIn: 'root' lo rende un singleton: Angular crea una sola istanza
+ * condivisa da tutta l'applicazione (tutti i componenti vedono gli stessi dati).
+ *
+ * In un'app reale questo servizio farebbe chiamate HTTP a una vera API REST.
+ */
 @Injectable({ providedIn: 'root' })
 export class MockDataService {
 
   // ── UTENTI ──────────────────────────────────────────────────────────────────
+  // 'as const' sul ruolo garantisce che TypeScript inferisca il tipo letterale
+  // ('admin') invece del tipo generico (string), rispettando l'union type dell'interfaccia.
 
   utenti: Utente[] = [
     {
@@ -115,15 +140,15 @@ export class MockDataService {
       punti: 1200,
       areeInteresse: ['Giochi', 'Sport', 'Ambiente'],
       badge: [
-        { nome: 'Early Adopter', colore: '#f5a623', icona: '⭐' },
+        { nome: 'Early Adopter',    colore: '#f5a623', icona: '⭐' },
         { nome: 'Challenge Winner', colore: '#9b59b6', icona: '🏆' },
-        { nome: 'Top Contributor', colore: '#1abc9c', icona: '🌟' },
-        { nome: 'Eco Warrior', colore: '#2ecc71', icona: '🌱' },
+        { nome: 'Top Contributor',  colore: '#1abc9c', icona: '🌟' },
+        { nome: 'Eco Warrior',      colore: '#2ecc71', icona: '🌱' },
       ],
       accountGaming: [
-        { piattaforma: 'Steam', username: 'ProGamer2024', connesso: true, icona: '🎮' },
-        { piattaforma: 'PlayStation', username: 'Player_IT', connesso: true, icona: '🎮' },
-        { piattaforma: 'Xbox', username: '', connesso: false, icona: '🎮' },
+        { piattaforma: 'Steam',       username: 'ProGamer2024', connesso: true,  icona: '🎮' },
+        { piattaforma: 'PlayStation', username: 'Player_IT',    connesso: true,  icona: '🎮' },
+        { piattaforma: 'Xbox',        username: '',             connesso: false, icona: '🎮' },
       ],
     },
     {
@@ -161,6 +186,8 @@ export class MockDataService {
   ];
 
   // ── GRUPPI ──────────────────────────────────────────────────────────────────
+  // descrizioneEstesa è presente solo in alcuni gruppi (campo opzionale).
+  // I componenti usano l'operatore || per fare fallback sulla descrizione breve.
 
   gruppi: Gruppo[] = [
     {
@@ -172,10 +199,10 @@ export class MockDataService {
       membri: 1200,
       immagine: 'https://picsum.photos/seed/gaming/800/300',
       membri_lista: [
-        { id: 1, nome: 'Admin Marco', avatar: 'https://i.pravatar.cc/150?img=3', ruolo: 'Admin' },
-        { id: 2, nome: 'Giulia M.', avatar: 'https://i.pravatar.cc/150?img=5', ruolo: 'Moderatore' },
-        { id: 3, nome: 'Luca P.', avatar: 'https://i.pravatar.cc/150?img=15', ruolo: 'Membro' },
-        { id: 4, nome: 'Sara T.', avatar: 'https://i.pravatar.cc/150?img=9', ruolo: 'Membro' },
+        { id: 1, nome: 'Admin Marco', avatar: 'https://i.pravatar.cc/150?img=3',  ruolo: 'Admin' },
+        { id: 2, nome: 'Giulia M.',   avatar: 'https://i.pravatar.cc/150?img=5',  ruolo: 'Moderatore' },
+        { id: 3, nome: 'Luca P.',     avatar: 'https://i.pravatar.cc/150?img=15', ruolo: 'Membro' },
+        { id: 4, nome: 'Sara T.',     avatar: 'https://i.pravatar.cc/150?img=9',  ruolo: 'Membro' },
       ],
     },
     {
@@ -188,7 +215,7 @@ export class MockDataService {
       immagine: 'https://picsum.photos/seed/eco/800/300',
       membri_lista: [
         { id: 1, nome: 'Alessandro R.', avatar: 'https://i.pravatar.cc/150?img=11', ruolo: 'Admin' },
-        { id: 3, nome: 'Luca P.', avatar: 'https://i.pravatar.cc/150?img=15', ruolo: 'Membro' },
+        { id: 3, nome: 'Luca P.',       avatar: 'https://i.pravatar.cc/150?img=15', ruolo: 'Membro' },
       ],
     },
     {
@@ -200,8 +227,8 @@ export class MockDataService {
       membri: 540,
       immagine: 'https://picsum.photos/seed/sport/800/300',
       membri_lista: [
-        { id: 3, nome: 'Luca P.', avatar: 'https://i.pravatar.cc/150?img=15', ruolo: 'Admin' },
-        { id: 2, nome: 'Giulia M.', avatar: 'https://i.pravatar.cc/150?img=5', ruolo: 'Membro' },
+        { id: 3, nome: 'Luca P.',   avatar: 'https://i.pravatar.cc/150?img=15', ruolo: 'Admin' },
+        { id: 2, nome: 'Giulia M.', avatar: 'https://i.pravatar.cc/150?img=5',  ruolo: 'Membro' },
       ],
     },
     {
@@ -237,9 +264,9 @@ export class MockDataService {
       membri: 730,
       immagine: 'https://picsum.photos/seed/music/800/300',
       membri_lista: [
-        { id: 2, nome: 'Giulia M.', avatar: 'https://i.pravatar.cc/150?img=5', ruolo: 'Admin' },
+        { id: 2, nome: 'Giulia M.',     avatar: 'https://i.pravatar.cc/150?img=5',  ruolo: 'Admin' },
         { id: 1, nome: 'Alessandro R.', avatar: 'https://i.pravatar.cc/150?img=11', ruolo: 'Membro' },
-        { id: 3, nome: 'Luca P.', avatar: 'https://i.pravatar.cc/150?img=15', ruolo: 'Membro' },
+        { id: 3, nome: 'Luca P.',       avatar: 'https://i.pravatar.cc/150?img=15', ruolo: 'Membro' },
       ],
     },
     {
@@ -252,7 +279,7 @@ export class MockDataService {
       immagine: 'https://picsum.photos/seed/tech/800/300',
       membri_lista: [
         { id: 1, nome: 'Alessandro R.', avatar: 'https://i.pravatar.cc/150?img=11', ruolo: 'Admin' },
-        { id: 2, nome: 'Giulia M.', avatar: 'https://i.pravatar.cc/150?img=5', ruolo: 'Moderatore' },
+        { id: 2, nome: 'Giulia M.',     avatar: 'https://i.pravatar.cc/150?img=5',  ruolo: 'Moderatore' },
       ],
     },
     {
@@ -264,14 +291,16 @@ export class MockDataService {
       membri: 1450,
       immagine: 'https://picsum.photos/seed/anime/800/300',
       membri_lista: [
-        { id: 3, nome: 'Luca P.', avatar: 'https://i.pravatar.cc/150?img=15', ruolo: 'Admin' },
+        { id: 3, nome: 'Luca P.',       avatar: 'https://i.pravatar.cc/150?img=15', ruolo: 'Admin' },
         { id: 1, nome: 'Alessandro R.', avatar: 'https://i.pravatar.cc/150?img=11', ruolo: 'Moderatore' },
-        { id: 2, nome: 'Giulia M.', avatar: 'https://i.pravatar.cc/150?img=5', ruolo: 'Membro' },
+        { id: 2, nome: 'Giulia M.',     avatar: 'https://i.pravatar.cc/150?img=5',  ruolo: 'Membro' },
       ],
     },
   ];
 
   // ── CROWDFUNDING ────────────────────────────────────────────────────────────
+  // La percentuale di avanzamento si calcola con raggiunto / obiettivo * 100.
+  // I componenti usano questa formula per alimentare il componente ProgressBar.
 
   campagne: CampagnaCrowdfunding[] = [
     {
@@ -279,14 +308,14 @@ export class MockDataService {
       titolo: 'Torneo Spring Legends 2025',
       descrizione: 'Organizziamo il più grande torneo gaming italiano! Premi esclusivi, streaming live e tanto divertimento per tutta la community.',
       obiettivo: 5000,
-      raggiunto: 3750,
+      raggiunto: 3750,   // 75% raggiunto
       autore: '@ale_gamer_pro',
       immagine: 'https://loremflickr.com/800/400/esport,gaming?lock=1',
       scadenza: '2025-04-30',
       ricompense: [
-        { titolo: 'Supporter', descrizione: 'Il tuo nome nei crediti del torneo', importoMinimo: 10, immagine: 'https://loremflickr.com/200/200/gaming?lock=101' },
-        { titolo: 'Campione', descrizione: 'T-shirt esclusiva + nome nei crediti', importoMinimo: 30, immagine: 'https://loremflickr.com/200/200/tshirt,merchandise?lock=102' },
-        { titolo: 'Leggenda', descrizione: 'Accesso VIP + kit esclusivo + meet & greet', importoMinimo: 100, immagine: 'https://loremflickr.com/200/200/trophy,award?lock=103' },
+        { titolo: 'Supporter', descrizione: 'Il tuo nome nei crediti del torneo',         importoMinimo: 10,  immagine: 'https://loremflickr.com/200/200/gaming?lock=101' },
+        { titolo: 'Campione',  descrizione: 'T-shirt esclusiva + nome nei crediti',        importoMinimo: 30,  immagine: 'https://loremflickr.com/200/200/tshirt,merchandise?lock=102' },
+        { titolo: 'Leggenda',  descrizione: 'Accesso VIP + kit esclusivo + meet & greet', importoMinimo: 100, immagine: 'https://loremflickr.com/200/200/trophy,award?lock=103' },
       ],
     },
     {
@@ -294,13 +323,13 @@ export class MockDataService {
       titolo: 'Eco-Warriors: Insieme per il Pianeta',
       descrizione: 'Raccogliamo fondi per piantare 1000 alberi in collaborazione con associazioni ambientali locali.',
       obiettivo: 2000,
-      raggiunto: 1800,
+      raggiunto: 1800,   // 90% raggiunto
       autore: '@luca_sport',
       immagine: 'https://loremflickr.com/800/400/forest,ecology?lock=2',
       scadenza: '2025-05-15',
       ricompense: [
-        { titolo: 'Verde', descrizione: 'Certificato digitale di adozione albero', importoMinimo: 5, immagine: 'https://loremflickr.com/200/200/tree,nature?lock=104' },
-        { titolo: 'Foresta', descrizione: 'Targa personalizzata + certificato', importoMinimo: 25, immagine: 'https://loremflickr.com/200/200/forest,green?lock=105' },
+        { titolo: 'Verde',   descrizione: 'Certificato digitale di adozione albero', importoMinimo: 5,  immagine: 'https://loremflickr.com/200/200/tree,nature?lock=104' },
+        { titolo: 'Foresta', descrizione: 'Targa personalizzata + certificato',      importoMinimo: 25, immagine: 'https://loremflickr.com/200/200/forest,green?lock=105' },
       ],
     },
     {
@@ -308,18 +337,20 @@ export class MockDataService {
       titolo: 'Viaggi Virtuali: Esplora con Noi',
       descrizione: 'Creiamo una serie di video documentari sui luoghi più belli d\'Italia visitati dalla nostra community.',
       obiettivo: 3000,
-      raggiunto: 468,
+      raggiunto: 468,    // ~15% raggiunto
       autore: '@giulia_travels',
       immagine: 'https://loremflickr.com/800/400/italy,travel?lock=3',
       scadenza: '2025-06-01',
       ricompense: [
-        { titolo: 'Spettatore', descrizione: 'Accesso anticipato ai video', importoMinimo: 15, immagine: 'https://loremflickr.com/200/200/camera,video?lock=106' },
-        { titolo: 'Protagonista', descrizione: 'Comparsa nel documentario', importoMinimo: 50, immagine: 'https://loremflickr.com/200/200/documentary,film?lock=107' },
+        { titolo: 'Spettatore',   descrizione: 'Accesso anticipato ai video',   importoMinimo: 15, immagine: 'https://loremflickr.com/200/200/camera,video?lock=106' },
+        { titolo: 'Protagonista', descrizione: 'Comparsa nel documentario',     importoMinimo: 50, immagine: 'https://loremflickr.com/200/200/documentary,film?lock=107' },
       ],
     },
   ];
 
   // ── ARTICOLI ────────────────────────────────────────────────────────────────
+  // Gli articoli con stato 'Bozza' o 'In Revisione' non hanno contenuto completo.
+  // I componenti filtrano per stato === 'Pubblicato' prima di mostrarli.
 
   articoli: Articolo[] = [
     {
@@ -340,6 +371,7 @@ export class MockDataService {
     {
       id: 2,
       titolo: 'Eco-Warriors: Iniziativa Verde',
+      // Nessun contenuto: è ancora una bozza
       stato: 'Bozza',
       visualizzazioni: 0,
       likes: 0,
@@ -465,6 +497,8 @@ export class MockDataService {
   ];
 
   // ── CHALLENGE ───────────────────────────────────────────────────────────────
+  // attiva: false = challenge conclusa (scadenza passata).
+  // I componenti filtrano con .filter(c => c.attiva) per mostrare solo quelle in corso.
 
   challenge: Challenge[] = [
     {
@@ -514,7 +548,7 @@ export class MockDataService {
       scadenza: '2025-03-01',
       partecipanti: 95,
       obiettivo: 150,
-      attiva: false,
+      attiva: false,  // conclusa
       immagine: 'https://loremflickr.com/800/400/photography,italy?lock=23',
       regole: [
         'Carica almeno una foto al giorno per 30 giorni',
@@ -609,7 +643,7 @@ export class MockDataService {
       scadenza: '2025-03-20',
       partecipanti: 143,
       obiettivo: 200,
-      attiva: false,
+      attiva: false,  // conclusa
       immagine: 'https://picsum.photos/seed/video1/800/400',
       regole: [
         'Il video deve durare esattamente 60 secondi',
@@ -628,7 +662,7 @@ export class MockDataService {
       scadenza: '2025-02-28',
       partecipanti: 76,
       obiettivo: 128,
-      attiva: false,
+      attiva: false,  // conclusa
       immagine: 'https://picsum.photos/seed/chess1/800/400',
       regole: [
         'Registrati su Chess.com con username riconoscibile',
@@ -647,7 +681,7 @@ export class MockDataService {
       scadenza: '2025-02-15',
       partecipanti: 201,
       obiettivo: 300,
-      attiva: false,
+      attiva: false,  // conclusa
       immagine: 'https://picsum.photos/seed/urban1/800/400',
       regole: [
         'Geolocalizza almeno 3 spot sportivi nella tua città',
@@ -660,6 +694,8 @@ export class MockDataService {
   ];
 
   // ── STATISTICHE ADMIN ───────────────────────────────────────────────────────
+  // Oggetto piatto (non un array) con le metriche della dashboard admin.
+  // I Delta sono stringhe già formattate per la visualizzazione (es. '+12%').
 
   statoAdmin = {
     utentiTotali: 12500,
@@ -675,29 +711,36 @@ export class MockDataService {
   };
 
   // ── AREE TEMATICHE ──────────────────────────────────────────────────────────
+  // Array usato da tutti i componenti per ottenere colore e icona di ogni area.
+  // I metodi getAreaColore() e getAreaIcona() nei componenti fanno .find() su questo array.
 
   areeTematiche = [
-    { nome: 'Giochi',      icona: '🎮', colore: '#6c3ff5' },
-    { nome: 'Sport',       icona: '⚽', colore: '#e74c3c' },
-    { nome: 'Viaggi',      icona: '✈️', colore: '#3498db' },
-    { nome: 'Inclusione',  icona: '❤️', colore: '#e91e8c' },
-    { nome: 'Ambiente',    icona: '🌿', colore: '#2ecc71' },
-    { nome: 'Musica',      icona: '🎵', colore: '#e67e22' },
-    { nome: 'Tecnologia',  icona: '💻', colore: '#1abc9c' },
+    { nome: 'Giochi',        icona: '🎮', colore: '#6c3ff5' },
+    { nome: 'Sport',         icona: '⚽', colore: '#e74c3c' },
+    { nome: 'Viaggi',        icona: '✈️', colore: '#3498db' },
+    { nome: 'Inclusione',    icona: '❤️', colore: '#e91e8c' },
+    { nome: 'Ambiente',      icona: '🌿', colore: '#2ecc71' },
+    { nome: 'Musica',        icona: '🎵', colore: '#e67e22' },
+    { nome: 'Tecnologia',    icona: '💻', colore: '#1abc9c' },
     { nome: 'Anime & Manga', icona: '⛩️', colore: '#c0392b' },
-    { nome: 'Altro',       icona: '💬', colore: '#f39c12' },
+    { nome: 'Altro',         icona: '💬', colore: '#f39c12' },
   ];
 
-  // ── METODI ──────────────────────────────────────────────────────────────────
+  // ── METODI DI RICERCA ───────────────────────────────────────────────────────
+  // Metodi helper che cercano un elemento per id nell'array corrispondente.
+  // Restituiscono l'elemento trovato oppure undefined se non esiste.
 
+  /** Cerca un utente per id. Restituisce undefined se non trovato. */
   getUtente(id: number) {
     return this.utenti.find(u => u.id === id);
   }
 
+  /** Cerca un gruppo per id. Restituisce undefined se non trovato. */
   getGruppo(id: number) {
     return this.gruppi.find(g => g.id === id);
   }
 
+  /** Cerca una campagna crowdfunding per id. Restituisce undefined se non trovata. */
   getCampagna(id: number) {
     return this.campagne.find(c => c.id === id);
   }

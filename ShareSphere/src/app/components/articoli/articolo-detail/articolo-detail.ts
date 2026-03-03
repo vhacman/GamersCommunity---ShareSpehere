@@ -1,7 +1,8 @@
 import { Component, inject } from '@angular/core';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { LowerCasePipe } from '@angular/common';
-import { MockDataService, Articolo } from '../../../services/mock-data-service';
+import { MockDataService } from '../../../services/mock-data-service';
+import { Articolo } from '../../../model';
 
 /**
  * Componente per la visualizzazione del dettaglio di un articolo.

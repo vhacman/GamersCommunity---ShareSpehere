@@ -2,7 +2,8 @@ import { Component, inject } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatMenuModule } from '@angular/material/menu';
-import { MockDataService, Articolo } from '../../../services/mock-data-service';
+import { MockDataService } from '../../../services/mock-data-service';
+import { Articolo } from '../../../model';
 
 /**
  * Interfaccia per le statistiche mostrate nella dashboard.

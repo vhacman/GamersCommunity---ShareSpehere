@@ -1,0 +1,54 @@
+================================================================================
+                     SPRINT BACKLOG - ShareSphere
+================================================================================
+
+Data: 2026-03-03
+Progetto: GamersCommunity (ShareSphere)
+Team: Viorica Gabriela Hacman, Domenico Portanova, Carlomaria Lanna,
+          Adriano Mastrobuoni, Angelo Rusu, Jojo de Andrade Rocha
+
+================================================================================
+                           USER STORIES COMPLETATE
+================================================================================
+
+[1]  Homepage e Aree Tematiche
+     Data: 2026-03-03
+     Descrizione: Implementazione homepage con aree tematiche
+
+[2]  Gestione Profilo Utente
+     Data: 2026-03-03
+     Descrizione: Profilo utente, modifica dati e gestione account gaming
+
+[3]  Gestione Gruppi/Community
+     Data: 2026-03-03
+     Descrizione: Lista gruppi, dettaglio, chat, gestione membri e ruoli
+
+[4]  Sistema Challenge
+     Autore: vhacman
+     Data: 2026-03-03
+     Descrizione: Lista challenge e dettaglio con partecipazione
+
+[5]  Sistema Crowdfunding
+     Data: 2026-03-03
+     Descrizione: Campagne crowdfunding, dettaglio, creazione e boost
+
+[6]  Gestione Articoli/Blog
+     Data: 2026-03-03
+     Dettaglio articolo con contenuto
+
+[7]  Pagine Admin
+     Data: 2026-03-03
+     Descrizione: Dashboard admin, gestione articoli, challenge, utenti e impostazioni
+
+[8]  Autenticazione Login
+     Data: 2026-03-03
+     Descrizione: Form di login utente
+
+[9]  Componenti Shared
+     Data: 2026-03-03
+     Descrizione: Navigation bar, footer, progress bar e spazi pubblicitari
+
+[10] Refactoring e Migliorie
+     Data: 2026-03-03
+     Descrizione: Sostituzione @if deprecati con @iff, aggiunta commenti
+

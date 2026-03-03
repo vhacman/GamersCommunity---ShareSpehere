@@ -1,6 +1,7 @@
 import { Component, signal, computed } from '@angular/core';
 import { RouterLink } from '@angular/router';
-import { MockDataService, Challenge } from '../../../services/mock-data-service';
+import { MockDataService } from '../../../services/mock-data-service';
+import { Challenge } from '../../../model';
 
 @Component({
   selector: 'app-challenge-list',

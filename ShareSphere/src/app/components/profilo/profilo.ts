@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
-import { MockDataService, Utente } from '../../services/mock-data-service';
+import { MockDataService } from '../../services/mock-data-service';
+import { Utente } from '../../model';
 import { ModificaProfilo } from './modifica-profilo/modifica-profilo';
 import { AccountCollegato } from './account-collegato/account-collegato';
 

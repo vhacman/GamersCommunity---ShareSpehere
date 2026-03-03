@@ -3,7 +3,8 @@ import { Component, OnInit, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
-import { Gruppo, MockDataService, MembroGruppo } from '../../../services/mock-data-service';
+import { MockDataService } from '../../../services/mock-data-service';
+import { Gruppo, MembroGruppo } from '../../../model';
 import { SpazioPubblicitario } from "../../shared/spazio-pubblicitario/spazio-pubblicitario";
 
 /**

@@ -1,8 +1,19 @@
+<!-- Contenitore grigio di sfondo: rappresenta il 100% della barra.
+     [style.height.px] è la sintassi Angular per applicare un valore numerico
+     in pixel direttamente come stile inline — equivale a style="height: 14px".
+     La larghezza è fissa al 100% via CSS, l'altezza viene dal @Input() altezza. -->
 <div class="bar-bg" [style.height.px]="altezza">
+
+  <!-- Riempimento colorato: la sua larghezza percentuale determina il progresso.
+       [style.width.%]    → applica percentualeClampata come larghezza in % (es. 75%)
+       [style.background] → colore dinamico passato dal componente padre
+       [style.height.px]  → stessa altezza del contenitore per riempirlo completamente
+       percentualeClampata è il getter che garantisce un valore tra 0 e 100. -->
   <div
     class="bar-fill"
     [style.width.%]="percentualeClampata"
     [style.background]="colore"
     [style.height.px]="altezza"
   ></div>
+
 </div>

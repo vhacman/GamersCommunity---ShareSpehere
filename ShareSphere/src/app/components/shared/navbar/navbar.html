@@ -22,9 +22,52 @@
   <span class="spacer"></span>
 
   <!-- Notifiche -->
-  <button mat-icon-button [matBadge]="notifiche()" matBadgeColor="warn" matBadgeSize="small">
-    <mat-icon>notifications</mat-icon>
-  </button>
+  <div class="notifiche-wrapper" (click)="$event.stopPropagation()">
+    <button
+      mat-icon-button
+      [matBadge]="notifiche() || null"
+      matBadgeColor="warn"
+      matBadgeSize="small"
+      (click)="toggleNotifiche($event)"
+      class="notifiche-btn"
+    >
+      <mat-icon>notifications</mat-icon>
+    </button>
+
+    @if (popupAperto()) {
+      <div class="notifiche-popup">
+
+        <!-- Header popup -->
+        <div class="popup-header">
+          <span class="popup-title">Notifiche</span>
+          @if (notifiche() > 0) {
+            <button class="btn-segna-lette" (click)="segnaLette($event)">
+              Segna tutte come lette
+            </button>
+          }
+        </div>
+
+        <!-- Lista notifiche -->
+        <div class="popup-list">
+          @for (n of listaNotifiche; track n.id) {
+            <div class="notifica-item" [class.non-letta]="!n.letta">
+              <div class="notifica-icona" [style.background]="n.iconaColore + '22'">
+                <mat-icon [style.color]="n.iconaColore">{{ n.icona }}</mat-icon>
+              </div>
+              <div class="notifica-body">
+                <p class="notifica-testo">{{ n.testo }}</p>
+                <span class="notifica-tempo">{{ n.tempo }}</span>
+              </div>
+              @if (!n.letta) {
+                <span class="dot-non-letta"></span>
+              }
+            </div>
+          }
+        </div>
+
+      </div>
+    }
+  </div>
 
   <!-- Menu utente -->
   <button mat-icon-button [matMenuTriggerFor]="userMenu">

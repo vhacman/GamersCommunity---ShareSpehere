@@ -1,114 +1,127 @@
-<div *ngIf="!showModifica && !showCollega"
-style="margin:0;background:linear-gradient(135deg,#0f0f0f,#1a1a2e);color:white;padding:40px;font-family:Orbitron;min-height:100vh;">
+@if (!showModifica && !showCollega) {
+  <div class="profilo-wrapper">
 
-<div style="max-width:1100px;margin:auto;">
+    <!-- ── BANNER ─────────────────────────────────────────────────────── -->
+    <div class="profilo-banner"></div>
 
-<!-- HEADER -->
-<div style="background:#141414;padding:30px;border-radius:20px;box-shadow:0 0 20px #00f7ff40;margin-bottom:40px;">
-<div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;">
+    <!-- ── AVATAR ─────────────────────────────────────────────────────── -->
+    <div class="profilo-avatar-wrap">
+      <div class="profilo-avatar">
+        <img [src]="utente.avatar" [alt]="utente.nome">
+        <button class="avatar-edit-btn" aria-label="Cambia foto">
+          <mat-icon>photo_camera</mat-icon>
+        </button>
+      </div>
+    </div>
 
-<div style="display:flex;align-items:center;gap:20px;">
-<img [src]="fotoProfilo"
-style="width:140px;height:140px;border-radius:50%;border:4px solid #00f7ff;box-shadow:0 0 20px #00f7ff;object-fit:cover;">
+    <!-- ── CARD PRINCIPALE ────────────────────────────────────────────── -->
+    <div class="profilo-card">
 
-<div>
-<h1 style="margin:0;">{{nome}}</h1>
-<p style="margin:5px 0;color:#00f7ff;">{{username}}</p>
-</div>
-</div>
+      <!-- Info + pulsante modifica -->
+      <div class="profilo-info-row">
+        <div class="profilo-info-text">
+          <h2 class="profilo-nome">{{ utente.nome }}</h2>
+          <p class="profilo-username">{{ utente.username }}</p>
+          <p class="profilo-bio">{{ utente.bio }}</p>
+        </div>
+        <button class="btn-modifica" (click)="apriModifica()">
+          <mat-icon>edit</mat-icon> Modifica
+        </button>
+      </div>
 
-<button (click)="apriModifica()"
-style="background:#00f7ff;border:none;padding:12px 20px;border-radius:10px;font-weight:bold;cursor:pointer;">
-✏️ Modifica Profilo
-</button>
+      <!-- Statistiche -->
+      <div class="stats-row">
+        <div class="stat-card">
+          <mat-icon class="stat-icon" style="color:#6c3ff5">emoji_events</mat-icon>
+          <span class="stat-value">{{ utente.challenge }}</span>
+          <span class="stat-label">Challenge</span>
+        </div>
+        <div class="stat-card">
+          <mat-icon class="stat-icon" style="color:#3498db">people</mat-icon>
+          <span class="stat-value">{{ utente.amici }}</span>
+          <span class="stat-label">Amici</span>
+        </div>
+        <div class="stat-card">
+          <mat-icon class="stat-icon" style="color:#f5a623">star</mat-icon>
+          <span class="stat-value">{{ utente.punti }}</span>
+          <span class="stat-label">Punti</span>
+        </div>
+      </div>
 
-</div>
+      <!-- ── INTERESSI ───────────────────────────────────────────────── -->
+      <section class="profilo-section">
+        <h3 class="section-title">Interessi</h3>
+        <div class="chips-row">
+          @for (interesse of utente.areeInteresse; track interesse) {
+            <span class="chip"
+              [style.background]="getAreaColore(interesse) + '22'"
+              [style.color]="getAreaColore(interesse)">
+              {{ getAreaIcona(interesse) }} {{ interesse }}
+            </span>
+          }
+          <span class="chip chip--add">+ Aggiungi</span>
+        </div>
+      </section>
 
-<div style="margin-top:20px;color:#ccc;max-width:800px;">
-{{descrizione}}
-</div>
-</div>
+      <!-- ── BADGE ──────────────────────────────────────────────────── -->
+      <section class="profilo-section">
+        <h3 class="section-title">Badge Ottenuti</h3>
+        <div class="badges-scroll">
+          @for (badge of utente.badge; track badge.nome) {
+            <div class="badge-card" [style.border-color]="badge.colore + '55'">
+              <span class="badge-icon" [style.background]="badge.colore + '22'">
+                {{ badge.icona }}
+              </span>
+              <span class="badge-nome">{{ badge.nome }}</span>
+            </div>
+          }
+        </div>
+      </section>
 
-<!-- AREE DI INTERESSE -->
-<h2 style="border-left:4px solid #00f7ff;padding-left:10px;">
-Aree di Interesse
-<span *ngIf="interessi.length > 4"
-(click)="toggleInteressi()"
-style="color:#00f7ff;cursor:pointer;font-size:14px;margin-left:15px;">
-{{ showAllInteressi ? 'Show Less' : 'Show All' }}
-</span>
-</h2>
+      <!-- ── ACCOUNT GAMING ─────────────────────────────────────────── -->
+      <section class="profilo-section">
+        <div class="section-header-row">
+          <h3 class="section-title">Account Gaming</h3>
+          <button class="btn-collega" (click)="apriCollega()">+ Collega</button>
+        </div>
+        <div class="accounts-list">
+          @for (acc of utente.accountGaming; track acc.piattaforma) {
+            <div class="account-row">
+              <span class="account-icon">{{ getPiattaformaIcona(acc.piattaforma) }}</span>
+              <div class="account-info">
+                <span class="account-piattaforma">{{ acc.piattaforma }}</span>
+                <span class="account-username">
+                  {{ acc.connesso ? acc.username : 'Non collegato' }}
+                </span>
+              </div>
+              <button class="btn-connetti" [class.connesso]="acc.connesso">
+                {{ acc.connesso ? 'Connesso ✓' : 'Collega' }}
+              </button>
+            </div>
+          }
+        </div>
+      </section>
 
-<div style="display:flex;flex-wrap:wrap;gap:15px;margin:20px 0;">
-<div *ngFor="let i of (showAllInteressi ? interessi : interessi | slice:0:4)"
-style="background:#26263a;padding:10px 20px;border-radius:30px;">
-{{i}}
-</div>
-</div>
+    </div>
+  </div>
+}
 
-<!-- BADGE -->
-<h2 style="border-left:4px solid gold;padding-left:10px;">
-Badge Ottenuti
-<span *ngIf="badges.length > 4"
-(click)="toggleBadges()"
-style="color:gold;cursor:pointer;font-size:14px;margin-left:15px;">
-{{ showAllBadges ? 'Show Less' : 'Show All' }}
-</span>
-</h2>
+<!-- ── MODIFICA PROFILO ──────────────────────────────────────────────── -->
+@if (showModifica) {
+  <div class="sub-view">
+    <button class="btn-back" (click)="tornaProfilo()">
+      <mat-icon>arrow_back</mat-icon> Torna al profilo
+    </button>
+    <app-modifica-profilo></app-modifica-profilo>
+  </div>
+}
 
-<div style="display:flex;flex-wrap:wrap;gap:20px;margin:20px 0;">
-<div *ngFor="let badge of (showAllBadges ? badges : badges | slice:0:4)"
-style="background:#1f1f2e;padding:20px;border-radius:15px;text-align:center;width:120px;">
-<img [src]="badge.icona" style="width:60px;margin-bottom:10px;"><br>
-{{badge.nome}}
-</div>
-</div>
-
-<!-- ACCOUNT GAMING -->
-<h2 style="border-left:4px solid #00f7ff;padding-left:10px;">
-Account Gaming
-<span *ngIf="accounts.length > 4"
-(click)="toggleAccounts()"
-style="color:#00f7ff;cursor:pointer;font-size:14px;margin-left:15px;">
-{{ showAllAccounts ? 'Show Less' : 'Show All' }}
-</span>
-</h2>
-
-<div style="display:flex;flex-wrap:wrap;gap:20px;margin:20px 0;">
-
-<div *ngFor="let acc of (showAllAccounts ? accounts : accounts | slice:0:4)"
-style="background:#1f1f2e;padding:20px;border-radius:15px;text-align:center;width:150px;">
-<img [src]="iconePiattaforme[acc.nome] || 'https://via.placeholder.com/50'"
-style="width:50px;margin-bottom:10px;"><br>
-{{acc.nome}}
-</div>
-
-</div>
-
-<button (click)="apriCollega()"
-style="margin-top:10px;background:#8a2be2;border:none;padding:10px 20px;border-radius:10px;color:white;cursor:pointer;">
-+ Collega Account
-</button>
-
-</div>
-</div>
-
-<!-- MODIFICA -->
-<div *ngIf="showModifica" style="padding:40px;">
-<button (click)="tornaProfilo()"
-style="margin-bottom:20px;background:#444;padding:10px 20px;border:none;border-radius:10px;color:white;">
-⬅ Torna al Profilo
-</button>
-
-<app-modifica-profilo></app-modifica-profilo>
-</div>
-
-<!-- COLLEGA -->
-<div *ngIf="showCollega" style="padding:40px;">
-<button (click)="tornaProfilo()"
-style="margin-bottom:20px;background:#444;padding:10px 20px;border:none;border-radius:10px;color:white;">
-⬅ Torna al Profilo
-</button>
-
-<app-account-collegato></app-account-collegato>
-</div>
+<!-- ── COLLEGA ACCOUNT ───────────────────────────────────────────────── -->
+@if (showCollega) {
+  <div class="sub-view">
+    <button class="btn-back" (click)="tornaProfilo()">
+      <mat-icon>arrow_back</mat-icon> Torna al profilo
+    </button>
+    <app-account-collegato></app-account-collegato>
+  </div>
+}

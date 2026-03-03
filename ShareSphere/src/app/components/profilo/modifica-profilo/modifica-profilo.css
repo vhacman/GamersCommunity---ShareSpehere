@@ -1,0 +1,87 @@
+.modifica-card {
+  background: white;
+  border-radius: 16px;
+  padding: 28px;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.07);
+  max-width: 520px;
+}
+
+.modifica-title {
+  font-size: 18px;
+  font-weight: 700;
+  color: #111;
+  margin: 0 0 24px;
+}
+
+.form-group {
+  margin-bottom: 18px;
+}
+
+.form-group label {
+  display: block;
+  font-size: 13px;
+  font-weight: 600;
+  color: #444;
+  margin-bottom: 6px;
+}
+
+.form-group input,
+.form-group textarea {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1.5px solid #e0e0e0;
+  border-radius: 8px;
+  font-size: 14px;
+  color: #111;
+  background: white;
+  box-sizing: border-box;
+  transition: border-color 0.15s;
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+  outline: none;
+  border-color: #6c3ff5;
+}
+
+.form-group input:disabled {
+  background: #f5f5f5;
+  color: #aaa;
+}
+
+.form-group textarea {
+  resize: vertical;
+}
+
+.preview-img {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-top: 10px;
+  border: 3px solid #e0e0e0;
+}
+
+.btn-salva {
+  background: #6c3ff5;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 12px 24px;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.hint-error {
+  font-size: 12px;
+  color: #e74c3c;
+  margin: 4px 0 0;
+}
+
+.hint-success {
+  font-size: 13px;
+  color: #27ae60;
+  font-weight: 600;
+  margin: 12px 0 0;
+}

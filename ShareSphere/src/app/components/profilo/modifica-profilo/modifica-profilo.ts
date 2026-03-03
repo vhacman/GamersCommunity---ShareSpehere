@@ -6,7 +6,8 @@ import { FormsModule } from '@angular/forms';
   selector: 'app-modifica-profilo',
   standalone: true,
   imports: [CommonModule, FormsModule],
-  templateUrl: './modifica-profilo.html'
+  templateUrl: './modifica-profilo.html',
+  styleUrl: './modifica-profilo.css',
 })
 export class ModificaProfilo implements OnInit {
 

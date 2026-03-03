@@ -1,18 +1,26 @@
+<!-- Contenitore principale per il form di login -->
 <div class="login-wrapper">
+  <!-- Card Material che contiene tutto il form -->
   <mat-card>
+    <!-- Header della card con il titolo -->
     <mat-card-header>
       <mat-card-title>Login</mat-card-title>
     </mat-card-header>
 
+    <!-- Corpo della card: contiene i campi di input -->
     <mat-card-content>
 
+      <!-- Campo username: input testuale con binding bidirezionale via signal -->
       <mat-form-field appearance="outline">
         <mat-label>Username</mat-label>
+        <!-- Two-way binding usando signal: username() legge, username.set($event) scrive -->
         <input matInput type="text" placeholder="Username"
                [ngModel]="username()" (ngModelChange)="username.set($event)" />
+        <!-- Icona prefisso (a sinistra del campo) -->
         <mat-icon matPrefix>person</mat-icon>
       </mat-form-field>
 
+      <!-- Campo password: input di tipo password (caratteri nascosti) -->
       <mat-form-field appearance="outline">
         <mat-label>Password</mat-label>
         <input matInput type="password" placeholder="Password"
@@ -22,15 +30,11 @@
 
     </mat-card-content>
 
+    <!-- Azioni della card: contiene il bottone di submit -->
     <mat-card-actions>
+      <!-- Bottone per inviare il form e chiamare il metodo login() nel component -->
       <button mat-flat-button (click)="login()">Entra</button>
     </mat-card-actions>
-
-    @if (errorMessage()) {
-      <mat-card-footer>
-        <p class="error">{{ errorMessage() }}</p>
-      </mat-card-footer>
-    }
 
   </mat-card>
 </div>

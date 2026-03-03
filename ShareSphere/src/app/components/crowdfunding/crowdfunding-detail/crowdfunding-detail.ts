@@ -1,5 +1,6 @@
 import { Component, signal, OnInit } from '@angular/core';
 import { ActivatedRoute, RouterLink } from '@angular/router';
+import { FormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatCardModule } from '@angular/material/card';
@@ -11,6 +12,7 @@ import { ProgressBar } from '../../shared/progress-bar/progress-bar';
   selector: 'app-crowdfunding-detail',
   imports: [
     RouterLink,
+    FormsModule,
     MatButtonModule,
     MatIconModule,
     MatCardModule,
@@ -25,6 +27,8 @@ export class CrowdfundingDetail implements OnInit {
   boostPopupAperto = signal(false);
   ricompensaPopupAperta = signal(false);
   ricompensaScelta = signal<Ricompensa | null>(null);
+  donazionePopupAperta = signal(false);
+  donazioneImporto: number = 25;
 
   constructor(private route: ActivatedRoute, private data: MockDataService) {}
 
@@ -51,6 +55,17 @@ export class CrowdfundingDetail implements OnInit {
 
   apriBoost() { this.boostPopupAperto.set(true); }
   chiudiBoost() { this.boostPopupAperto.set(false); }
+
+  apriDonazione() { this.donazionePopupAperta.set(true); }
+  chiudiDonazione() { this.donazionePopupAperta.set(false); }
+
+  confermaDonazione() {
+    if (this.campagna && this.donazioneImporto > 0) {
+      this.campagna.raggiunto += this.donazioneImporto;
+      this.donazionePopupAperta.set(false);
+      this.donazioneImporto = 25;
+    }
+  }
 
   apriRicompensa(ricompensa: Ricompensa) {
     this.ricompensaScelta.set(ricompensa);

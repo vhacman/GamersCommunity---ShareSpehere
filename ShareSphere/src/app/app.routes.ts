@@ -6,6 +6,9 @@ import { GruppiList } from './components/gruppi/gruppi-list/gruppi-list';
 import { CrowdfundingList } from './components/crowdfunding/crowdfunding-list/crowdfunding-list';
 import { CrowdfundingForm } from './components/crowdfunding/crowdfunding-form/crowdfunding-form';
 import { CrowdfundingDetail } from './components/crowdfunding/crowdfunding-detail/crowdfunding-detail';
+import { ChallengeList } from './components/challenge/challenge-list/challenge-list';
+import { ChallengeDetail } from './components/challenge/challenge-detail/challenge-detail';
+import { ArticoloDetail } from './components/articoli/articolo-detail/articolo-detail';
 import { AdminLayout } from './components/admin/admin-layout/admin-layout';
 import { AdminDashboard } from './components/admin/admin-dashboard/admin-dashboard';
 import { AdminArticoli } from './components/admin/admin-articoli/admin-articoli';
@@ -23,6 +26,9 @@ export const routes: Routes = [
   { path: 'crowdfunding',       component: CrowdfundingList },
   { path: 'crowdfunding/nuova', component: CrowdfundingForm },
   { path: 'crowdfunding/:id',   component: CrowdfundingDetail },
+  { path: 'challenge',          component: ChallengeList },
+  { path: 'challenge/:id',      component: ChallengeDetail },
+  { path: 'articoli/:id',       component: ArticoloDetail },
   {
     path: 'admin',
     component: AdminLayout,

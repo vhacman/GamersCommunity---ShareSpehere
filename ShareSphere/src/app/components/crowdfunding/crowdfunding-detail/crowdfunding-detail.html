@@ -63,6 +63,10 @@
                 {{ campagna.scadenza }}
               </span>
             </div>
+            <button mat-flat-button class="btn-dona" (click)="apriDonazione()">
+              <mat-icon>favorite</mat-icon>
+              Dona a questa campagna
+            </button>
             <button mat-flat-button class="btn-boost" (click)="apriBoost()">
               <mat-icon>rocket_launch</mat-icon>
               Boosta questa campagna
@@ -93,6 +97,48 @@
     <!-- ── POPUP BOOST ─────────────────────────────────────────────── -->
     @if (boostPopupAperto()) {
       <app-boost-popup (chiudi)="chiudiBoost()" />
+    }
+
+    <!-- ── POPUP DONAZIONE ─────────────────────────────────────────── -->
+    @if (donazionePopupAperta()) {
+      <div class="popup-overlay" (click)="chiudiDonazione()">
+        <div class="popup popup-small" (click)="$event.stopPropagation()">
+          <button class="close-btn" (click)="chiudiDonazione()">✕</button>
+          <div class="popup-donazione">
+            <span class="donazione-icon">❤️</span>
+            <h2>Supporta questa campagna</h2>
+            <p class="donazione-subtitle">La tua donazione fa la differenza!</p>
+            
+            <div class="donazione-importi">
+              <button 
+                class="importo-btn" 
+                [class.active]="donazioneImporto === 10"
+                (click)="donazioneImporto = 10">10 €</button>
+              <button 
+                class="importo-btn" 
+                [class.active]="donazioneImporto === 25"
+                (click)="donazioneImporto = 25">25 €</button>
+              <button 
+                class="importo-btn" 
+                [class.active]="donazioneImporto === 50"
+                (click)="donazioneImporto = 50">50 €</button>
+              <button 
+                class="importo-btn" 
+                [class.active]="donazioneImporto === 100"
+                (click)="donazioneImporto = 100">100 €</button>
+            </div>
+
+            <div class="donazione-custom">
+              <label>oppure inserisci un importo personalizzato</label>
+              <input type="number" [(ngModel)]="donazioneImporto" min="1" class="importo-input">
+            </div>
+
+            <button class="btn-conferma" (click)="confermaDonazione()">
+              Dona {{ donazioneImporto }} €
+            </button>
+          </div>
+        </div>
+      </div>
     }
 
   </div>

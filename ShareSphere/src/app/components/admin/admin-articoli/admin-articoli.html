@@ -1,11 +1,15 @@
+<!-- HEADER: barra filtri  -->
 <div class="articoli-header">
   <div class="filtri">
+    <!-- Genera un bottone per ogni filtro disponibile (es. Tutti, Pubblicati, Bozze...) -->
+    <!-- [class.attivo] evidenzia il filtro selezionato; (click) aggiorna filtroStato -->
     @for (f of filtri; track f) {
       <button class="filtro-btn" [class.attivo]="filtroStato === f" (click)="setFiltro(f)">{{ f }}</button>
     }
   </div>
 </div>
 
+<!--   TABELLA ARTICOLI -->
 <div class="table-card">
   <table class="data-table">
     <thead>
@@ -20,36 +24,63 @@
       </tr>
     </thead>
     <tbody>
+      <!-- Itera sulla lista già filtrata dal component -->
       @for (a of articoliFiltrati; track a.id) {
         <tr>
+
+          <!-- Colonna Articolo: thumbnail + titolo affiancati -->
           <td class="td-articolo">
             <img [src]="a.immagine" class="thumb" [alt]="a.titolo" />
             <span class="titolo">{{ a.titolo }}</span>
           </td>
+
+          <!-- Colonna Categoria: badge stilizzato con classe fissa -->
           <td><span class="cat-badge">{{ a.categoria }}</span></td>
+
+          <!-- Colonna Stato: badge con classe CSS dinamica calcolata dal component -->
+          <!-- getStatoBadgeClass() restituisce es. 'badge-pubblicato', 'badge-bozza'... -->
           <td><span class="badge" [class]="getStatoBadgeClass(a.stato)">{{ a.stato }}</span></td>
+
+          <!-- toLocaleString() formatta i numeri grandi con separatori (es. 1.200) -->
           <td>{{ a.visualizzazioni.toLocaleString() }}</td>
+
           <td>{{ a.likes }}</td>
+
           <td class="td-data">{{ a.data }}</td>
+
+          <!-- Colonna Azioni: 3 bottoni Material Icon -->
           <td class="td-azioni">
+            <!-- Apre form/dialog di modifica -->
             <button mat-icon-button class="btn-edit"><mat-icon>edit</mat-icon></button>
+
+            <!-- Elimina l'articolo -->
             <button mat-icon-button class="btn-delete"><mat-icon>delete</mat-icon></button>
+
+            <!-- Apre il menu contestuale definito sotto (#menu) -->
             <button mat-icon-button [matMenuTriggerFor]="menu"><mat-icon>more_vert</mat-icon></button>
+
+            <!-- Menu contestuale con azioni secondarie -->
             <mat-menu #menu="matMenu">
               <button mat-menu-item>Visualizza</button>
               <button mat-menu-item>Duplica</button>
               <button mat-menu-item>Archivia</button>
             </mat-menu>
           </td>
+
         </tr>
       }
     </tbody>
   </table>
 
+  <!--   PAGINAZIONE -->
+  <!-- Attualmente statica: andrebbe collegata a logica reale nel component -->
   <div class="pagination">
+    <!-- Mostra quanti elementi sono visibili rispetto al totale -->
     <span class="pag-info">Mostrando {{ articoliFiltrati.length }} di {{ articoli.length }} elementi</span>
+
     <div class="pag-btns">
       <button class="pag-btn">Precedente</button>
+      <!-- pag-active evidenzia la pagina corrente -->
       <button class="pag-btn pag-active">1</button>
       <button class="pag-btn">Successivo</button>
     </div>

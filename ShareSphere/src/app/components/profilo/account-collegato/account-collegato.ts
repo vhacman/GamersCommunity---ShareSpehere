@@ -6,7 +6,8 @@ import { FormsModule } from '@angular/forms';
   selector: 'app-account-collegato',
   standalone: true,
   imports: [CommonModule, FormsModule],
-  templateUrl: './account-collegato.html'
+  templateUrl: './account-collegato.html',
+  styleUrl: './account-collegato.css',
 })
 export class AccountCollegato {
 

@@ -1,7 +1,7 @@
 <div class="page-wrapper">
 
   <!-- ── HERO ─────────────────────────────────────────────────────────── -->
-  <section class="hero">
+<section class="hero">
     <div class="hero-text">
       <h1>
         Benvenuto nella<br>
@@ -27,10 +27,9 @@
   <section class="section">
     <div class="section-header">
       <h2 class="section-title">Aree Tematiche</h2>
-      <a routerLink="/gruppi" class="vedi-tutte">Vedi tutte ›</a>
     </div>
     <div class="aree-grid">
-      @for (area of areeTematiche; track area.nome) {
+      @for (area of areeVisibili; track area.nome) {
         <a routerLink="/gruppi" class="area-card">
           <div class="area-icona" [style.background]="area.colore + '22'">
             <span class="area-emoji">{{ area.icona }}</span>
@@ -39,15 +38,45 @@
         </a>
       }
     </div>
+    <div class="challenge-dots">
+      @for (i of dotsAree; track i) {
+        <button class="challenge-dot" [class.active]="paginaAree() === i" (click)="vaiAAree(i)" [attr.aria-label]="'Pagina ' + (i + 1)"></button>
+      }
+    </div>
   </section>
 
-  <!-- ── CHALLENGE ATTIVA ──────────────────────────────────────────────── -->
-  @if (challengeAttiva) {
-    <section class="challenge-banner">
-      <span class="challenge-badge">📅 Challenge Attiva</span>
-      <h2 class="challenge-titolo">{{ challengeAttiva.titolo }}</h2>
-      <p class="challenge-desc">{{ challengeAttiva.descrizione }}</p>
-      <button class="challenge-btn" routerLink="/crowdfunding">Partecipa Ora</button>
+  <!-- ── CHALLENGE ATTIVE ──────────────────────────────────────────────── -->
+  @if (challengeAttive.length) {
+    <section class="section">
+      <div class="section-header">
+        <h2 class="section-title">Challenge Attive</h2>
+        <a routerLink="/challenge" class="vedi-tutte">Vedi tutte ›</a>
+      </div>
+      <div class="challenge-grid">
+        @for (c of challengeVisibili; track c.id) {
+          <div class="challenge-card">
+            <div class="challenge-card-header" [style.background]="getAreaColore(c.area) + '22'">
+              <span class="challenge-area-icon">{{ getAreaIcona(c.area) }}</span>
+              <span class="challenge-area-tag" [style.color]="getAreaColore(c.area)">{{ c.area }}</span>
+            </div>
+            <div class="challenge-card-body">
+              <h3 class="challenge-card-titolo">{{ c.titolo }}</h3>
+              <p class="challenge-card-desc">{{ c.descrizione }}</p>
+              <div class="challenge-card-meta">
+                <span class="challenge-meta-item">👥 {{ c.partecipanti }}</span>
+                <span class="challenge-meta-item">📅 {{ c.scadenza }}</span>
+              </div>
+              <a [routerLink]="['/challenge', c.id]" class="challenge-card-btn challenge-card-btn--main">Partecipa</a>
+            </div>
+          </div>
+        }
+      </div>
+      <!-- Dot navigation -->
+      <div class="challenge-dots">
+        @for (i of dotsChallenge; track i) {
+          <button class="challenge-dot" [class.active]="paginaChallenge() === i" (click)="vaiAChallenge(i)" [attr.aria-label]="'Pagina ' + (i + 1)"></button>
+        }
+      </div>
     </section>
   }
 
@@ -57,22 +86,27 @@
       <h2 class="section-title">In Evidenza</h2>
     </div>
     <div class="evidenza-list">
-      @for (articolo of articoliInEvidenza; track articolo.id) {
-        <div class="evidenza-card">
-          <img [src]="articolo.immagine" [alt]="articolo.titolo" class="evidenza-img" />
+      @for (articolo of evidenzaVisibili; track articolo.id) {
+        <a [routerLink]="['/articoli', articolo.id]" class="evidenza-card">
+          <div class="evidenza-accent" [style.background]="getAreaColore(articolo.categoria)"></div>
           <div class="evidenza-body">
-            <span
-              class="evidenza-badge"
+            <span class="evidenza-badge"
               [style.background]="getAreaBadgeStyle(articolo.categoria)"
               [style.color]="getAreaColore(articolo.categoria)"
             >{{ articolo.categoria }}</span>
             <h3 class="evidenza-titolo">{{ articolo.titolo }}</h3>
+            <p class="evidenza-desc">{{ articolo.descrizione }}</p>
             <p class="evidenza-meta">
-              <span>&#64;{{ articolo.categoria | lowercase }}team</span>
-              <span>{{ articolo.likes }} likes</span>
+              <span>&#64;{{ articolo.categoria | lowercase }}team · {{ articolo.data }}</span>
+              <span>♥ {{ articolo.likes }}</span>
             </p>
           </div>
-        </div>
+        </a>
+      }
+    </div>
+    <div class="challenge-dots">
+      @for (i of dotsEvidenza; track i) {
+        <button class="challenge-dot" [class.active]="paginaEvidenza() === i" (click)="vaiAEvidenza(i)" [attr.aria-label]="'Pagina ' + (i + 1)"></button>
       }
     </div>
   </section>

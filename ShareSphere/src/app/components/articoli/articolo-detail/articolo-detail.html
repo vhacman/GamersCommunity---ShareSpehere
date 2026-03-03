@@ -1,0 +1,79 @@
+<!-- Sezione visibile solo se l'articolo e stato caricato -->
+@if (articolo) {
+  <div class="page-wrapper">
+
+    <!-- Breadcrumb: navigazione per tornare alla home -->
+    <nav class="ad-breadcrumb">
+      <a routerLink="/home" class="ad-bread-link">← Home</a>
+    </nav>
+
+    <!-- Inizio pagina: badge categoria + titolo + metadati -->
+    <header class="ad-header">
+      <!-- Icona dell'area tematica (es. per Gaming mostra il controller) -->
+      <div class="ad-header-accent" [style.background]="getAreaColore(articolo.categoria) + '18'">
+        <span class="ad-header-icon">{{ getAreaIcona(articolo.categoria) }}</span>
+      </div>
+      <div class="ad-header-body">
+        <!-- Badge categoria colorato in base all'area -->
+        <span class="ad-categoria-badge"
+          [style.background]="getAreaColore(articolo.categoria) + '22'"
+          [style.color]="getAreaColore(articolo.categoria)">
+          {{ articolo.categoria }}
+        </span>
+        <!-- Titolo principale dell'articolo -->
+        <h1 class="ad-titolo">{{ articolo.titolo }}</h1>
+        <!-- Sottotitolo/descrizione breve -->
+        <p class="ad-descrizione">{{ articolo.descrizione }}</p>
+        <!-- Metadati: autore, data, visualizzazioni, likes -->
+        <div class="ad-meta">
+          <span>&#64;{{ articolo.categoria | lowercase }}team</span>
+          <span>{{ articolo.data }}</span>
+          <span>👁 {{ articolo.visualizzazioni }}</span>
+          <span>♥ {{ articolo.likes }}</span>
+        </div>
+      </div>
+    </header>
+
+    <!-- Corpo dell'articolo: lista di paragrafi dal modello dati -->
+    <article class="ad-contenuto">
+      <!-- Se esistono paragrafi, li ciclo e mostro -->
+      @if (articolo.contenuto?.length) {
+        @for (paragrafo of articolo.contenuto; track $index) {
+          <p class="ad-paragrafo">{{ paragrafo }}</p>
+        }
+      } @else {
+        <!-- Messaggio placeholder se l'articolo non ha contenuto -->
+        <p class="ad-paragrafo ad-paragrafo--placeholder">Contenuto non ancora disponibile.</p>
+      }
+    </article>
+
+    <!-- Sezione articoli correlati: solo se ce ne sono nella stessa categoria -->
+    @if (correlati.length) {
+      <section class="ad-correlati">
+        <h2 class="ad-correlati-title">Altri articoli in "{{ articolo.categoria }}"</h2>
+        <div class="ad-correlati-grid">
+          <!-- Ciclo gli articoli correlati e creo una card per ciascuno -->
+          @for (c of correlati; track c.id) {
+            <!-- Link alla pagina di dettaglio dell'articolo correlato -->
+            <a [routerLink]="['/articoli', c.id]" class="ad-corr-card">
+              <!-- Barra colorata in base alla categoria -->
+              <div class="ad-corr-accent" [style.background]="getAreaColore(c.categoria)"></div>
+              <div class="ad-corr-body">
+                <h3 class="ad-corr-titolo">{{ c.titolo }}</h3>
+                <p class="ad-corr-desc">{{ c.descrizione }}</p>
+                <span class="ad-corr-link">Leggi →</span>
+              </div>
+            </a>
+          }
+        </div>
+      </section>
+    }
+
+  </div>
+} @else {
+  <!-- Messaggio di errore se l'articolo non e stato trovato (id non valido) -->
+  <div class="ad-not-found">
+    <p>Articolo non trovato.</p>
+    <a routerLink="/home">← Torna alla home</a>
+  </div>
+}

@@ -1,7 +1,20 @@
 <div class="app-container">
 
-  <div class="modal-overlay" *ngIf="isCreateModalOpen">
-    <div class="modal-card">
+  <!-- Popup conferma iscrizione -->
+  <div class="popup-overlay" *ngIf="isJoinPopupOpen" (click)="closeJoinPopup()">
+    <div class="popup-card" (click)="$event.stopPropagation()">
+      <div class="popup-icon">
+        <mat-icon>check_circle</mat-icon>
+      </div>
+      <h3>Ti sei unito al gruppo!</h3>
+      <p>Ora fai parte di <strong>{{ joinedGroupName }}</strong></p>
+      <button class="popup-btn" (click)="closeJoinPopup()">Ok</button>
+    </div>
+  </div>
+
+  <!-- Modal creazione gruppo -->
+  <div class="modal-overlay" *ngIf="isCreateModalOpen" (click)="closeModal()">
+    <div class="modal-card" (click)="$event.stopPropagation()">
       <h2>Create New Community</h2>
       <div class="form-group">
         <label>Group Name</label>
@@ -40,19 +53,28 @@
 
     <div class="cards-container">
       <div class="group-card" *ngFor="let g of filteredGroups" (click)="selectGroup(g)">
-        <div class="card-img"><img [src]="g.immagine"></div>
+        <div class="card-accent" [style.background]="getAreaColore(g.area)"></div>
         <div class="card-body">
-          <span class="area-tag" [ngClass]="g.area.toLowerCase()">{{g.area}}</span>
+          <span class="area-tag"
+            [style.background]="getAreaColore(g.area) + '22'"
+            [style.color]="getAreaColore(g.area)">
+            {{getAreaIcona(g.area)}} {{g.area}}
+          </span>
           <h3>{{g.nome}}</h3>
-          <p>{{g.membri}} members</p>
-          <button class="join-btn" (click)="joinGroup($event, g)">Join</button>
+          <p>{{g.descrizione}}</p>
+          <div class="card-footer">
+            <span class="card-members">👥 {{g.membri}}</span>
+            <button class="join-btn" (click)="joinGroup($event, g)">Unisciti</button>
+          </div>
         </div>
       </div>
     </div>
   </div>
 
   <div class="detail-container" *ngIf="selectedGroup">
-    <button class="back-link" (click)="backToList()">← Back to list</button>
+    <button class="back-btn" (click)="backToList()">
+      <mat-icon>arrow_back</mat-icon> Torna ai gruppi
+    </button>
     <div class="hero-image">
       <img [src]="selectedGroup.immagine">
       <div class="hero-content">
@@ -61,9 +83,11 @@
       </div>
     </div>
     <div class="detail-body">
-      <h3>About</h3>
-      <p>{{selectedGroup.descrizione}}</p>
-      <button class="join-large" (click)="joinGroup($event, selectedGroup)">Join this Group</button>
+      <h3>Informazioni del gruppo</h3>
+      <p>{{ selectedGroup.descrizioneEstesa || selectedGroup.descrizione }}</p>
+      <button class="join-large" (click)="joinGroup($event, selectedGroup)">
+        <mat-icon>person_add</mat-icon> Unisciti al gruppo
+      </button>
     </div>
   </div>
 

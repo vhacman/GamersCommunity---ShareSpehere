@@ -1,0 +1,171 @@
+<!-- Sezione visibile solo se la challenge e stata caricata correttamente -->
+@if (challenge) {
+  <div class="page-wrapper">
+
+    <!-- Breadcrumb: link per tornare alla lista di tutte le challenge -->
+    <nav class="cd-breadcrumb">
+      <a routerLink="/challenge" class="cd-bread-link">← Tutte le Challenge</a>
+    </nav>
+
+    <!-- Hero: sezione principale con banner, titolo, stats e pulsante di partecipazione -->
+    <section class="cd-hero">
+      <!-- Banner colorato in base all'area tematica, con icona e stato (in corso/conclusa) -->
+      <div class="cd-hero-banner" [style.background]="getAreaColore(challenge.area) + '15'">
+        <span class="cd-hero-banner-icon">{{ getAreaIcona(challenge.area) }}</span>
+        <div class="cd-hero-banner-meta">
+          <!-- Label dell'area tematica -->
+          <span class="cd-hero-area-label" [style.color]="getAreaColore(challenge.area)">{{ challenge.area }}</span>
+          <!-- Stato della challenge: rossa se attiva, grigia se conclusa -->
+          @if (!challenge.attiva) {
+            <span class="cd-hero-stato">Conclusa</span>
+          } @else {
+            <span class="cd-hero-stato cd-hero-stato--attiva">🔴 In corso</span>
+          }
+        </div>
+      </div>
+
+      <!-- Corpo del hero: titolo, descrizione e statistiche -->
+      <div class="cd-hero-body">
+        <h1 class="cd-titolo">{{ challenge.titolo }}</h1>
+        <p class="cd-desc">{{ challenge.descrizione }}</p>
+
+        <!-- Statistiche della challenge: partecipanti, giorni rimasti, scadenza -->
+        <div class="cd-stats">
+          <!-- Numero partecipanti -->
+          <div class="cd-stat">
+            <span class="cd-stat-icon">👥</span>
+            <div>
+              <span class="cd-stat-val">{{ challenge.partecipanti }}</span>
+              <span class="cd-stat-lab">Partecipanti</span>
+            </div>
+          </div>
+          <!-- Giorni rimasti (solo se la challenge e attiva) -->
+          @if (challenge.attiva) {
+            <div class="cd-stat">
+              <span class="cd-stat-icon">⏳</span>
+              <div>
+                <span class="cd-stat-val">{{ giorniRimasti(challenge.scadenza) }}</span>
+                <span class="cd-stat-lab">Giorni rimasti</span>
+              </div>
+            </div>
+          }
+          <!-- Data di scadenza -->
+          <div class="cd-stat">
+            <span class="cd-stat-icon">📅</span>
+            <div>
+              <span class="cd-stat-val">{{ challenge.scadenza }}</span>
+              <span class="cd-stat-lab">Scadenza</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Barra di progresso verso l'obiettivo partecipanti (se definito) -->
+        @if (challenge.obiettivo) {
+          <div class="cd-progress-wrap">
+            <div class="cd-progress-bar">
+              <!-- Larghezza della barra calcolata in percentuale -->
+              <div class="cd-progress-fill"
+                   [style.width.%]="getProgressoPercentuale(challenge)"
+                   [style.background]="getAreaColore(challenge.area)">
+              </div>
+            </div>
+            <div class="cd-progress-label">
+              <span>{{ challenge.partecipanti }} partecipanti</span>
+              <span>Obiettivo: {{ challenge.obiettivo }}</span>
+            </div>
+          </div>
+        }
+
+        <!-- Call To Action: pulsante per partecipare o messaggio gia iscritto -->
+        @if (challenge.attiva) {
+          @if (!partecipato()) {
+            <!-- Pulsante per partecipare alla challenge (colore dinamico per area) -->
+            <button class="cd-cta-btn" (click)="partecipa()"
+                    [style.background]="getAreaColore(challenge.area)">
+              🚀 Partecipa Ora
+            </button>
+          } @else {
+            <!-- Messaggio per chi e gia iscritto -->
+            <div class="cd-partecipato">
+              ✅ Sei iscritto! Buona fortuna nella challenge.
+            </div>
+          }
+        } @else {
+          <!-- Messaggio per challenge concluse -->
+          <div class="cd-conclusa-msg">Questa challenge e conclusa.</div>
+        }
+      </div>
+    </section>
+
+    <!-- Sezione dettagli: premio, regole e tag della challenge -->
+    <div class="cd-dettagli-grid">
+
+      <!-- Card Premio: descrizione del premio per i vincitori -->
+      <section class="cd-card">
+        <h2 class="cd-card-title">🎁 Premio</h2>
+        <p class="cd-card-text cd-card-text--premio">{{ challenge.premio }}</p>
+      </section>
+
+      <!-- Card Regole: lista delle regole da seguire (se presenti) -->
+      @if (challenge.regole?.length) {
+        <section class="cd-card">
+          <h2 class="cd-card-title">📋 Regole</h2>
+          <ol class="cd-regole-list">
+            @for (regola of challenge.regole; track regola) {
+              <li class="cd-regola">{{ regola }}</li>
+            }
+          </ol>
+        </section>
+      }
+
+      <!-- Card Tag: etichette per categorizzare la challenge (se presenti) -->
+      @if (challenge.tag?.length) {
+        <section class="cd-card">
+          <h2 class="cd-card-title">🏷️ Tag</h2>
+          <div class="cd-tags">
+            @for (tag of challenge.tag; track tag) {
+              <span class="cd-tag" [style.background]="getAreaColore(challenge.area) + '22'"
+                    [style.color]="getAreaColore(challenge.area)">{{ tag }}</span>
+            }
+          </div>
+        </section>
+      }
+
+    </div>
+
+    <!-- Sezione challenge correlate: altre challenge nella stessa area tematica -->
+    @if (correlate.length) {
+      <section class="cd-correlate">
+        <h2 class="cd-correlate-title">Altre challenge in "{{ challenge.area }}"</h2>
+        <!-- Griglia di card per le challenge correlate -->
+        <div class="cd-correlate-grid">
+          @for (c of correlate; track c.id) {
+            <!-- Link alla pagina di dettaglio di ogni challenge correlata -->
+            <a [routerLink]="['/challenge', c.id]" class="cd-corr-card">
+              <!-- Header della card: icona area e nome area -->
+              <div class="cd-corr-header" [style.background]="getAreaColore(c.area) + '18'">
+                <span class="cd-corr-icon">{{ getAreaIcona(c.area) }}</span>
+                <span class="cd-corr-area" [style.color]="getAreaColore(c.area)">{{ c.area }}</span>
+              </div>
+              <div class="cd-corr-body">
+                <!-- Stato: in corso (rossa) o conclusa (verde) -->
+                <span class="cd-corr-stato" [class.attiva]="c.attiva">
+                  {{ c.attiva ? '🔴 In corso' : '✅ Conclusa' }}
+                </span>
+                <h3 class="cd-corr-titolo">{{ c.titolo }}</h3>
+                <span class="cd-corr-link">Scopri →</span>
+              </div>
+            </a>
+          }
+        </div>
+      </section>
+    }
+
+  </div>
+} @else {
+  <!-- Messaggio di errore se la challenge non viene trovata (ID non valido) -->
+  <div class="cd-not-found">
+    <p>Challenge non trovata.</p>
+    <a routerLink="/challenge">← Torna alla lista</a>
+  </div>
+}

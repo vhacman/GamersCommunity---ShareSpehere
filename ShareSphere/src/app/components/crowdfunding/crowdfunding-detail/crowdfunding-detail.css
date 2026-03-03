@@ -209,6 +209,101 @@
   font-size: 16px !important;
 }
 
+.btn-dona {
+  width: 100%;
+  background: #22c55e !important;
+  color: white !important;
+  border-radius: 24px !important;
+  height: 48px !important;
+  font-size: 16px !important;
+  margin-bottom: 12px !important;
+}
+
+.btn-dona:hover {
+  background: #16a34a !important;
+}
+
+/* ── POPUP DONAZIONE ── */
+.popup-donazione {
+  text-align: center;
+  padding: 16px 0;
+}
+
+.donazione-icon {
+  font-size: 48px;
+  display: block;
+  margin-bottom: 12px;
+}
+
+.popup-donazione h2 {
+  font-size: 20px;
+  font-weight: 700;
+  color: #1a1a2e;
+  margin: 0 0 4px;
+}
+
+.donazione-subtitle {
+  color: #666;
+  font-size: 14px;
+  margin: 0 0 20px;
+}
+
+.donazione-importi {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+  margin-bottom: 16px;
+}
+
+.importo-btn {
+  padding: 10px 8px;
+  border: 2px solid #e5e7eb;
+  border-radius: 10px;
+  background: white;
+  font-size: 14px;
+  font-weight: 600;
+  color: #374151;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.importo-btn:hover {
+  border-color: #22c55e;
+  color: #22c55e;
+}
+
+.importo-btn.active {
+  border-color: #22c55e;
+  background: #22c55e;
+  color: white;
+}
+
+.donazione-custom {
+  margin-bottom: 20px;
+}
+
+.donazione-custom label {
+  display: block;
+  font-size: 12px;
+  color: #9ca3af;
+  margin-bottom: 8px;
+}
+
+.importo-input {
+  width: 100%;
+  padding: 12px;
+  border: 2px solid #e5e7eb;
+  border-radius: 10px;
+  font-size: 16px;
+  text-align: center;
+  box-sizing: border-box;
+}
+
+.importo-input:focus {
+  outline: none;
+  border-color: #22c55e;
+}
+
 .icon-small {
   font-size: 16px;
   width: 16px;

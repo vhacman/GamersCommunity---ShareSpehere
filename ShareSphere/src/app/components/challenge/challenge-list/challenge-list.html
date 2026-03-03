@@ -1,0 +1,99 @@
+<div class="page-wrapper">
+
+  <!-- ── HERO ──────────────────────────────────────────────────────────── -->
+  <section class="cl-hero">
+    <div class="cl-hero-text">
+      <span class="cl-hero-badge">🏆 ShareSphere Challenge</span>
+      <h1>Metti alla prova<br><span class="cl-accent">le tue passioni</span></h1>
+      <p class="cl-hero-sub">Partecipa alle sfide della community, guadagna badge esclusivi e stringi nuove amicizie attraverso il gioco e la condivisione.</p>
+    </div>
+    <div class="cl-hero-stats">
+      <div class="cl-stat">
+        <span class="cl-stat-val">{{ tutte.length }}</span>
+        <span class="cl-stat-lab">Challenge totali</span>
+      </div>
+      <div class="cl-stat">
+        <span class="cl-stat-val">{{ attiveCount }}</span>
+        <span class="cl-stat-lab">In corso</span>
+      </div>
+      <div class="cl-stat">
+        <span class="cl-stat-val">1.4K</span>
+        <span class="cl-stat-lab">Partecipanti attivi</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── FILTRI ─────────────────────────────────────────────────────────── -->
+  <div class="cl-filtri">
+    <button class="cl-filtro-btn" [class.active]="filtro() === 'tutte'" (click)="filtro.set('tutte')">
+      Tutte
+    </button>
+    <button class="cl-filtro-btn" [class.active]="filtro() === 'in-corso'" (click)="filtro.set('in-corso')">
+      🔴 In corso
+    </button>
+    <button class="cl-filtro-btn" [class.active]="filtro() === 'concluse'" (click)="filtro.set('concluse')">
+      ✅ Concluse
+    </button>
+  </div>
+
+  <!-- ── GRIGLIA CHALLENGE ──────────────────────────────────────────────── -->
+  <div class="cl-grid">
+    @for (c of challengeFiltrate(); track c.id) {
+      <a [routerLink]="['/challenge', c.id]" class="cl-card" [class.cl-card--conclusa]="!c.attiva">
+
+        <!-- Header colorato -->
+        <div class="cl-card-header" [style.background]="getAreaColore(c.area) + '18'">
+          <span class="cl-card-header-icon">{{ getAreaIcona(c.area) }}</span>
+          <div class="cl-card-header-info">
+            <span class="cl-card-area-label" [style.color]="getAreaColore(c.area)">{{ c.area }}</span>
+            @if (!c.attiva) {
+              <span class="cl-card-conclusa-tag">Conclusa</span>
+            } @else {
+              <span class="cl-card-attiva-tag">🔴 In corso</span>
+            }
+          </div>
+        </div>
+
+        <!-- Body -->
+        <div class="cl-card-body">
+          <h3 class="cl-card-titolo">{{ c.titolo }}</h3>
+          <p class="cl-card-desc">{{ c.descrizione }}</p>
+
+          <!-- Premio -->
+          <div class="cl-card-premio">
+            🎁 {{ c.premio }}
+          </div>
+
+          <!-- Progress partecipanti -->
+          @if (c.obiettivo) {
+            <div class="cl-card-progress-wrap">
+              <div class="cl-card-progress-bar">
+                <div class="cl-card-progress-fill"
+                     [style.width.%]="getProgressoPercentuale(c)"
+                     [style.background]="getAreaColore(c.area)">
+                </div>
+              </div>
+              <span class="cl-card-progress-label">
+                {{ c.partecipanti }} / {{ c.obiettivo }} partecipanti
+              </span>
+            </div>
+          }
+
+          <!-- Footer -->
+          <div class="cl-card-footer">
+            @if (c.attiva) {
+              <span class="cl-card-giorni">⏳ {{ giorniRimasti(c.scadenza) }} giorni rimasti</span>
+            } @else {
+              <span class="cl-card-giorni cl-card-giorni--grey">Scaduta il {{ c.scadenza }}</span>
+            }
+            <span class="cl-card-cta" [class.cl-card-cta--grey]="!c.attiva">
+              {{ c.attiva ? 'Partecipa →' : 'Vedi risultati →' }}
+            </span>
+          </div>
+        </div>
+
+      </a>
+    }
+  </div>
+
+</div>

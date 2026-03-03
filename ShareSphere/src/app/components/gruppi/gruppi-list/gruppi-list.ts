@@ -1,12 +1,14 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { FormsModule } from '@angular/forms'; // Fondamentale per il form
+import { FormsModule } from '@angular/forms';
+import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
 import { Gruppo, MockDataService, MembroGruppo } from '../../../services/mock-data-service';
 
 @Component({
   selector: 'app-gruppi-list',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, MatIconModule, MatButtonModule],
   templateUrl: './gruppi-list.html',
   styleUrl: './gruppi-list.css',
 })
@@ -15,11 +17,12 @@ export class GruppiList implements OnInit {
   areas: string[] = [];
   filterArea: string = 'All';
   
-  // Stati della visualizzazione
   selectedGroup: Gruppo | null = null;
   isCreateModalOpen: boolean = false;
 
-  // Modello per il nuovo gruppo
+  isJoinPopupOpen: boolean = false;
+  joinedGroupName: string = '';
+
   newGroup = {
     nome: '',
     area: 'Giochi',
@@ -34,6 +37,14 @@ export class GruppiList implements OnInit {
     this.areas = ['All', ...new Set(this.groups.map((g) => g.area))];
   }
 
+  getAreaColore(area: string): string {
+    return this.mockDataService.areeTematiche.find(a => a.nome === area)?.colore ?? '#6c3ff5';
+  }
+
+  getAreaIcona(area: string): string {
+    return this.mockDataService.areeTematiche.find(a => a.nome === area)?.icona ?? '💬';
+  }
+
   get filteredGroups() {
     return this.filterArea === 'All' 
       ? this.groups 
@@ -41,9 +52,14 @@ export class GruppiList implements OnInit {
   }
 
   joinGroup(event: Event, group: Gruppo) {
-    event.stopPropagation(); // Evita di aprire il dettaglio al click sul tasto
+    event.stopPropagation();
     group.membri++;
-    alert(`You have successfully joined ${group.nome}!`);
+    this.joinedGroupName = group.nome;
+    this.isJoinPopupOpen = true;
+  }
+
+  closeJoinPopup() {
+    this.isJoinPopupOpen = false;
   }
 
   createGroup() {

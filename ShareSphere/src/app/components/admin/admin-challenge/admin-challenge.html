@@ -1,22 +1,33 @@
+<!-- STATS: riepilogo numerico in cima alla pagina -->
 <div class="stats-row">
+
+  <!-- Totale challenge presenti nell'array (calcolato con .length) -->
   <div class="stat-card">
     <div class="stat-icon-wrap stat-icon--orange"><mat-icon>emoji_events</mat-icon></div>
     <span class="stat-value">{{ challenge.length }}</span>
     <span class="stat-label">Challenge Totali</span>
   </div>
+
+  <!-- Challenge con flag attiva === true (calcolato nel component come getter/proprietà) -->
   <div class="stat-card">
     <div class="stat-icon-wrap stat-icon--green"><mat-icon>check_circle</mat-icon></div>
     <span class="stat-value">{{ attive }}</span>
     <span class="stat-label">Challenge Attive</span>
   </div>
+
+  <!-- Somma dei partecipanti di tutte le challenge (calcolata nel component) -->
   <div class="stat-card">
     <div class="stat-icon-wrap stat-icon--blue"><mat-icon>group</mat-icon></div>
     <span class="stat-value">{{ totPartecipanti }}</span>
     <span class="stat-label">Partecipanti Totali</span>
   </div>
+
 </div>
 
+<!--  TABELLA CHALLENGE -->
 <div class="table-card">
+
+  <!-- Header tabella: titolo + bottone creazione nuova challenge -->
   <div class="table-header">
     <h2 class="table-title">Tutte le Challenge</h2>
     <button class="btn-nuovo"><mat-icon>add</mat-icon> Nuova Challenge</button>
@@ -37,19 +48,30 @@
     <tbody>
       @for (c of challenge; track c.id) {
         <tr>
+
+          <!-- Colonna Challenge: titolo in grassetto + descrizione breve sotto -->
           <td class="td-titolo">
             <strong>{{ c.titolo }}</strong>
             <small>{{ c.descrizione }}</small>
           </td>
+
+          <!-- Colonna Area: badge con categoria/area tematica -->
           <td><span class="area-badge">{{ c.area }}</span></td>
+
           <td>{{ c.partecipanti }}</td>
+
           <td class="td-premio">{{ c.premio }}</td>
+
           <td class="td-data">{{ c.scadenza }}</td>
+
+          <!-- Colonna Stato: badge binario — verde "Attiva" o rosso "Scaduta" -->
           <td>
             <span class="badge" [class.badge-attiva]="c.attiva" [class.badge-scaduta]="!c.attiva">
               {{ c.attiva ? 'Attiva' : 'Scaduta' }}
             </span>
           </td>
+
+          <!-- Colonna Azioni: modifica, elimina, menu contestuale -->
           <td class="td-azioni">
             <button mat-icon-button class="btn-edit"><mat-icon>edit</mat-icon></button>
             <button mat-icon-button class="btn-delete"><mat-icon>delete</mat-icon></button>
@@ -60,11 +82,13 @@
               <button mat-menu-item>{{ c.attiva ? 'Disattiva' : 'Attiva' }}</button>
             </mat-menu>
           </td>
+
         </tr>
       }
     </tbody>
   </table>
 
+  <!--  PAGINAZIONE   -->
   <div class="pagination">
     <span class="pag-info">Mostrando {{ challenge.length }} di {{ challenge.length }} elementi</span>
     <div class="pag-btns">
@@ -73,4 +97,5 @@
       <button class="pag-btn">Successivo</button>
     </div>
   </div>
+
 </div>

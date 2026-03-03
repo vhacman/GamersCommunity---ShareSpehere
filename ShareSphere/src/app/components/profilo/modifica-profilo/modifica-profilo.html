@@ -1,0 +1,40 @@
+<div style="background:#141414;padding:30px;border-radius:20px;color:white;max-width:600px;margin:auto;">
+
+<h2>Modifica Profilo</h2>
+
+<label>Nome</label>
+<input [(ngModel)]="nome" type="text"
+style="width:100%;padding:10px;margin:10px 0;background:#1f1f2e;color:white;border:none;border-radius:8px;">
+
+<label>Username</label>
+<input [(ngModel)]="username" type="text"
+[disabled]="usernameBloccato"
+style="width:100%;padding:10px;margin:10px 0;background:#1f1f2e;color:white;border:none;border-radius:8px;">
+
+<div *ngIf="usernameBloccato" style="color:red;font-size:12px;">
+Puoi modificare lo username solo una volta al mese ❗
+</div>
+
+<label>Descrizione</label>
+<textarea [(ngModel)]="descrizione"
+style="width:100%;padding:10px;margin:10px 0;background:#1f1f2e;color:white;border:none;border-radius:8px;">
+</textarea>
+
+<label>Foto Profilo</label>
+<input type="file" (change)="caricaFoto($event)"
+style="margin:10px 0;">
+
+<div *ngIf="fotoProfilo">
+<img [src]="fotoProfilo" style="width:120px;border-radius:50%;margin-top:10px;">
+</div>
+
+<button (click)="salvaProfilo()"
+style="margin-top:20px;padding:12px 20px;background:#00f7ff;border:none;border-radius:10px;cursor:pointer;">
+Salva Modifiche
+</button>
+
+<div style="margin-top:15px;color:#00f7ff;">
+{{messaggio}}
+</div>
+
+</div>

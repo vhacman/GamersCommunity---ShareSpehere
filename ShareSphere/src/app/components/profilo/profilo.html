@@ -1,127 +1,160 @@
+<!-- ══════════════════════════════════════════════════════════════════
+		 VISTA PRINCIPALE DEL PROFILO
+		 Mostrata solo quando né la modifica né il collega account sono aperti.
+		 Le tre viste (profilo / modifica / collega) sono mutualmente esclusive:
+		 una sola alla volta è visibile grazie ai tre @if separati.
+		 ══════════════════════════════════════════════════════════════════ -->
 @if (!showModifica && !showCollega) {
-  <div class="profilo-wrapper">
+	<div class="profilo-wrapper">
 
-    <!-- ── BANNER ─────────────────────────────────────────────────────── -->
-    <div class="profilo-banner"></div>
+		<!-- ── BANNER ─────────────────────────────────────────────────────── -->
+		<!-- Fascia decorativa in cima alla pagina (sfondo colorato/immagine via CSS). -->
+		<div class="profilo-banner"></div>
 
-    <!-- ── AVATAR ─────────────────────────────────────────────────────── -->
-    <div class="profilo-avatar-wrap">
-      <div class="profilo-avatar">
-        <img [src]="utente.avatar" [alt]="utente.nome">
-        <button class="avatar-edit-btn" aria-label="Cambia foto">
-          <mat-icon>photo_camera</mat-icon>
-        </button>
-      </div>
-    </div>
+		<!-- ── AVATAR ─────────────────────────────────────────────────────── -->
+		<!-- [src] e [alt] con binding: valori dinamici presi dall'oggetto utente.
+				 aria-label sul bottone migliora l'accessibilità per screen reader. -->
+		<div class="profilo-avatar-wrap">
+			<div class="profilo-avatar">
+				<img [src]="utente.avatar" [alt]="utente.nome">
+				<button class="avatar-edit-btn" aria-label="Cambia foto">
+					<mat-icon>photo_camera</mat-icon>
+				</button>
+			</div>
+		</div>
 
-    <!-- ── CARD PRINCIPALE ────────────────────────────────────────────── -->
-    <div class="profilo-card">
+		<!-- ── CARD PRINCIPALE ────────────────────────────────────────────── -->
+		<div class="profilo-card">
 
-      <!-- Info + pulsante modifica -->
-      <div class="profilo-info-row">
-        <div class="profilo-info-text">
-          <h2 class="profilo-nome">{{ utente.nome }}</h2>
-          <p class="profilo-username">{{ utente.username }}</p>
-          <p class="profilo-bio">{{ utente.bio }}</p>
-        </div>
-        <button class="btn-modifica" (click)="apriModifica()">
-          <mat-icon>edit</mat-icon> Modifica
-        </button>
-      </div>
+			<!-- Info utente + bottone modifica.
+					 apriModifica() imposta showModifica = true, nascondendo questa vista
+					 e mostrando il blocco @if (showModifica) più in basso. -->
+			<div class="profilo-info-row">
+				<div class="profilo-info-text">
+					<h2 class="profilo-nome">{{ utente.nome }}</h2>
+					<p class="profilo-username">{{ utente.username }}</p>
+					<p class="profilo-bio">{{ utente.bio }}</p>
+				</div>
+				<button class="btn-modifica" (click)="apriModifica()">
+					<mat-icon>edit</mat-icon> Modifica
+				</button>
+			</div>
 
-      <!-- Statistiche -->
-      <div class="stats-row">
-        <div class="stat-card">
-          <mat-icon class="stat-icon" style="color:#6c3ff5">emoji_events</mat-icon>
-          <span class="stat-value">{{ utente.challenge }}</span>
-          <span class="stat-label">Challenge</span>
-        </div>
-        <div class="stat-card">
-          <mat-icon class="stat-icon" style="color:#3498db">people</mat-icon>
-          <span class="stat-value">{{ utente.amici }}</span>
-          <span class="stat-label">Amici</span>
-        </div>
-        <div class="stat-card">
-          <mat-icon class="stat-icon" style="color:#f5a623">star</mat-icon>
-          <span class="stat-value">{{ utente.punti }}</span>
-          <span class="stat-label">Punti</span>
-        </div>
-      </div>
+			<!-- ── STATISTICHE ─────────────────────────────────────────────── -->
+			<!-- Tre card affiancate con icona, valore numerico e label.
+					 I colori inline sono hardcoded perché non dipendono dai dati utente. -->
+			<div class="stats-row">
+				<div class="stat-card">
+					<mat-icon class="stat-icon" style="color:#6c3ff5">emoji_events</mat-icon>
+					<span class="stat-value">{{ utente.challenge }}</span>
+					<span class="stat-label">Challenge</span>
+				</div>
+				<div class="stat-card">
+					<mat-icon class="stat-icon" style="color:#3498db">people</mat-icon>
+					<span class="stat-value">{{ utente.amici }}</span>
+					<span class="stat-label">Amici</span>
+				</div>
+				<div class="stat-card">
+					<mat-icon class="stat-icon" style="color:#f5a623">star</mat-icon>
+					<span class="stat-value">{{ utente.punti }}</span>
+					<span class="stat-label">Punti</span>
+				</div>
+			</div>
 
-      <!-- ── INTERESSI ───────────────────────────────────────────────── -->
-      <section class="profilo-section">
-        <h3 class="section-title">Interessi</h3>
-        <div class="chips-row">
-          @for (interesse of utente.areeInteresse; track interesse) {
-            <span class="chip"
-              [style.background]="getAreaColore(interesse) + '22'"
-              [style.color]="getAreaColore(interesse)">
-              {{ getAreaIcona(interesse) }} {{ interesse }}
-            </span>
-          }
-          <span class="chip chip--add">+ Aggiungi</span>
-        </div>
-      </section>
+			<!-- ── INTERESSI ───────────────────────────────────────────────── -->
+			<!-- @for itera sugli interessi dell'utente e crea un chip per ognuno.
+					 track interesse usa la stringa stessa come chiave univoca (va bene
+					 perché gli interessi non si ripetono).
+					 getAreaColore() + '22' = colore con opacità ~13% per lo sfondo. -->
+			<section class="profilo-section">
+				<h3 class="section-title">Interessi</h3>
+				<div class="chips-row">
+					@for (interesse of utente.areeInteresse; track interesse) {
+						<span class="chip"
+							[style.background]="getAreaColore(interesse) + '22'"
+							[style.color]="getAreaColore(interesse)">
+							{{ getAreaIcona(interesse) }} {{ interesse }}
+						</span>
+					}
+					<!-- Chip statico per aggiungere nuovi interessi (funzionalità futura) -->
+					<span class="chip chip--add">+ Aggiungi</span>
+				</div>
+			</section>
 
-      <!-- ── BADGE ──────────────────────────────────────────────────── -->
-      <section class="profilo-section">
-        <h3 class="section-title">Badge Ottenuti</h3>
-        <div class="badges-scroll">
-          @for (badge of utente.badge; track badge.nome) {
-            <div class="badge-card" [style.border-color]="badge.colore + '55'">
-              <span class="badge-icon" [style.background]="badge.colore + '22'">
-                {{ badge.icona }}
-              </span>
-              <span class="badge-nome">{{ badge.nome }}</span>
-            </div>
-          }
-        </div>
-      </section>
+			<!-- ── BADGE ──────────────────────────────────────────────────── -->
+			<!-- Lista scorrevole orizzontalmente dei badge conquistati dall'utente.
+					 track badge.nome usa il nome come chiave univoca di ogni badge.
+					 '55' in hex = circa 33% di opacità per il bordo della card. -->
+			<section class="profilo-section">
+				<h3 class="section-title">Badge Ottenuti</h3>
+				<div class="badges-scroll">
+					@for (badge of utente.badge; track badge.nome) {
+						<div class="badge-card" [style.border-color]="badge.colore + '55'">
+							<span class="badge-icon" [style.background]="badge.colore + '22'">
+								{{ badge.icona }}
+							</span>
+							<span class="badge-nome">{{ badge.nome }}</span>
+						</div>
+					}
+				</div>
+			</section>
 
-      <!-- ── ACCOUNT GAMING ─────────────────────────────────────────── -->
-      <section class="profilo-section">
-        <div class="section-header-row">
-          <h3 class="section-title">Account Gaming</h3>
-          <button class="btn-collega" (click)="apriCollega()">+ Collega</button>
-        </div>
-        <div class="accounts-list">
-          @for (acc of utente.accountGaming; track acc.piattaforma) {
-            <div class="account-row">
-              <span class="account-icon">{{ getPiattaformaIcona(acc.piattaforma) }}</span>
-              <div class="account-info">
-                <span class="account-piattaforma">{{ acc.piattaforma }}</span>
-                <span class="account-username">
-                  {{ acc.connesso ? acc.username : 'Non collegato' }}
-                </span>
-              </div>
-              <button class="btn-connetti" [class.connesso]="acc.connesso">
-                {{ acc.connesso ? 'Connesso ✓' : 'Collega' }}
-              </button>
-            </div>
-          }
-        </div>
-      </section>
+			<!-- ── ACCOUNT GAMING ─────────────────────────────────────────── -->
+			<!-- Lista degli account gaming collegati (es. Steam, PSN, Xbox...).
+					 apriCollega() apre la vista per collegare un nuovo account. -->
+			<section class="profilo-section">
+				<div class="section-header-row">
+					<h3 class="section-title">Account Gaming</h3>
+					<button class="btn-collega" (click)="apriCollega()">+ Collega</button>
+				</div>
+				<div class="accounts-list">
+					@for (acc of utente.accountGaming; track acc.piattaforma) {
+						<div class="account-row">
+							<span class="account-icon">{{ getPiattaformaIcona(acc.piattaforma) }}</span>
+							<div class="account-info">
+								<span class="account-piattaforma">{{ acc.piattaforma }}</span>
+								<!-- Operatore ternario nel template: se connesso mostra l'username,
+										 altrimenti mostra 'Non collegato' -->
+								<span class="account-username">
+									{{ acc.connesso ? acc.username : 'Non collegato' }}
+								</span>
+							</div>
+							<!-- [class.connesso] aggiunge la classe CSS 'connesso' solo se acc.connesso è true,
+									 cambiando aspetto al bottone (es. verde con spunta). -->
+							<button class="btn-connetti" [class.connesso]="acc.connesso">
+								{{ acc.connesso ? 'Connesso ✓' : 'Collega' }}
+							</button>
+						</div>
+					}
+				</div>
+			</section>
 
-    </div>
-  </div>
+		</div>
+	</div>
 }
 
 <!-- ── MODIFICA PROFILO ──────────────────────────────────────────────── -->
+<!-- Mostrata quando showModifica è true.
+		 tornaProfilo() reimposta showModifica = false per tornare alla vista principale.
+		 app-modifica-profilo è il componente figlio per la modifica dei dati. -->
 @if (showModifica) {
-  <div class="sub-view">
-    <button class="btn-back" (click)="tornaProfilo()">
-      <mat-icon>arrow_back</mat-icon> Torna al profilo
-    </button>
-    <app-modifica-profilo></app-modifica-profilo>
-  </div>
+	<div class="sub-view">
+		<button class="btn-back" (click)="tornaProfilo()">
+			<mat-icon>arrow_back</mat-icon> Torna al profilo
+		</button>
+		<app-modifica-profilo></app-modifica-profilo>
+	</div>
 }
 
 <!-- ── COLLEGA ACCOUNT ───────────────────────────────────────────────── -->
+<!-- Mostrata quando showCollega è true.
+		 Stessa struttura della vista modifica: bottone indietro + componente figlio.
+		 app-account-collegato gestisce il flusso di collegamento piattaforme gaming. -->
 @if (showCollega) {
-  <div class="sub-view">
-    <button class="btn-back" (click)="tornaProfilo()">
-      <mat-icon>arrow_back</mat-icon> Torna al profilo
-    </button>
-    <app-account-collegato></app-account-collegato>
-  </div>
+	<div class="sub-view">
+		<button class="btn-back" (click)="tornaProfilo()">
+			<mat-icon>arrow_back</mat-icon> Torna al profilo
+		</button>
+		<app-account-collegato></app-account-collegato>
+	</div>
 }

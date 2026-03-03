@@ -1,12 +1,20 @@
+<!-- mat-toolbar è il componente Angular Material per la barra di navigazione.
+     Gestisce automaticamente altezza, ombra e z-index della navbar. -->
 <mat-toolbar class="navbar">
 
-  <!-- Logo -->
+  <!-- ── LOGO ───────────────────────────────────────────────────────────
+       routerLink naviga alla home senza ricaricare la pagina (SPA navigation).
+       Alternativa HTML puro: <a href="/home"> ricaricherebbe l'intera pagina. -->
   <a routerLink="/home" class="logo">
     <img src="img/logo.png" alt="ShareSphere logo" class="logo-img" />
     <span class="logo-text">ShareSphere</span>
   </a>
 
-  <!-- Nav links (centro) -->
+  <!-- ── NAV LINKS (centro) ─────────────────────────────────────────────
+       @for genera un link per ogni elemento dell'array navLinks del componente.
+       track link.path usa il path come chiave univoca per la lista.
+       routerLinkActive="active" aggiunge automaticamente la classe CSS 'active'
+       al link della pagina correntemente visitata. -->
   <nav class="nav-links">
     @for (link of navLinks; track link.path) {
       <a
@@ -19,10 +27,20 @@
     }
   </nav>
 
+  <!-- Elemento flessibile che occupa tutto lo spazio vuoto tra i nav-link
+       e le icone a destra, spingendole verso il bordo della toolbar. -->
   <span class="spacer"></span>
 
-  <!-- Notifiche -->
+  <!-- ── NOTIFICHE ──────────────────────────────────────────────────────
+       stopPropagation sul wrapper impedisce che i click interni al popup
+       si propaghino al document e lo chiudano accidentalmente. -->
   <div class="notifiche-wrapper" (click)="$event.stopPropagation()">
+
+    <!-- mat-icon-button = bottone circolare trasparente di Angular Material.
+         [matBadge] mostra il contatore notifiche non lette sopra all'icona.
+         "notifiche() || null" nasconde il badge quando il valore è 0
+         (null rimuove completamente il badge dal DOM).
+         notifiche() si legge con () perché è un signal Angular. -->
     <button
       mat-icon-button
       [matBadge]="notifiche() || null"
@@ -34,10 +52,13 @@
       <mat-icon>notifications</mat-icon>
     </button>
 
+    <!-- Popup notifiche: visibile solo quando popupAperto() è true.
+         popupAperto() è anch'esso un signal, quindi si legge come funzione. -->
     @if (popupAperto()) {
       <div class="notifiche-popup">
 
-        <!-- Header popup -->
+        <!-- Header del popup con titolo e bottone "segna tutte lette".
+             Il bottone appare solo se ci sono notifiche non lette (notifiche() > 0). -->
         <div class="popup-header">
           <span class="popup-title">Notifiche</span>
           @if (notifiche() > 0) {
@@ -47,20 +68,29 @@
           }
         </div>
 
-        <!-- Lista notifiche -->
+        <!-- Lista delle notifiche: ogni item ha icona colorata, testo e timestamp.
+             [class.non-letta] aggiunge la classe CSS 'non-letta' se n.letta è false,
+             permettendo di stilare diversamente le notifiche non ancora lette.
+             Il pallino rosso (dot-non-letta) è visibile solo sulle non lette. -->
         <div class="popup-list">
           @for (n of listaNotifiche; track n.id) {
             <div class="notifica-item" [class.non-letta]="!n.letta">
+
+              <!-- Icona della notifica con sfondo colorato semi-trasparente ('22' = ~13% opacità) -->
               <div class="notifica-icona" [style.background]="n.iconaColore + '22'">
                 <mat-icon [style.color]="n.iconaColore">{{ n.icona }}</mat-icon>
               </div>
+
               <div class="notifica-body">
                 <p class="notifica-testo">{{ n.testo }}</p>
                 <span class="notifica-tempo">{{ n.tempo }}</span>
               </div>
+
+              <!-- Pallino indicatore: mostrato solo sulle notifiche non lette -->
               @if (!n.letta) {
                 <span class="dot-non-letta"></span>
               }
+
             </div>
           }
         </div>
@@ -69,11 +99,16 @@
     }
   </div>
 
-  <!-- Menu utente -->
+  <!-- ── MENU UTENTE ────────────────────────────────────────────────────
+       [matMenuTriggerFor] collega il bottone al menu definito sotto (#userMenu).
+       Cliccando il bottone si apre automaticamente il mat-menu. -->
   <button mat-icon-button [matMenuTriggerFor]="userMenu">
     <mat-icon>account_circle</mat-icon>
   </button>
 
+  <!-- mat-menu è un dropdown di Angular Material.
+       #userMenu è il riferimento locale usato da matMenuTriggerFor sopra.
+       mat-divider aggiunge una linea separatrice tra le voci del menu. -->
   <mat-menu #userMenu="matMenu">
     <button mat-menu-item routerLink="/profilo">
       <mat-icon>person</mat-icon>
@@ -84,6 +119,7 @@
       <span>Admin</span>
     </button>
     <mat-divider />
+    <!-- Logout: reindirizza alla pagina di login -->
     <button mat-menu-item routerLink="/login">
       <mat-icon>logout</mat-icon>
       <span>Esci</span>

@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <!DOCTYPE html>
 <html lang="it">
 <head>
@@ -27,6 +28,28 @@ style="width:140px;height:140px;border-radius:50%;border:4px solid #00f7ff;box-s
 </div>
 
 <button onclick="alert('Modifica Profilo')"
+=======
+<div *ngIf="!showModifica && !showCollega"
+style="margin:0;background:linear-gradient(135deg,#0f0f0f,#1a1a2e);color:white;padding:40px;font-family:Orbitron;min-height:100vh;">
+
+<div style="max-width:1100px;margin:auto;">
+
+<!-- HEADER -->
+<div style="background:#141414;padding:30px;border-radius:20px;box-shadow:0 0 20px #00f7ff40;margin-bottom:40px;">
+<div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;">
+
+<div style="display:flex;align-items:center;gap:20px;">
+<img [src]="fotoProfilo"
+style="width:140px;height:140px;border-radius:50%;border:4px solid #00f7ff;box-shadow:0 0 20px #00f7ff;object-fit:cover;">
+
+<div>
+<h1 style="margin:0;">{{nome}}</h1>
+<p style="margin:5px 0;color:#00f7ff;">{{username}}</p>
+</div>
+</div>
+
+<button (click)="apriModifica()"
+>>>>>>> 03d4c2c2729914d7ed3624145f6d0eda20b640e7
 style="background:#00f7ff;border:none;padding:12px 20px;border-radius:10px;font-weight:bold;cursor:pointer;">
 ✏️ Modifica Profilo
 </button>
@@ -34,6 +57,7 @@ style="background:#00f7ff;border:none;padding:12px 20px;border-radius:10px;font-
 </div>
 
 <div style="margin-top:20px;color:#ccc;max-width:800px;">
+<<<<<<< HEAD
 Gamer competitivo amante delle challenge online.  
 Sempre alla ricerca di nuovi obiettivi da completare e badge da sbloccare.  
 Specializzato in FPS e giochi strategici.
@@ -79,11 +103,33 @@ style="color:#00f7ff;cursor:pointer;font-size:14px;margin-left:15px;">Show All</
 <div class="hidden-item" style="display:none;background:#26263a;padding:10px 20px;border-radius:30px;">🚗 Motorsport</div>
 <div class="hidden-item" style="display:none;background:#26263a;padding:10px 20px;border-radius:30px;">📚 Lettura</div>
 
+=======
+{{descrizione}}
+</div>
+</div>
+
+<!-- AREE DI INTERESSE -->
+<h2 style="border-left:4px solid #00f7ff;padding-left:10px;">
+Aree di Interesse
+<span *ngIf="interessi.length > 4"
+(click)="toggleInteressi()"
+style="color:#00f7ff;cursor:pointer;font-size:14px;margin-left:15px;">
+{{ showAllInteressi ? 'Show Less' : 'Show All' }}
+</span>
+</h2>
+
+<div style="display:flex;flex-wrap:wrap;gap:15px;margin:20px 0;">
+<div *ngFor="let i of (showAllInteressi ? interessi : interessi | slice:0:4)"
+style="background:#26263a;padding:10px 20px;border-radius:30px;">
+{{i}}
+</div>
+>>>>>>> 03d4c2c2729914d7ed3624145f6d0eda20b640e7
 </div>
 
 <!-- BADGE -->
 <h2 style="border-left:4px solid gold;padding-left:10px;">
 Badge Ottenuti
+<<<<<<< HEAD
 <span onclick="toggleSection('badges', this)"
 style="color:gold;cursor:pointer;font-size:14px;margin-left:15px;">Show All</span>
 </h2>
@@ -110,11 +156,27 @@ style="color:gold;cursor:pointer;font-size:14px;margin-left:15px;">Show All</spa
 <img src="https://cdn-icons-png.flaticon.com/512/929/929426.png" style="width:60px;"><br>Elite Rank
 </div>
 
+=======
+<span *ngIf="badges.length > 4"
+(click)="toggleBadges()"
+style="color:gold;cursor:pointer;font-size:14px;margin-left:15px;">
+{{ showAllBadges ? 'Show Less' : 'Show All' }}
+</span>
+</h2>
+
+<div style="display:flex;flex-wrap:wrap;gap:20px;margin:20px 0;">
+<div *ngFor="let badge of (showAllBadges ? badges : badges | slice:0:4)"
+style="background:#1f1f2e;padding:20px;border-radius:15px;text-align:center;width:120px;">
+<img [src]="badge.icona" style="width:60px;margin-bottom:10px;"><br>
+{{badge.nome}}
+</div>
+>>>>>>> 03d4c2c2729914d7ed3624145f6d0eda20b640e7
 </div>
 
 <!-- ACCOUNT GAMING -->
 <h2 style="border-left:4px solid #00f7ff;padding-left:10px;">
 Account Gaming
+<<<<<<< HEAD
 <span onclick="toggleSection('accounts', this)"
 style="color:#00f7ff;cursor:pointer;font-size:14px;margin-left:15px;">Show All</span>
 </h2>
@@ -139,15 +201,37 @@ style="color:#00f7ff;cursor:pointer;font-size:14px;margin-left:15px;">Show All</
 
 <div class="hidden-item" style="display:none;background:#1f1f2e;padding:20px;border-radius:15px;text-align:center;width:150px;">
 <img src="https://cdn-icons-png.flaticon.com/512/5968/5968847.png" style="width:50px;"><br>Ubisoft
+=======
+<span *ngIf="accounts.length > 4"
+(click)="toggleAccounts()"
+style="color:#00f7ff;cursor:pointer;font-size:14px;margin-left:15px;">
+{{ showAllAccounts ? 'Show Less' : 'Show All' }}
+</span>
+</h2>
+
+<div style="display:flex;flex-wrap:wrap;gap:20px;margin:20px 0;">
+
+<div *ngFor="let acc of (showAllAccounts ? accounts : accounts | slice:0:4)"
+style="background:#1f1f2e;padding:20px;border-radius:15px;text-align:center;width:150px;">
+<img [src]="iconePiattaforme[acc.nome] || 'https://via.placeholder.com/50'"
+style="width:50px;margin-bottom:10px;"><br>
+{{acc.nome}}
+>>>>>>> 03d4c2c2729914d7ed3624145f6d0eda20b640e7
 </div>
 
 </div>
 
+<<<<<<< HEAD
 <button style="margin-top:10px;background:#8a2be2;border:none;padding:10px 20px;border-radius:10px;color:white;cursor:pointer;">
+=======
+<button (click)="apriCollega()"
+style="margin-top:10px;background:#8a2be2;border:none;padding:10px 20px;border-radius:10px;color:white;cursor:pointer;">
+>>>>>>> 03d4c2c2729914d7ed3624145f6d0eda20b640e7
 + Collega Account
 </button>
 
 </div>
+<<<<<<< HEAD
 
 <script>
 function toggleSection(id, btn){
@@ -162,3 +246,26 @@ btn.innerText=isHidden?"Show Less":"Show All";
 
 </body>
 </html>
+=======
+</div>
+
+<!-- MODIFICA -->
+<div *ngIf="showModifica" style="padding:40px;">
+<button (click)="tornaProfilo()"
+style="margin-bottom:20px;background:#444;padding:10px 20px;border:none;border-radius:10px;color:white;">
+⬅ Torna al Profilo
+</button>
+
+<app-modifica-profilo></app-modifica-profilo>
+</div>
+
+<!-- COLLEGA -->
+<div *ngIf="showCollega" style="padding:40px;">
+<button (click)="tornaProfilo()"
+style="margin-bottom:20px;background:#444;padding:10px 20px;border:none;border-radius:10px;color:white;">
+⬅ Torna al Profilo
+</button>
+
+<app-account-collegato></app-account-collegato>
+</div>
+>>>>>>> 03d4c2c2729914d7ed3624145f6d0eda20b640e7

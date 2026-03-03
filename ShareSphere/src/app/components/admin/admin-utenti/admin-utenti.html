@@ -14,13 +14,19 @@
   <div class="table-header">
     <h2 class="table-title">Tutti gli Utenti</h2>
     <div class="header-right">
+<<<<<<< HEAD
       <table>
+=======
+>>>>>>> 03d4c2c2729914d7ed3624145f6d0eda20b640e7
       <select class="filtro-select" [value]="filtroRuolo()" (change)="filtroRuolo.set($any($event.target).value)">
         @for (r of ruoli; track r) {
           <option [value]="r">{{ r }}</option>
         }
       </select>
+<<<<<<< HEAD
     </table>
+=======
+>>>>>>> 03d4c2c2729914d7ed3624145f6d0eda20b640e7
       <button class="btn-nuovo"><mat-icon>person_add</mat-icon> Nuovo Utente</button>
     </div>
   </div>
@@ -40,6 +46,10 @@
       @for (u of utentiFiltrati; track u.email) {
         <tr>
           <td class="td-utente">
+<<<<<<< HEAD
+=======
+            <div class="avatar-circle" [style.background]="getAvatarColor(u.ruolo)">{{ u.iniziali }}</div>
+>>>>>>> 03d4c2c2729914d7ed3624145f6d0eda20b640e7
             <div class="user-info">
               <span class="u-nome">{{ u.nome }}</span>
               <span class="u-email">{{ u.email }}</span>

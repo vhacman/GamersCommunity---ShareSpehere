@@ -11,9 +11,15 @@ import { FormsModule } from '@angular/forms';
   styleUrl: './admin-impostazioni.css',
 })
 export class AdminImpostazioni {
+<<<<<<< HEAD
   nomePiattaforma = 'ShareSphere';
   descrizione = 'Dove le passioni diventano persone';
   emailContatto = 'admin@sharesphere.com';
+=======
+  nomePiattaforma = 'Beyond Gaming';
+  descrizione = 'Community gaming platform per gamer appassionati';
+  emailContatto = 'admin@beyondgaming.com';
+>>>>>>> 03d4c2c2729914d7ed3624145f6d0eda20b640e7
 
   notifNuoviUtenti = signal(true);
   notifReportContenuti = signal(true);

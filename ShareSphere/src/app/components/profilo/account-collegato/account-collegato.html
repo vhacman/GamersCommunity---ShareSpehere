@@ -1,0 +1,35 @@
+<div style="background:#141414;padding:30px;border-radius:20px;color:white;max-width:600px;margin:auto;">
+
+<h2>Collega Account Gaming</h2>
+
+<label>Nome Piattaforma</label>
+<input [(ngModel)]="filtro" (input)="cercaPiattaforma()"
+type="text"
+style="width:100%;padding:10px;margin:10px 0;background:#1f1f2e;color:white;border:none;border-radius:8px;">
+
+<div *ngIf="suggerimenti.length > 0" style="background:#1f1f2e;padding:10px;border-radius:8px;">
+<div *ngFor="let s of suggerimenti"
+(click)="selezionaPiattaforma(s)"
+style="padding:5px;cursor:pointer;">
+{{s}}
+</div>
+</div>
+
+<label>Email</label>
+<input [(ngModel)]="email" type="email"
+style="width:100%;padding:10px;margin:10px 0;background:#1f1f2e;color:white;border:none;border-radius:8px;">
+
+<label>Password</label>
+<input [(ngModel)]="password" type="password"
+style="width:100%;padding:10px;margin:10px 0;background:#1f1f2e;color:white;border:none;border-radius:8px;">
+
+<button (click)="collegaAccount()"
+style="margin-top:20px;padding:12px 20px;background:#8a2be2;border:none;border-radius:10px;cursor:pointer;">
+Collega Account
+</button>
+
+<div style="margin-top:15px;color:#00f7ff;">
+{{messaggio}}
+</div>
+
+</div>

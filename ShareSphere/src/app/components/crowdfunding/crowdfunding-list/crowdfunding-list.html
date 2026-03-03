@@ -35,13 +35,10 @@
 
           <!-- Progress bar -->
           <div class="progress-section">
-            <div class="progress-bar-bg">
-              <div
-                class="progress-bar-fill"
-                [style.width.%]="getPercentuale(campagna)"
-                [style.background]="getColoreProgressBar(getPercentuale(campagna))"
-              ></div>
-            </div>
+            <app-progress-bar
+              [percentuale]="getPercentuale(campagna)"
+              [colore]="getColoreProgressBar(getPercentuale(campagna))"
+            />
             <div class="progress-info">
               <span class="progress-raggiunto">{{ formatEuro(campagna.raggiunto) }} raccolti</span>
               <span class="progress-percentuale">{{ getPercentuale(campagna) }}%</span>
@@ -71,6 +68,9 @@
       </mat-card>
     }
   </div>
+
+  <!-- Spazio pubblicitario -->
+  <app-spazio-pubblicitario formato="leaderboard" />
 
   @if (boostPopupAperto()) {
     <app-boost-popup (chiudi)="chiudiBoost()" />

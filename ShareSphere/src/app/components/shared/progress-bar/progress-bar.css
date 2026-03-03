@@ -1,0 +1,11 @@
+.bar-bg {
+  width: 100%;
+  background: #eee;
+  border-radius: 14px;
+  overflow: hidden;
+}
+
+.bar-fill {
+  border-radius: 14px;
+  transition: width 0.8s ease, background 0.8s ease;
+}

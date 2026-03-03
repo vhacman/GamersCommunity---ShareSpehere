@@ -6,6 +6,8 @@ import { MatCardModule } from '@angular/material/card';
 import { MatChipsModule } from '@angular/material/chips';
 import { MockDataService, CampagnaCrowdfunding } from '../../../services/mock-data-service';
 import { BoostPopup } from '../boost-popup/boost-popup';
+import { ProgressBar } from '../../shared/progress-bar/progress-bar';
+import { SpazioPubblicitario } from '../../shared/spazio-pubblicitario/spazio-pubblicitario';
 
 @Component({
   selector: 'app-crowdfunding-list',
@@ -16,6 +18,8 @@ import { BoostPopup } from '../boost-popup/boost-popup';
     MatCardModule,
     MatChipsModule,
     BoostPopup,
+    ProgressBar,
+    SpazioPubblicitario,
   ],
   templateUrl: './crowdfunding-list.html',
   styleUrl: './crowdfunding-list.css',

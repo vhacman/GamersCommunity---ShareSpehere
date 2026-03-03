@@ -5,6 +5,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatCardModule } from '@angular/material/card';
 import { MockDataService, CampagnaCrowdfunding, Ricompensa } from '../../../services/mock-data-service';
 import { BoostPopup } from '../boost-popup/boost-popup';
+import { ProgressBar } from '../../shared/progress-bar/progress-bar';
 
 @Component({
   selector: 'app-crowdfunding-detail',
@@ -14,6 +15,7 @@ import { BoostPopup } from '../boost-popup/boost-popup';
     MatIconModule,
     MatCardModule,
     BoostPopup,
+    ProgressBar,
   ],
   templateUrl: './crowdfunding-detail.html',
   styleUrl: './crowdfunding-detail.css',

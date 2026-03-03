@@ -1,1 +1,39 @@
-<p>spazio-pubblicitario works!</p>
+@if (annuncio) {
+  <div class="ad-wrapper" [class]="'ad-' + formato" [style.--ad-colore]="annuncio.colore">
+    <span class="ad-label">Sponsorizzato</span>
+
+    @if (formato === 'leaderboard') {
+      <div class="ad-inner ad-inner--row">
+        <span class="ad-icona">{{ annuncio.icona }}</span>
+        <div class="ad-testo">
+          <span class="ad-sponsor">{{ annuncio.sponsor }}</span>
+          <span class="ad-titolo">{{ annuncio.titolo }}</span>
+          <span class="ad-sub">{{ annuncio.sottotitolo }}</span>
+        </div>
+        <button class="ad-cta">{{ annuncio.cta }}</button>
+      </div>
+    }
+
+    @if (formato === 'sidebar') {
+      <div class="ad-inner ad-inner--col">
+        <span class="ad-icona ad-icona--lg">{{ annuncio.icona }}</span>
+        <span class="ad-sponsor">{{ annuncio.sponsor }}</span>
+        <span class="ad-titolo">{{ annuncio.titolo }}</span>
+        <span class="ad-sub">{{ annuncio.sottotitolo }}</span>
+        <button class="ad-cta">{{ annuncio.cta }}</button>
+      </div>
+    }
+
+    @if (formato === 'inline') {
+      <div class="ad-inner ad-inner--row">
+        <span class="ad-icona">{{ annuncio.icona }}</span>
+        <div class="ad-testo">
+          <span class="ad-sponsor">{{ annuncio.sponsor }}</span>
+          <span class="ad-titolo">{{ annuncio.titolo }}</span>
+          <span class="ad-sub">{{ annuncio.sottotitolo }}</span>
+        </div>
+        <button class="ad-cta">{{ annuncio.cta }}</button>
+      </div>
+    }
+  </div>
+}

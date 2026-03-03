@@ -5,10 +5,11 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatCardModule } from '@angular/material/card';
 import { MockDataService, Articolo, Challenge } from '../../services/mock-data-service';
+import { SpazioPubblicitario } from '../shared/spazio-pubblicitario/spazio-pubblicitario';
 
 @Component({
   selector: 'app-home-page',
-  imports: [RouterLink, LowerCasePipe, MatButtonModule, MatIconModule, MatCardModule],
+  imports: [RouterLink, LowerCasePipe, MatButtonModule, MatIconModule, MatCardModule, SpazioPubblicitario],
   templateUrl: './home-page.html',
   styleUrl: './home-page.css',
 })

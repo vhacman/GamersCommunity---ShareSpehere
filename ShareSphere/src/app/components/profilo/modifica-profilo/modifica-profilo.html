@@ -1,35 +1,61 @@
 <div class="modifica-card">
   <h2 class="modifica-title">Modifica Profilo</h2>
 
+  <!-- ===== NOME =====
+       [(ngModel)] = two-way binding: il campo mostra il valore di 'nome'
+       e aggiorna la variabile ad ogni tasto premuto dall'utente. -->
   <div class="form-group">
     <label>Nome</label>
     <input [(ngModel)]="nome" type="text" placeholder="Il tuo nome">
   </div>
 
+  <!-- ===== USERNAME =====
+       [disabled] = binding condizionale: disabilita l'input se usernameBloccato è true.
+       Il messaggio di errore appare solo quando il campo è bloccato,
+       spiegando all'utente il motivo. -->
   <div class="form-group">
     <label>Username</label>
     <input [(ngModel)]="username" type="text" [disabled]="usernameBloccato" placeholder="@username">
+
     @if (usernameBloccato) {
       <p class="hint-error">Puoi modificare lo username solo una volta al mese.</p>
     }
   </div>
 
+  <!-- ===== DESCRIZIONE =====
+       textarea per testi lunghi. rows="3" imposta l'altezza iniziale
+       visibile (3 righe di testo). -->
   <div class="form-group">
     <label>Descrizione</label>
     <textarea [(ngModel)]="descrizione" placeholder="Raccontati alla community..." rows="3"></textarea>
   </div>
 
+  <!-- ===== FOTO PROFILO =====
+       (change) scatta quando l'utente seleziona un file.
+       $event contiene l'oggetto Event con i file selezionati,
+       passato a caricaFoto() che lo converte in base64.
+       L'anteprima viene mostrata solo se fotoProfilo è valorizzata
+       (stringa non vuota = valore truthy in JavaScript). -->
   <div class="form-group">
     <label>Foto Profilo</label>
     <input type="file" (change)="caricaFoto($event)">
+
     @if (fotoProfilo) {
+      <!-- [src] binding: aggiorna l'immagine in tempo reale
+           non appena fotoProfilo viene valorizzata con il base64 -->
       <img [src]="fotoProfilo" class="preview-img">
     }
   </div>
 
+  <!-- Bottone salvataggio: chiama salvaProfilo() che persiste
+       i dati nel localStorage e aggiorna il messaggio di conferma. -->
   <button class="btn-salva" (click)="salvaProfilo()">Salva Modifiche</button>
 
+  <!-- Messaggio di conferma: visibile solo dopo il salvataggio.
+       'messaggio' è una stringa vuota di default (falsy),
+       diventa truthy dopo salvaProfilo() → "Profilo aggiornato ✔️" -->
   @if (messaggio) {
     <p class="hint-success">{{ messaggio }}</p>
   }
+
 </div>

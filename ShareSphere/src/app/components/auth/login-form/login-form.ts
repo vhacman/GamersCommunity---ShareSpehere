@@ -1,4 +1,4 @@
-import { Component, signal } from '@angular/core';
+import { Component, signal, inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { MatCardModule } from '@angular/material/card';
@@ -38,13 +38,13 @@ const MOCK_USERS = [
   styleUrl: './login-form.css',
 })
 export class LoginForm {
+  // Router iniettato tramite inject()
+  private router = inject(Router);
+
   // Signal per memorizzare i valori dei campi username e password
   // I signal sono reattivi: cambiano automaticamente la UI quando aggiornati
   username = signal('');
   password = signal('');
-
-  // Router iniettato per navigare alla home dopo il login
-  constructor(private router: Router) {}
 
   /**
    * Metodo chiamato quando l'utente clicca sul bottone "Entra".

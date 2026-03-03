@@ -1,34 +1,54 @@
+<!-- Overlay del popup: cliccando fuori si chiude -->
 <div class="popup-overlay" (click)="onChiudi()">
+	<!-- Contenuto del popup: il click qui non chiude il popup (stopPropagation) -->
 	<div class="popup" (click)="$event.stopPropagation()">
 
+		<!-- Se l'utente NON ha ancora acquistato il boost, mostra la selezione piani -->
 		@if (!boosted()) {
 
+			<!-- Bottone per chiudere il popup (X) -->
 			<button class="close-btn" (click)="onChiudi()">✕</button>
-			<h2 class="popup-titolo">🔥 Dai visibilità al tuo progetto</h2>
+			
+			<!-- Titolo e sottotitolo del popup -->
+			<h2 class="popup-titolo">🔥 Dai visibilita al tuo progetto</h2>
 			<p class="popup-subtitle">Scegli un piano boost per mettere in risalto la tua campagna</p>
 
+			<!-- Griglia dei piani di boost disponibili -->
 			<div class="piani-grid">
+				<!-- Ciclo su tutti i piani definiti nell'array -->
 				@for (piano of piani; track piano.id) {
+					<!-- Card del singolo piano: cambia stile se popolare o selezionato -->
 					<div
 						class="piano-card"
 						[class.popolare]="piano.popolare"
 						[class.selezionato]="pianSelezionato() === piano.id"
 						(click)="selezionaPiano(piano.id)"
 					>
+						<!-- Badge "Piu scelto" solo per il piano popolare (Pro) -->
 						@if (piano.popolare) {
-							<span class="badge-popolare">Più scelto</span>
+							<span class="badge-popolare">Piu scelto</span>
 						}
+						
+						<!-- Icona del piano (material icon) -->
 						<mat-icon class="piano-icona">{{ piano.icona }}</mat-icon>
+						
+						<!-- Nome del piano (Base, Pro, Ultra) -->
 						<h3 class="piano-nome">{{ piano.nome }}</h3>
+						
+						<!-- Prezzo e durata del piano -->
 						<div class="piano-prezzo">
 							<span class="prezzo-importo">{{ piano.prezzo }}</span>
 							<span class="prezzo-durata"> / {{ piano.durata }}</span>
 						</div>
+						
+						<!-- Lista delle features/caratteristiche del piano -->
 						<ul class="piano-features">
 							@for (f of piano.features; track f) {
 								<li>✓ {{ f }}</li>
 							}
 						</ul>
+						
+						<!-- Bottone per selezionare questo piano -->
 						<button
 							class="btn-seleziona"
 							[class.btn-filled]="pianSelezionato() === piano.id"
@@ -41,6 +61,7 @@
 				}
 			</div>
 
+			<!-- Bottone finale per confermare l'acquisto: disabilitato se nessun piano e selezionato -->
 			<button
 				class="btn-conferma"
 				[disabled]="!pianSelezionato()"
@@ -50,11 +71,11 @@
 			</button>
 
 		} @else {
-
+			<!-- Se l'utente ha gia acquistato il boost, mostra il messaggio di successo -->
 			<div class="popup-success">
 				<span class="success-icon">🚀</span>
 				<h2>Boost attivato!</h2>
-				<p>La tua campagna è ora in evidenza.</p>
+				<p>La tua campagna e ora in evidenza.</p>
 				<button class="btn-conferma" (click)="onChiudi()">Chiudi</button>
 			</div>
 

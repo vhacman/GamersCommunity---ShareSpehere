@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { LowerCasePipe } from '@angular/common';
 import { MockDataService, Articolo } from '../../../services/mock-data-service';
@@ -14,14 +14,17 @@ import { MockDataService, Articolo } from '../../../services/mock-data-service';
   styleUrl: './articolo-detail.css',
 })
 export class ArticoloDetail {
+  // Servizi iniettati tramite inject()
+  private route = inject(ActivatedRoute);
+  private data = inject(MockDataService);
+
   // Articolo corrente da visualizzare (definito dall'ID nell'URL)
   articolo: Articolo | undefined;
   
   // Lista degli articoli correlati (stessa categoria, escludendo quello corrente)
   correlati: Articolo[] = [];
 
-  // Costruttore: inietta i servizi per accedere ai parametri URL e ai dati mock
-  constructor(private route: ActivatedRoute, private data: MockDataService) {
+  constructor() {
     // Sottoscrizione ai parametri dell'URL (l'ID dell'articolo)
     this.route.params.subscribe(params => {
       const id = +params['id']; // Converte l'ID da stringa a numero

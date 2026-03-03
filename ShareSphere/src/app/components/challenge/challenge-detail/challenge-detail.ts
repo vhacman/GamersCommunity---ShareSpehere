@@ -1,4 +1,4 @@
-import { Component, signal } from '@angular/core';
+import { Component, signal, inject } from '@angular/core';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { MockDataService, Challenge } from '../../../services/mock-data-service';
 
@@ -14,6 +14,10 @@ import { MockDataService, Challenge } from '../../../services/mock-data-service'
   styleUrl: './challenge-detail.css',
 })
 export class ChallengeDetail {
+  // Servizi iniettati tramite inject()
+  private route = inject(ActivatedRoute);
+  private data = inject(MockDataService);
+
   // Challenge corrente da visualizzare (definita dall'ID nell'URL)
   challenge: Challenge | undefined;
   
@@ -23,8 +27,7 @@ export class ChallengeDetail {
   // Signal booleano per tracciare se l'utente ha gia partecipato
   partecipato = signal(false);
 
-  // Costruttore: inietta i servizi per accedere ai parametri URL e ai dati mock
-  constructor(private route: ActivatedRoute, private data: MockDataService) {
+  constructor() {
     // Sottoscrizione ai parametri dell'URL (l'ID della challenge)
     this.route.params.subscribe(params => {
       const id = +params['id']; // Converte l'ID da stringa a numero

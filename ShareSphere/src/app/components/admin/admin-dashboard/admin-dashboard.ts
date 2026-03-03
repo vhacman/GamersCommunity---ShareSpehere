@@ -1,9 +1,13 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatMenuModule } from '@angular/material/menu';
 import { MockDataService, Articolo } from '../../../services/mock-data-service';
 
+/**
+ * Interfaccia per le statistiche mostrate nella dashboard.
+ * Ogni stat ha: icona, etichetta, valore, variazione (delta) e colore.
+ */
 interface StatCard {
   icon: string;
   label: string;
@@ -12,6 +16,10 @@ interface StatCard {
   color: string;
 }
 
+/**
+ * Componente per la dashboard admin.
+ * Mostra le statistiche globali e l'elenco degli articoli.
+ */
 @Component({
   selector: 'app-admin-dashboard',
   imports: [MatIconModule, MatButtonModule, MatMenuModule],
@@ -19,6 +27,10 @@ interface StatCard {
   styleUrl: './admin-dashboard.css',
 })
 export class AdminDashboard {
+  // Servizio dati iniettato tramite inject()
+  private data = inject(MockDataService);
+
+  // Array delle statistiche mostrate nella dashboard
   stats: StatCard[] = [
     { icon: 'group',        label: 'Utenti Totali',        value: '12.5K', delta: '+12%', color: 'purple' },
     { icon: 'article',      label: 'Articoli Pubblicati',  value: '847',   delta: '+8%',  color: 'blue'   },
@@ -26,12 +38,17 @@ export class AdminDashboard {
     { icon: 'trending_up',  label: 'Engagement Rate',      value: '34%',   delta: '+5%',  color: 'green'  },
   ];
 
+  // Lista degli articoli caricati dal servizio mock
   articoli: Articolo[];
 
-  constructor(private data: MockDataService) {
+  constructor() {
     this.articoli = this.data.articoli;
   }
 
+  /**
+   * Restituisce la classe CSS appropriata in base allo stato dell'articolo.
+   * Usato per colorare diversamente i badge degli stati.
+   */
   getStatoBadgeClass(stato: string): string {
     switch (stato) {
       case 'Pubblicato':   return 'badge-pubblicato';

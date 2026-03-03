@@ -1,7 +1,8 @@
+<!-- Se il form non e stato ancora inviato, mostra il modulo di creazione -->
 @if (!inviato()) {
   <div class="page-wrapper">
 
-    <!-- Header -->
+    <!-- Header con breadcrumb e titolo -->
     <a routerLink="/crowdfunding" class="back-link">
       <mat-icon>arrow_back</mat-icon>
       Torna alle campagne
@@ -11,19 +12,22 @@
 
     <div class="form-grid">
 
-      <!-- Colonna sinistra: form principale -->
+      <!-- Colonna sinistra: form principale con i campi di input -->
       <div class="col-left">
 
+        <!-- Card: informazioni principali della campagna -->
         <mat-card class="form-card">
           <mat-card-content>
             <h2>Informazioni principali</h2>
 
+            <!-- Campo: titolo della campagna -->
             <mat-form-field appearance="outline" class="full-width">
               <mat-label>Titolo campagna</mat-label>
               <input matInput [ngModel]="titolo()" (ngModelChange)="titolo.set($event)" placeholder="Es. Torneo Spring Legends 2025" />
               <mat-icon matPrefix>campaign</mat-icon>
             </mat-form-field>
 
+            <!-- Campo: descrizione dettagliata -->
             <mat-form-field appearance="outline" class="full-width">
               <mat-label>Descrizione</mat-label>
               <textarea matInput [ngModel]="descrizione()" (ngModelChange)="descrizione.set($event)"
@@ -31,13 +35,16 @@
               <mat-icon matPrefix>description</mat-icon>
             </mat-form-field>
 
+            <!-- Riga con due campi affiancati: obiettivo e area -->
             <div class="row-2">
+              <!-- Campo: obiettivo economico in euro -->
               <mat-form-field appearance="outline">
                 <mat-label>Obiettivo (€)</mat-label>
                 <input matInput type="number" [ngModel]="obiettivo()" (ngModelChange)="obiettivo.set($event)" min="1" />
                 <mat-icon matPrefix>euro</mat-icon>
               </mat-form-field>
 
+              <!-- Campo: area tematica (dropdown) -->
               <mat-form-field appearance="outline">
                 <mat-label>Area tematica</mat-label>
                 <mat-select [ngModel]="area()" (ngModelChange)="area.set($event)">
@@ -49,13 +56,16 @@
               </mat-form-field>
             </div>
 
+            <!-- Riga con due campi: scadenza e immagine -->
             <div class="row-2">
+              <!-- Campo: data di scadenza -->
               <mat-form-field appearance="outline">
                 <mat-label>Scadenza</mat-label>
                 <input matInput type="date" [ngModel]="scadenza()" (ngModelChange)="scadenza.set($event)" />
                 <mat-icon matPrefix>calendar_today</mat-icon>
               </mat-form-field>
 
+              <!-- Campo: URL immagine di copertina -->
               <mat-form-field appearance="outline">
                 <mat-label>URL immagine copertina</mat-label>
                 <input matInput [ngModel]="immagine()" (ngModelChange)="immagine.set($event)" placeholder="https://..." />
@@ -66,19 +76,22 @@
           </mat-card-content>
         </mat-card>
 
-        <!-- Ricompense -->
+        <!-- Card: sezione per aggiungere ricompense -->
         <mat-card class="form-card">
           <mat-card-content>
             <div class="ricompense-header">
               <h2>🎁 Ricompense</h2>
+              <!-- Bottone per aggiungere una nuova ricompensa -->
               <button mat-stroked-button class="btn-aggiungi" (click)="aggiungiRicompensa()">
                 <mat-icon>add</mat-icon>
                 Aggiungi
               </button>
             </div>
 
+            <!-- Ciclo su tutte le ricompense inserite -->
             @for (r of ricompense(); track $index) {
               <div class="ricompensa-form">
+                <!-- Intestazione con numero ricompensa e bottone elimina -->
                 <div class="ricompensa-top">
                   <span class="ricompensa-num">Ricompensa {{ $index + 1 }}</span>
                   @if (ricompense().length > 1) {
@@ -88,6 +101,7 @@
                   }
                 </div>
 
+                <!-- Riga con titolo e importo minimo -->
                 <div class="row-2">
                   <mat-form-field appearance="outline">
                     <mat-label>Titolo</mat-label>
@@ -101,11 +115,13 @@
                   </mat-form-field>
                 </div>
 
+                <!-- Campo: descrizione della ricompensa -->
                 <mat-form-field appearance="outline" class="full-width">
                   <mat-label>Descrizione ricompensa</mat-label>
                   <input matInput [ngModel]="r.descrizione" (ngModelChange)="aggiornaCampoRicompensa($index, 'descrizione', $event)" />
                 </mat-form-field>
 
+                <!-- Campo: URL immagine della ricompensa -->
                 <mat-form-field appearance="outline" class="full-width">
                   <mat-label>URL immagine ricompensa</mat-label>
                   <input matInput [ngModel]="r.immagine" (ngModelChange)="aggiornaCampoRicompensa($index, 'immagine', $event)" placeholder="https://..." />
@@ -119,26 +135,32 @@
 
       </div>
 
-      <!-- Colonna destra: anteprima obiettivo -->
+      <!-- Colonna destra: anteprima in tempo reale della campagna -->
       <div class="col-right">
         <mat-card class="preview-card">
           <mat-card-content>
             <h3>Anteprima campagna</h3>
 
+            <!-- Titolo dinamico che si aggiorna mentre l'utente scrive -->
             <div class="preview-titolo">{{ titolo() || 'Titolo campagna...' }}</div>
+            <!-- Area tematica selezionata -->
             <div class="preview-area">{{ area() || 'Area tematica' }}</div>
-            <p class="preview-desc">{{ descrizione() || 'La descrizione apparirà qui...' }}</p>
+            <!-- Descrizione dinamica -->
+            <p class="preview-desc">{{ descrizione() || 'La descrizione apparira qui...' }}</p>
 
+            <!-- Obiettivo economico formattato -->
             <div class="preview-obiettivo">
               <span class="preview-label">Obiettivo</span>
               <span class="preview-valore">{{ obiettivo() | number }} €</span>
             </div>
 
+            <!-- Barra di progresso (sempre a 0 nell'anteprima) -->
             <div class="preview-bar-bg">
               <div class="preview-bar-fill"></div>
             </div>
             <p class="preview-zero">0% raccolto</p>
 
+            <!-- Data di scadenza -->
             <div class="preview-scadenza">
               <mat-icon class="icon-small">calendar_today</mat-icon>
               {{ scadenza() || 'Data scadenza' }}
@@ -149,9 +171,11 @@
 
     </div>
 
-    <!-- Footer azioni -->
+    <!-- Footer con bottoni Annulla e Pubblica -->
     <div class="form-footer">
+      <!-- Annulla: ritorna alla lista senza salvare -->
       <button mat-stroked-button routerLink="/crowdfunding">Annulla</button>
+      <!-- Pubblica: salva solo se il form e valido -->
       <button mat-flat-button class="btn-pubblica" [disabled]="!formValido()" (click)="salva()">
         <mat-icon>rocket_launch</mat-icon>
         Pubblica campagna
@@ -161,7 +185,7 @@
   </div>
 
 } @else {
-  <!-- Successo -->
+  <!-- Messaggio di successo dopo l'invio del form -->
   <div class="success-wrapper">
     <span class="success-icon">🚀</span>
     <h2>Campagna creata!</h2>

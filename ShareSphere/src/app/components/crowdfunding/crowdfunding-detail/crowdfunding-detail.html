@@ -1,13 +1,14 @@
+<!-- Sezione visibile solo se la campagna e stata caricata correttamente -->
 @if (campagna) {
   <div class="page-wrapper">
 
-    <!-- Back -->
+    <!-- Breadcrumb: link per tornare alla lista delle campagne -->
     <a routerLink="/crowdfunding" class="back-link">
       <mat-icon>arrow_back</mat-icon>
       Torna alle campagne
     </a>
 
-    <!-- Hero -->
+    <!-- Hero: immagine di copertina con titolo e autore sovrapposti -->
     <div class="hero-wrapper">
       <img [src]="campagna.immagine" [alt]="campagna.titolo" class="hero-img" />
       <div class="hero-overlay">
@@ -16,10 +17,12 @@
       </div>
     </div>
 
+    <!-- Layout a due colonne: descrizione/ricompense a sinistra, progress a destra -->
     <div class="content-grid">
 
-      <!-- Colonna sinistra -->
+      <!-- Colonna sinistra: descrizione e ricompense -->
       <div class="col-left">
+        <!-- Card con la descrizione completa della campagna -->
         <mat-card class="section-card">
           <mat-card-content>
             <h2>Descrizione</h2>
@@ -27,15 +30,19 @@
           </mat-card-content>
         </mat-card>
 
+        <!-- Sezione ricompense: griglia di card per ogni ricompensa disponibile -->
         <h2 class="section-title">🎁 Ricompense</h2>
         <div class="ricompense-grid">
+          <!-- Ciclo su tutte le ricompense della campagna -->
           @for (ricompensa of campagna.ricompense; track $index) {
             <mat-card class="ricompensa-card">
               <img [src]="ricompensa.immagine" [alt]="ricompensa.titolo" class="ricompensa-img" />
               <mat-card-content>
+                <!-- Importo minimo richiesto per questa ricompensa -->
                 <div class="ricompensa-importo">Da {{ formatEuro(ricompensa.importoMinimo) }}</div>
                 <h3 class="ricompensa-titolo">{{ ricompensa.titolo }}</h3>
                 <p class="ricompensa-desc">{{ ricompensa.descrizione }}</p>
+                <!-- Pulsante per selezionare questa ricompensa -->
                 <button class="btn-scegli" (click)="apriRicompensa(ricompensa)">Scegli questa ricompensa</button>
               </mat-card-content>
             </mat-card>
@@ -43,19 +50,22 @@
         </div>
       </div>
 
-      <!-- Colonna destra: progress + boost -->
+      <!-- Colonna destra: barra di progresso e pulsanti di azione -->
       <div class="col-right">
         <mat-card class="progress-card">
           <mat-card-content>
+            <!-- Importo raccolto vs obiettivo -->
             <div class="importi">
               <span class="raggiunto">{{ formatEuro(campagna.raggiunto) }}</span>
               <span class="obiettivo">di {{ formatEuro(campagna.obiettivo) }}</span>
             </div>
+            <!-- Componente barra di progresso personalizzato -->
             <app-progress-bar
               [percentuale]="getPercentuale()"
               [colore]="getColoreProgressBar()"
               [altezza]="14"
             />
+            <!-- Statistiche: percentuale raggiunta e data di scadenza -->
             <div class="progress-stats">
               <span class="percentuale">{{ getPercentuale() }}% raggiunto</span>
               <span class="scadenza">
@@ -63,10 +73,12 @@
                 {{ campagna.scadenza }}
               </span>
             </div>
+            <!-- Pulsante per aprire il popup di donazione -->
             <button mat-flat-button class="btn-dona" (click)="apriDonazione()">
               <mat-icon>favorite</mat-icon>
               Dona a questa campagna
             </button>
+            <!-- Pulsante per aprire il popup di boost -->
             <button mat-flat-button class="btn-boost" (click)="apriBoost()">
               <mat-icon>rocket_launch</mat-icon>
               Boosta questa campagna
@@ -77,7 +89,7 @@
 
     </div>
 
-    <!-- ── POPUP RICOMPENSA ──────────────────────────────────────────── -->
+    <!-- POPUP RICOMPENSA: mostrato quando l'utente seleziona una ricompensa -->
     @if (ricompensaPopupAperta() && ricompensaScelta()) {
       <div class="popup-overlay" (click)="chiudiRicompensaPopup()">
         <div class="popup popup-small" (click)="$event.stopPropagation()">
@@ -94,12 +106,12 @@
       </div>
     }
 
-    <!-- ── POPUP BOOST ─────────────────────────────────────────────── -->
+    <!-- POPUP BOOST: componente separato per il boost -->
     @if (boostPopupAperto()) {
       <app-boost-popup (chiudi)="chiudiBoost()" />
     }
 
-    <!-- ── POPUP DONAZIONE ─────────────────────────────────────────── -->
+    <!-- POPUP DONAZIONE: form per inserire l'importo da donare -->
     @if (donazionePopupAperta()) {
       <div class="popup-overlay" (click)="chiudiDonazione()">
         <div class="popup popup-small" (click)="$event.stopPropagation()">
@@ -109,6 +121,7 @@
             <h2>Supporta questa campagna</h2>
             <p class="donazione-subtitle">La tua donazione fa la differenza!</p>
             
+            <!-- Pulsanti quick-select per importi predefiniti -->
             <div class="donazione-importi">
               <button 
                 class="importo-btn" 
@@ -128,11 +141,13 @@
                 (click)="donazioneImporto = 100">100 €</button>
             </div>
 
+            <!-- Campo per importo personalizzato -->
             <div class="donazione-custom">
               <label>oppure inserisci un importo personalizzato</label>
               <input type="number" [(ngModel)]="donazioneImporto" min="1" class="importo-input">
             </div>
 
+            <!-- Bottone di conferma donazione -->
             <button class="btn-conferma" (click)="confermaDonazione()">
               Dona {{ donazioneImporto }} €
             </button>
@@ -143,6 +158,7 @@
 
   </div>
 } @else {
+  <!-- Messaggio di errore se la campagna non viene trovata -->
   <div class="not-found">
     <p>Campagna non trovata.</p>
     <a routerLink="/crowdfunding" mat-flat-button>Torna alla lista</a>

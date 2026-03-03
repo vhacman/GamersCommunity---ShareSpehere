@@ -1,51 +1,65 @@
+<!-- Pagina principale che mostra l'elenco di tutte le challenge disponibili -->
 <div class="page-wrapper">
 
-  <!-- ── HERO ──────────────────────────────────────────────────────────── -->
+  <!-- Hero: sezione introduttiva con stats generali -->
   <section class="cl-hero">
+    <!-- Testo principale del hero -->
     <div class="cl-hero-text">
       <span class="cl-hero-badge">🏆 ShareSphere Challenge</span>
       <h1>Metti alla prova<br><span class="cl-accent">le tue passioni</span></h1>
       <p class="cl-hero-sub">Partecipa alle sfide della community, guadagna badge esclusivi e stringi nuove amicizie attraverso il gioco e la condivisione.</p>
     </div>
+    <!-- Statistiche generali mostrate nel hero -->
     <div class="cl-hero-stats">
       <div class="cl-stat">
+        <!-- Numero totale di challenge nel sistema -->
         <span class="cl-stat-val">{{ tutte.length }}</span>
         <span class="cl-stat-lab">Challenge totali</span>
       </div>
       <div class="cl-stat">
+        <!-- Numero di challenge attive (calcolato dalla proprietà attiveCount) -->
         <span class="cl-stat-val">{{ attiveCount }}</span>
         <span class="cl-stat-lab">In corso</span>
       </div>
       <div class="cl-stat">
+        <!-- Valore fisso per ora (potrebbe essere calcolato dinamicamente) -->
         <span class="cl-stat-val">1.4K</span>
         <span class="cl-stat-lab">Partecipanti attivi</span>
       </div>
     </div>
   </section>
 
-  <!-- ── FILTRI ─────────────────────────────────────────────────────────── -->
+  <!-- Filtri: bottoni per filtrare le challenge per stato -->
   <div class="cl-filtri">
+    <!-- Filtro 'tutte': mostra tutte le challenge -->
     <button class="cl-filtro-btn" [class.active]="filtro() === 'tutte'" (click)="filtro.set('tutte')">
       Tutte
     </button>
+    <!-- Filtro 'in-corso': mostra solo le challenge attive -->
     <button class="cl-filtro-btn" [class.active]="filtro() === 'in-corso'" (click)="filtro.set('in-corso')">
       🔴 In corso
     </button>
+    <!-- Filtro 'concluse': mostra solo le challenge terminate -->
     <button class="cl-filtro-btn" [class.active]="filtro() === 'concluse'" (click)="filtro.set('concluse')">
       ✅ Concluse
     </button>
   </div>
 
-  <!-- ── GRIGLIA CHALLENGE ──────────────────────────────────────────────── -->
+  <!-- Griglia delle challenge: cicla sulle challenge filtrate (computed reattivo) -->
   <div class="cl-grid">
+    <!-- Per ogni challenge filtrata, crea una card cliccabile -->
     @for (c of challengeFiltrate(); track c.id) {
+      <!-- Link alla pagina di dettaglio della challenge; classe 'conclusa' se non attiva -->
       <a [routerLink]="['/challenge', c.id]" class="cl-card" [class.cl-card--conclusa]="!c.attiva">
 
-        <!-- Header colorato -->
+        <!-- Header della card: sfondo colorato in base all'area tematica -->
         <div class="cl-card-header" [style.background]="getAreaColore(c.area) + '18'">
+          <!-- Icona dell'area tematica -->
           <span class="cl-card-header-icon">{{ getAreaIcona(c.area) }}</span>
           <div class="cl-card-header-info">
+            <!-- Nome dell'area tematica -->
             <span class="cl-card-area-label" [style.color]="getAreaColore(c.area)">{{ c.area }}</span>
+            <!-- Badge di stato: 'Conclusa' o 'In corso' -->
             @if (!c.attiva) {
               <span class="cl-card-conclusa-tag">Conclusa</span>
             } @else {
@@ -54,38 +68,44 @@
           </div>
         </div>
 
-        <!-- Body -->
+        <!-- Corpo della card: titolo, descrizione e dettagli -->
         <div class="cl-card-body">
+          <!-- Titolo della challenge -->
           <h3 class="cl-card-titolo">{{ c.titolo }}</h3>
+          <!-- Descrizione breve -->
           <p class="cl-card-desc">{{ c.descrizione }}</p>
 
-          <!-- Premio -->
+          <!-- Premio della challenge -->
           <div class="cl-card-premio">
             🎁 {{ c.premio }}
           </div>
 
-          <!-- Progress partecipanti -->
+          <!-- Barra di progresso (solo se c'è un obiettivo definito) -->
           @if (c.obiettivo) {
             <div class="cl-card-progress-wrap">
               <div class="cl-card-progress-bar">
+                <!-- Larghezza dinamica basata sulla percentuale di progresso -->
                 <div class="cl-card-progress-fill"
                      [style.width.%]="getProgressoPercentuale(c)"
                      [style.background]="getAreaColore(c.area)">
                 </div>
               </div>
+              <!-- Label che mostra partecipanti attuali / obiettivo -->
               <span class="cl-card-progress-label">
                 {{ c.partecipanti }} / {{ c.obiettivo }} partecipanti
               </span>
             </div>
           }
 
-          <!-- Footer -->
+          <!-- Footer della card: giorni rimasti e call-to-action -->
           <div class="cl-card-footer">
+            <!-- Se attiva: mostra giorni rimasti; se conclusa: mostra data di scadenza -->
             @if (c.attiva) {
               <span class="cl-card-giorni">⏳ {{ giorniRimasti(c.scadenza) }} giorni rimasti</span>
             } @else {
               <span class="cl-card-giorni cl-card-giorni--grey">Scaduta il {{ c.scadenza }}</span>
             }
+            <!-- Testo del bottone: cambia in base allo stato -->
             <span class="cl-card-cta" [class.cl-card-cta--grey]="!c.attiva">
               {{ c.attiva ? 'Partecipa →' : 'Vedi risultati →' }}
             </span>

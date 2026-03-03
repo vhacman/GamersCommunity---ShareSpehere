@@ -4,11 +4,11 @@ import { FormsModule } from '@angular/forms';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { Gruppo, MockDataService, MembroGruppo } from '../../../services/mock-data-service';
+import { SpazioPubblicitario } from "../../shared/spazio-pubblicitario/spazio-pubblicitario";
 
 @Component({
   selector: 'app-gruppi-list',
-  standalone: true,
-  imports: [CommonModule, FormsModule, MatIconModule, MatButtonModule],
+  imports: [CommonModule, FormsModule, MatIconModule, MatButtonModule, SpazioPubblicitario],
   templateUrl: './gruppi-list.html',
   styleUrl: './gruppi-list.css',
 })

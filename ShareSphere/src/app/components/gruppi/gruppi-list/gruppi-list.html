@@ -1,1 +1,70 @@
-<p>gruppi-list works!</p>
+<div class="app-container">
+
+  <div class="modal-overlay" *ngIf="isCreateModalOpen">
+    <div class="modal-card">
+      <h2>Create New Community</h2>
+      <div class="form-group">
+        <label>Group Name</label>
+        <input type="text" [(ngModel)]="newGroup.nome" placeholder="Enter name...">
+      </div>
+      <div class="form-group">
+        <label>Category</label>
+        <select [(ngModel)]="newGroup.area">
+          <option *ngFor="let area of areas.slice(1)" [value]="area">{{area}}</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Description</label>
+        <textarea [(ngModel)]="newGroup.descrizione" placeholder="Tell us about the group..."></textarea>
+      </div>
+      <div class="modal-actions">
+        <button class="btn-cancel" (click)="closeModal()">Cancel</button>
+        <button class="btn-save" (click)="createGroup()">Create Now</button>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="!selectedGroup">
+    <header class="main-header">
+      <h1>Communities</h1>
+      <button class="add-btn" (click)="openModal()">+ Create</button>
+    </header>
+
+    <div class="filter-chips">
+      <span *ngFor="let area of areas" 
+            (click)="filterArea = area" 
+            [class.active]="filterArea === area">
+        {{area}}
+      </span>
+    </div>
+
+    <div class="cards-container">
+      <div class="group-card" *ngFor="let g of filteredGroups" (click)="selectGroup(g)">
+        <div class="card-img"><img [src]="g.immagine"></div>
+        <div class="card-body">
+          <span class="area-tag" [ngClass]="g.area.toLowerCase()">{{g.area}}</span>
+          <h3>{{g.nome}}</h3>
+          <p>{{g.membri}} members</p>
+          <button class="join-btn" (click)="joinGroup($event, g)">Join</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="detail-container" *ngIf="selectedGroup">
+    <button class="back-link" (click)="backToList()">← Back to list</button>
+    <div class="hero-image">
+      <img [src]="selectedGroup.immagine">
+      <div class="hero-content">
+        <h1>{{selectedGroup.nome}}</h1>
+        <p>{{selectedGroup.area}} Community</p>
+      </div>
+    </div>
+    <div class="detail-body">
+      <h3>About</h3>
+      <p>{{selectedGroup.descrizione}}</p>
+      <button class="join-large" (click)="joinGroup($event, selectedGroup)">Join this Group</button>
+    </div>
+  </div>
+
+</div>

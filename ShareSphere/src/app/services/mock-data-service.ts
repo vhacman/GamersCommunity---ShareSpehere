@@ -8,7 +8,7 @@ export interface Utente {
   username: string;
   avatar: string;
   bio: string;
-  ruolo: 'admin' | 'user';
+  ruolo: 'admin' | 'moderator' | 'content_creator_verificato' | 'user';
   challenge: number;
   amici: number;
   punti: number;
@@ -102,7 +102,7 @@ export class MockDataService {
       username: '@ale_gamer_pro',
       avatar: 'https://i.pravatar.cc/150?img=11',
       bio: 'Gamer per passione, community builder per scelta. Amo i giochi cooperativi e credo nel potere delle community positive. Sempre pronto per nuove sfide! 🚀',
-      ruolo: 'admin',
+      ruolo: 'admin' as const,
       challenge: 12,
       amici: 284,
       punti: 1200,
@@ -125,7 +125,7 @@ export class MockDataService {
       username: '@giulia_travels',
       avatar: 'https://i.pravatar.cc/150?img=5',
       bio: 'Viaggiatrice seriale e appassionata di fotografia. Condivido le mie avventure con la community!',
-      ruolo: 'user',
+      ruolo: 'content_creator_verificato' as const,
       challenge: 7,
       amici: 150,
       punti: 850,
@@ -141,7 +141,7 @@ export class MockDataService {
       username: '@luca_sport',
       avatar: 'https://i.pravatar.cc/150?img=15',
       bio: 'Sportivo e amante della natura. Sempre in cerca di nuove sfide fisiche!',
-      ruolo: 'user',
+      ruolo: 'moderator' as const,
       challenge: 5,
       amici: 98,
       punti: 430,

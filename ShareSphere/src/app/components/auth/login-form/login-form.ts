@@ -9,9 +9,10 @@ import { MatIconModule } from '@angular/material/icon';
 
 // Utenti mock (niente backend)
 const MOCK_USERS = [
-  { username: 'admin', password: 'admin123', ruolo: 'admin', nome: 'Admin User' },
-  { username: 'mario', password: 'mario123', ruolo: 'user', nome: 'Mario Rossi' },
-  { username: 'giulia', password: 'giulia123', ruolo: 'user', nome: 'Giulia Bianchi' },
+  { username: 'admin',   password: 'admin123',   ruolo: 'admin',                      nome: 'Alessandro R.' },
+  { username: 'mod',     password: 'mod123',     ruolo: 'moderator',                  nome: 'Luca P.' },
+  { username: 'creator', password: 'creator123', ruolo: 'content_creator_verificato', nome: 'Giulia M.' },
+  { username: 'user',    password: 'user123',    ruolo: 'user',                       nome: 'Mario Rossi' },
 ];
 
 @Component({

@@ -245,10 +245,12 @@ src/app/components/
 
 - **Data inizio:** 2026-03-03
 - **Team:**
-  - vhacman
-  - portanovadomenico-dot
-  - GinoPasti
-  - EliasRaccoon
+  - Viorica Gabriela Hacman
+  - Domenico Portanova
+  - Carlomaria Lanna
+  - Adriano Mastrobuoni
+  - Angelo Rusu
+  - Jojo de Andrade Rocha
 
 ---
 

@@ -1,1 +1,154 @@
-<p>crowdfunding-detail works!</p>
+@if (campagna) {
+  <div class="page-wrapper">
+
+    <!-- Back -->
+    <a routerLink="/crowdfunding" class="back-link">
+      <mat-icon>arrow_back</mat-icon>
+      Torna alle campagne
+    </a>
+
+    <!-- Hero -->
+    <div class="hero-wrapper">
+      <img [src]="campagna.immagine" [alt]="campagna.titolo" class="hero-img" />
+      <div class="hero-overlay">
+        <h1>{{ campagna.titolo }}</h1>
+        <p>di {{ campagna.autore }}</p>
+      </div>
+    </div>
+
+    <div class="content-grid">
+
+      <!-- Colonna sinistra -->
+      <div class="col-left">
+        <mat-card class="section-card">
+          <mat-card-content>
+            <h2>Descrizione</h2>
+            <p class="descrizione">{{ campagna.descrizione }}</p>
+          </mat-card-content>
+        </mat-card>
+
+        <h2 class="section-title">🎁 Ricompense</h2>
+        <div class="ricompense-grid">
+          @for (ricompensa of campagna.ricompense; track $index) {
+            <mat-card class="ricompensa-card">
+              <img [src]="ricompensa.immagine" [alt]="ricompensa.titolo" class="ricompensa-img" />
+              <mat-card-content>
+                <div class="ricompensa-importo">Da {{ formatEuro(ricompensa.importoMinimo) }}</div>
+                <h3 class="ricompensa-titolo">{{ ricompensa.titolo }}</h3>
+                <p class="ricompensa-desc">{{ ricompensa.descrizione }}</p>
+                <button class="btn-scegli" (click)="apriBoost()">Scegli questa ricompensa</button>
+              </mat-card-content>
+            </mat-card>
+          }
+        </div>
+      </div>
+
+      <!-- Colonna destra: progress + boost -->
+      <div class="col-right">
+        <mat-card class="progress-card">
+          <mat-card-content>
+            <div class="importi">
+              <span class="raggiunto">{{ formatEuro(campagna.raggiunto) }}</span>
+              <span class="obiettivo">di {{ formatEuro(campagna.obiettivo) }}</span>
+            </div>
+            <div class="progress-bar-bg">
+              <div
+                class="progress-bar-fill"
+                [style.width.%]="getPercentuale()"
+                [style.background]="getColoreProgressBar()"
+              ></div>
+            </div>
+            <div class="progress-stats">
+              <span class="percentuale">{{ getPercentuale() }}% raggiunto</span>
+              <span class="scadenza">
+                <mat-icon class="icon-small">calendar_today</mat-icon>
+                {{ campagna.scadenza }}
+              </span>
+            </div>
+            <button mat-flat-button class="btn-boost" (click)="apriBoost()">
+              <mat-icon>rocket_launch</mat-icon>
+              Boosta questa campagna
+            </button>
+          </mat-card-content>
+        </mat-card>
+      </div>
+
+    </div>
+
+    <!-- ── POPUP BOOST ─────────────────────────────────────────────── -->
+    @if (boostPopupAperto()) {
+      <div class="popup-overlay" (click)="chiudiBoost()">
+        <div class="popup" (click)="$event.stopPropagation()">
+
+          @if (!boosted()) {
+
+            <button class="close-btn" (click)="chiudiBoost()">✕</button>
+            <h2 class="popup-titolo">🔥 Dai visibilità al tuo progetto</h2>
+            <p class="popup-subtitle">Scegli un piano boost per mettere in risalto la tua campagna</p>
+
+            <!-- 3 piani -->
+            <div class="piani-grid">
+              @for (piano of piani; track piano.id) {
+                <div
+                  class="piano-card"
+                  [class.popolare]="piano.popolare"
+                  [class.selezionato]="pianSelezionato() === piano.id"
+                  (click)="selezionaPiano(piano.id)"
+                >
+                  @if (piano.popolare) {
+                    <span class="badge-popolare">Più scelto</span>
+                  }
+                  <mat-icon class="piano-icona">{{ piano.icona }}</mat-icon>
+                  <h3 class="piano-nome">{{ piano.nome }}</h3>
+                  <div class="piano-prezzo">
+                    <span class="prezzo-importo">{{ piano.prezzo }}</span>
+                    <span class="prezzo-durata"> / {{ piano.durata }}</span>
+                  </div>
+                  <ul class="piano-features">
+                    @for (f of piano.features; track f) {
+                      <li>✓ {{ f }}</li>
+                    }
+                  </ul>
+                  <button
+                    class="btn-seleziona"
+                    [class.btn-filled]="piano.popolare"
+                    [class.btn-outline]="!piano.popolare"
+                    (click)="selezionaPiano(piano.id); $event.stopPropagation()"
+                  >
+                    Seleziona
+                  </button>
+                </div>
+              }
+            </div>
+
+            <button
+              class="btn-conferma"
+              [disabled]="!pianSelezionato()"
+              (click)="confermaBoost()"
+            >
+              Attiva boost
+            </button>
+
+          } @else {
+
+            <!-- Successo -->
+            <div class="popup-success">
+              <span class="success-icon">🚀</span>
+              <h2>Boost attivato!</h2>
+              <p>La tua campagna è ora in evidenza.</p>
+              <button class="btn-conferma" (click)="chiudiBoost()">Chiudi</button>
+            </div>
+
+          }
+
+        </div>
+      </div>
+    }
+
+  </div>
+} @else {
+  <div class="not-found">
+    <p>Campagna non trovata.</p>
+    <a routerLink="/crowdfunding" mat-flat-button>Torna alla lista</a>
+  </div>
+}

@@ -3,7 +3,6 @@ import { LoginForm } from './components/auth/login-form/login-form';
 import { HomePage } from './components/home-page/home-page';
 import { Profilo } from './components/profilo/profilo';
 import { GruppiList } from './components/gruppi/gruppi-list/gruppi-list';
-import { GruppoDetail } from './components/gruppi/gruppo-detail/gruppo-detail';
 import { CrowdfundingList } from './components/crowdfunding/crowdfunding-list/crowdfunding-list';
 import { CrowdfundingForm } from './components/crowdfunding/crowdfunding-form/crowdfunding-form';
 import { CrowdfundingDetail } from './components/crowdfunding/crowdfunding-detail/crowdfunding-detail';
@@ -13,16 +12,15 @@ import { AdminArticoli } from './components/admin/admin-articoli/admin-articoli'
 import { AdminChallenge } from './components/admin/admin-challenge/admin-challenge';
 
 export const routes: Routes = [
-  { path: '',                  redirectTo: 'home', pathMatch: 'full' },
-  { path: 'login',             component: LoginForm },
-  { path: 'home',              component: HomePage },
-  { path: 'profilo',           component: Profilo },
-  { path: 'profilo/:id',       component: Profilo },
-  { path: 'gruppi',            component: GruppiList },
-  { path: 'gruppi/:id',        component: GruppoDetail },
-  { path: 'crowdfunding',      component: CrowdfundingList },
-  { path: 'crowdfunding/nuova',component: CrowdfundingForm },
-  { path: 'crowdfunding/:id',  component: CrowdfundingDetail },
+  { path: '',                   redirectTo: 'home', pathMatch: 'full' },
+  { path: 'login',              component: LoginForm },
+  { path: 'home',               component: HomePage },
+  { path: 'profilo',            component: Profilo },
+  { path: 'profilo/:id',        component: Profilo },
+  { path: 'gruppi',             component: GruppiList },
+  { path: 'crowdfunding',       component: CrowdfundingList },
+  { path: 'crowdfunding/nuova', component: CrowdfundingForm },
+  { path: 'crowdfunding/:id',   component: CrowdfundingDetail },
   {
     path: 'admin',
     component: AdminLayout,

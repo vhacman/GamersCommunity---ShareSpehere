@@ -1,1 +1,75 @@
-<p>crowdfunding-list works!</p>
+<div class="page-wrapper">
+
+  <!-- Header -->
+  <div class="page-header">
+    <div>
+      <h1>Crowdfunding</h1>
+      <p>Supporta i progetti della community e vinci ricompense esclusive</p>
+    </div>
+    <button mat-flat-button routerLink="/crowdfunding/nuova" class="btn-nuova">
+      <mat-icon>add</mat-icon>
+      Nuova Campagna
+    </button>
+  </div>
+
+  <!-- Lista campagne -->
+  <div class="campagne-grid">
+    @for (campagna of campagne; track campagna.id) {
+      <mat-card class="campagna-card">
+
+        <!-- Immagine -->
+        <div class="card-img-wrapper">
+          <img [src]="campagna.immagine" [alt]="campagna.titolo" class="card-img" />
+          <span class="card-area">{{ campagna.ricompense.length }} ricompense</span>
+        </div>
+
+        <mat-card-content class="card-body">
+
+          <!-- Titolo e autore -->
+          <h2 class="card-titolo">{{ campagna.titolo }}</h2>
+          <p class="card-autore">
+            <mat-icon class="icon-small">person</mat-icon>
+            {{ campagna.autore }}
+          </p>
+          <p class="card-descrizione">{{ campagna.descrizione }}</p>
+
+          <!-- Progress bar -->
+          <div class="progress-section">
+            <div class="progress-bar-bg">
+              <div
+                class="progress-bar-fill"
+                [style.width.%]="getPercentuale(campagna)"
+                [style.background]="getColoreProgressBar(getPercentuale(campagna))"
+              ></div>
+            </div>
+            <div class="progress-info">
+              <span class="progress-raggiunto">{{ formatEuro(campagna.raggiunto) }} raccolti</span>
+              <span class="progress-percentuale">{{ getPercentuale(campagna) }}%</span>
+            </div>
+            <p class="progress-obiettivo">Obiettivo: {{ formatEuro(campagna.obiettivo) }}</p>
+          </div>
+
+          <!-- Scadenza -->
+          <p class="card-scadenza">
+            <mat-icon class="icon-small">calendar_today</mat-icon>
+            Scadenza: {{ campagna.scadenza }}
+          </p>
+
+        </mat-card-content>
+
+        <!-- Azioni -->
+        <mat-card-actions class="card-actions">
+          <button mat-flat-button class="btn-dettaglio" [routerLink]="['/crowdfunding', campagna.id]">
+            Scopri di più
+          </button>
+          <button mat-stroked-button class="btn-boost" [routerLink]="['/crowdfunding', campagna.id]">
+            <mat-icon>rocket_launch</mat-icon>
+            Boost
+          </button>
+        </mat-card-actions>
+
+      </mat-card>
+    }
+  </div>
+
+</div>

@@ -1,3 +1,10 @@
+// ═══════════════════════════════════════════════════════════════════════
+// SEZIONE DI: Jojo de Andrade Rocha
+// PRESENTAZIONE: Punto 1.6 - Admin Utenti
+//   Gestione utenti: statistiche (totali, attivi, creator, sospesi),
+//   tabella con filtro per ruolo (Admin/Moderatore/Creator/Utente),
+//   avatar colorati per ruolo, stato Attivo/Sospeso.
+// ═══════════════════════════════════════════════════════════════════════
 import { Component, signal } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';

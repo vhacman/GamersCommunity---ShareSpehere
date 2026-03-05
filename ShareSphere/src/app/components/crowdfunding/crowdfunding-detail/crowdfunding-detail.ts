@@ -1,3 +1,10 @@
+// ═══════════════════════════════════════════════════════════════════════
+// SEZIONE DI: Gabriela Hacman (Scrum Master)
+// PRESENTAZIONE: Punto 1.4 - Crowdfunding (Dettaglio)
+//   Dettaglio campagna: descrizione estesa, ricompense per donatori,
+//   donazione (importo default 25 EUR, aggiornamento real-time),
+//   popup Boost per la sponsorizzazione premium.
+// ═══════════════════════════════════════════════════════════════════════
 import { Component, signal, OnInit } from '@angular/core';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { FormsModule } from '@angular/forms';

@@ -1,3 +1,10 @@
+// ═══════════════════════════════════════════════════════════════════════
+// SEZIONE DI: Jojo de Andrade Rocha
+// PRESENTAZIONE: Punto 1.6 - Admin Articoli
+//   CRUD articoli con filtro per stato:
+//   Tutti / Pubblicato / Bozza / In Revisione.
+//   Badge colorati per stato, menu azioni per ogni articolo.
+// ═══════════════════════════════════════════════════════════════════════
 import { Component, inject } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';

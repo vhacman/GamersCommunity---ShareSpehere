@@ -1,3 +1,10 @@
+// ═══════════════════════════════════════════════════════════════════════
+// SEZIONE DI: Domenico Portanova (Product Owner)
+// PRESENTAZIONE: Punto 1.2 - Autenticazione / Login
+//   Form di login con credenziali mock, 4 ruoli utente:
+//   admin, moderatore, content_creator_verificato, user.
+//   Login riuscito reindirizza automaticamente alla home.
+// ═══════════════════════════════════════════════════════════════════════
 import { Component, signal, inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';

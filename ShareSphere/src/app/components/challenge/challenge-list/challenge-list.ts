@@ -1,3 +1,10 @@
+// ═══════════════════════════════════════════════════════════════════════
+// SEZIONE DI: Gabriela Hacman (Scrum Master)
+// PRESENTAZIONE: Punto 1.4 - Challenge (Lista)
+//   Lista challenge con filtro: tutte / in corso / concluse.
+//   Barra di progresso partecipanti e countdown giorni rimasti.
+//   Usa Angular Signals + computed() per il filtraggio reattivo.
+// ═══════════════════════════════════════════════════════════════════════
 import { Component, signal, computed } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { MockDataService } from '../../../services/mock-data-service';

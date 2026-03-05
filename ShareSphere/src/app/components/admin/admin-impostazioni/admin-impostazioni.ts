@@ -1,3 +1,10 @@
+// ═══════════════════════════════════════════════════════════════════════
+// SEZIONE DI: Adriano Mastrobuoni
+// PRESENTAZIONE: Punto 1.7 - Admin Impostazioni
+//   Pannello impostazioni piattaforma: nome, email di contatto,
+//   notifiche (toggle), tema chiaro/scuro, colore primario,
+//   monitoraggio storage DB, gestione API key, export backup.
+// ═══════════════════════════════════════════════════════════════════════
 import { Component, signal } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';

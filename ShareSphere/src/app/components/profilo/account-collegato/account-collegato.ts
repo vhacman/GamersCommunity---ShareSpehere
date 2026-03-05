@@ -1,3 +1,10 @@
+// ═══════════════════════════════════════════════════════════════════════
+// SEZIONE DI: Angelo Rusu
+// PRESENTAZIONE: Punto 1.5 - Account Gaming Collegati
+//   Collegamento account delle piattaforme gaming:
+//   Steam, PlayStation, Xbox, Epic Games, Ubisoft, Battle.net.
+//   Ricerca con suggerimenti automatici, salvataggio in localStorage.
+// ═══════════════════════════════════════════════════════════════════════
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';

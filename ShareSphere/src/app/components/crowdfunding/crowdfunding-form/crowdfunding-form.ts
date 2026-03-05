@@ -1,3 +1,10 @@
+// ═══════════════════════════════════════════════════════════════════════
+// SEZIONE DI: Gabriela Hacman (Scrum Master)
+// PRESENTAZIONE: Punto 1.4 - Crowdfunding (Form creazione)
+//   Form guidato per creare una campagna: titolo, descrizione,
+//   obiettivo, area, scadenza, immagine, ricompense dinamiche.
+//   Validazione integrata + redirect automatico dopo il salvataggio.
+// ═══════════════════════════════════════════════════════════════════════
 import { Component, signal, inject } from '@angular/core';
 import { DecimalPipe } from '@angular/common';
 import { Router, RouterLink } from '@angular/router';

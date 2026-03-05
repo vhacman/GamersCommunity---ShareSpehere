@@ -1,3 +1,10 @@
+// ═══════════════════════════════════════════════════════════════════════
+// SEZIONE DI: Adriano Mastrobuoni
+// PRESENTAZIONE: Punto 1.7 - Shared / ProgressBar
+//   Componente riutilizzabile: accetta [percentuale], [colore], [altezza].
+//   Usato in Challenge e Crowdfunding — scritto una volta, usato ovunque.
+//   Getter percentualeClampata garantisce il range [0, 100].
+// ═══════════════════════════════════════════════════════════════════════
 import { Component, Input } from '@angular/core';
 
 /**

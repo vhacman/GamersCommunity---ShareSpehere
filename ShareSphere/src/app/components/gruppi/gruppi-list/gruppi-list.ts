@@ -1,3 +1,10 @@
+// ═══════════════════════════════════════════════════════════════════════
+// SEZIONE DI: Carlo Ianna
+// PRESENTAZIONE: Punto 1.3 - Gruppi Tematici
+//   Lista gruppi con filtro per area, ricerca real-time,
+//   iscrizione con popup di conferma, creazione nuovo gruppo via modal,
+//   vista dettaglio del gruppo selezionato.
+// ═══════════════════════════════════════════════════════════════════════
 import { CommonModule } from '@angular/common';
 import { Component, OnInit, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';

@@ -1,3 +1,10 @@
+// ═══════════════════════════════════════════════════════════════════════
+// SEZIONE DI: Adriano Mastrobuoni
+// PRESENTAZIONE: Punto 1.7 - Shared / Navbar
+//   Barra di navigazione principale: link alle sezioni, badge notifiche
+//   con popup categorizzato (challenge, follower, like, gruppi),
+//   menu utente a tendina. Popup si chiude al click fuori (HostListener).
+// ═══════════════════════════════════════════════════════════════════════
 import { Component, signal, HostListener } from '@angular/core';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 import { MatToolbarModule } from '@angular/material/toolbar';

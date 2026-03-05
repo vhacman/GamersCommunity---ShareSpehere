@@ -1,3 +1,10 @@
+// ═══════════════════════════════════════════════════════════════════════
+// SEZIONE DI: Gabriela Hacman (Scrum Master)
+// PRESENTAZIONE: Punto 1.4 - Crowdfunding (Lista)
+//   Lista campagne con barra di progresso cromatica:
+//   viola < 50%, arancione 50-80%, verde >= 80%.
+//   Integra BoostPopup per la sponsorizzazione delle campagne.
+// ═══════════════════════════════════════════════════════════════════════
 import { Component, signal, inject } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { MatButtonModule } from '@angular/material/button';

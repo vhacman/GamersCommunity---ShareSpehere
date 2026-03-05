@@ -1,3 +1,10 @@
+// ═══════════════════════════════════════════════════════════════════════
+// SEZIONE DI: Adriano Mastrobuoni
+// PRESENTAZIONE: Punto 1.7 - Admin Challenge
+//   Gestione admin delle challenge: lista con stato attiva/conclusa,
+//   statistiche aggregate (totale attive, totale partecipanti).
+//   Copia dell'array per evitare modifiche dirette ai dati mock.
+// ═══════════════════════════════════════════════════════════════════════
 import { Component, inject } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';

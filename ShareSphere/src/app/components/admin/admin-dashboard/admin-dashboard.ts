@@ -1,3 +1,10 @@
+// ═══════════════════════════════════════════════════════════════════════
+// SEZIONE DI: Jojo de Andrade Rocha
+// PRESENTAZIONE: Punto 1.6 - Admin Dashboard
+//   Pannello admin (solo ruolo admin): statistiche globali della
+//   piattaforma (utenti, articoli, challenge, engagement rate)
+//   e lista articoli con badge di stato colorati.
+// ═══════════════════════════════════════════════════════════════════════
 import { Component, inject } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';

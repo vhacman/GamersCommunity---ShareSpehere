@@ -1,3 +1,10 @@
+// ═══════════════════════════════════════════════════════════════════════
+// SEZIONE DI: Gabriela Hacman (Scrum Master)
+// PRESENTAZIONE: Punto 1.4 - Challenge (Dettaglio)
+//   Dettaglio challenge: regole, premio, barra progresso,
+//   challenge correlate (stessa area, max 3),
+//   pulsante "Partecipa" che incrementa il contatore via Signal.
+// ═══════════════════════════════════════════════════════════════════════
 import { Component, signal, inject } from '@angular/core';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { MockDataService } from '../../../services/mock-data-service';

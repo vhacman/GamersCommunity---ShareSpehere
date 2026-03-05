@@ -1,3 +1,10 @@
+// ═══════════════════════════════════════════════════════════════════════
+// SEZIONE DI: Angelo Rusu
+// PRESENTAZIONE: Punto 1.5 - Profilo Utente
+//   Vista principale del profilo: avatar, bio, badge, statistiche,
+//   aree di interesse con chip colorati.
+//   Naviga verso ModificaProfilo e AccountCollegato come sotto-viste.
+// ═══════════════════════════════════════════════════════════════════════
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';

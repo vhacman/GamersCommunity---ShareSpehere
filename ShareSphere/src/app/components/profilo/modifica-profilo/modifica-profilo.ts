@@ -1,3 +1,10 @@
+// ═══════════════════════════════════════════════════════════════════════
+// SEZIONE DI: Angelo Rusu
+// PRESENTAZIONE: Punto 1.5 - Modifica Profilo
+//   Modifica nome, username (bloccato 30 giorni dopo ogni cambio),
+//   bio e foto profilo (upload con conversione base64).
+//   Dati persistiti in localStorage tra le sessioni.
+// ═══════════════════════════════════════════════════════════════════════
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';

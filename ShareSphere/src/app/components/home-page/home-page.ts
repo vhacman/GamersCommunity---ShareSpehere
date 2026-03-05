@@ -1,3 +1,9 @@
+// ═══════════════════════════════════════════════════════════════════════
+// SEZIONE DI: Domenico Portanova (Product Owner)
+// PRESENTAZIONE: Punto 1.2 - Homepage
+//   Mostra aree tematiche, challenge attive e articoli pubblicati,
+//   tutti paginati tramite il sistema di "dots" (pallini di navigazione).
+// ═══════════════════════════════════════════════════════════════════════
 import { Component, signal, computed } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { LowerCasePipe } from '@angular/common';
